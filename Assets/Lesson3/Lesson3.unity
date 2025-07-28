@@ -438,6 +438,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4580388671539056908, guid: 5079d2d11e670924193e0e2079b372d5, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 803773908}
     - target: {fileID: 8948521863533314594, guid: 5079d2d11e670924193e0e2079b372d5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -973,7 +977,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 1.5
   rate: 1
-  enemey: {fileID: 0}
+  enemey: {fileID: 589178727}
 --- !u!1 &1149828892
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,7 +1545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canShoot: 0
-  bullet: {fileID: 0}
+  bullet: {fileID: 856018370}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
