@@ -26,6 +26,7 @@ TrueTypeFontImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<< HEAD
 AssetOrigin:
   serializedVersion: 1
   productId: 35666
@@ -33,3 +34,5 @@ AssetOrigin:
   packageVersion: 2.1.0
   assetPath: Assets/Plugins/CW/Shared/Common/Examples/Fonts/VarelaRound-Regular.ttf
   uploadId: 653650
+=======
+>>>>>>> main

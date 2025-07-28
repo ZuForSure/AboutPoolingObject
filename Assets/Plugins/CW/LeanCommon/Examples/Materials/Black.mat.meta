@@ -7,6 +7,7 @@ NativeFormatImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<< HEAD
 AssetOrigin:
   serializedVersion: 1
   productId: 35666
@@ -14,3 +15,5 @@ AssetOrigin:
   packageVersion: 2.1.0
   assetPath: Assets/Plugins/CW/LeanCommon/Examples/Materials/Black.mat
   uploadId: 653650
+=======
+>>>>>>> main
