@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class BulletFly : MonoBehaviour
+public class BulletFly : NetworkBehaviour
 {
     [SerializeField] protected float speed = 10f;
     [SerializeField] protected Vector2 flyDirec = Vector2.right;
@@ -14,6 +15,7 @@ public class BulletFly : MonoBehaviour
 
     protected virtual void Fly()
     {
-        transform.parent.Translate(this.flyDirec * this.speed * Time.fixedDeltaTime);
+        if (!isServer) return;
+        transform.parent.Translate(flyDirec * this.speed * Time.fixedDeltaTime);
     }
 }

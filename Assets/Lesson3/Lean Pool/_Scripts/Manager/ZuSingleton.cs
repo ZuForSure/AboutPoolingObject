@@ -18,7 +18,7 @@ public abstract class ZuSingleton<T> : NetworkBehaviour  where T : NetworkBehavi
         if(instance == null)
         {
             instance = this as T;
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             return;
         }
 

@@ -2,8 +2,9 @@ using Lean.Pool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class GunShooting : MonoBehaviour
+public class GunShooting : NetworkBehaviour
 {
     [SerializeField] protected bool canShoot = false;
     [SerializeField] protected GameObject bullet;
@@ -16,12 +17,16 @@ public class GunShooting : MonoBehaviour
 
     protected virtual bool GetCanShoot()
     {
-        //this.canShoot = InputManager.Instance.ShootInput;
+        if (!isLocalPlayer) return false;
+
+        this.canShoot = InputManager.Instance.ShootInput;
         return this.canShoot;
     }
 
+    [Command]
     protected virtual void SpawnBullet()
     {
-        LeanPool.Spawn(this.bullet, transform.position, transform.rotation, null);
+        var newBullet = LeanPool.Spawn(this.bullet, transform.position, transform.rotation, null);
+        NetworkServer.Spawn(newBullet);
     }
 }

@@ -97,8 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a045197703d4a0e4bba5787ad3153fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   canShoot: 0
-  bullet: {fileID: 0}
+  bullet: {fileID: 5981414042708756307, guid: 9c4e2e9c9e364894f887e9efd79bb7f4, type: 3}
 --- !u!1 &4797302481902715161
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +114,7 @@ GameObject:
   - component: {fileID: 8492261478384592121}
   m_Layer: 0
   m_Name: TankMove
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -226,6 +229,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694e64bf49c6d2b46a44b3762f1a9d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!1 &5013344918106328300
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,8 +242,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7339908903297382260}
   - component: {fileID: 203189829348366088}
-  - component: {fileID: 4708401035588872514}
+  - component: {fileID: 691157410547718690}
   - component: {fileID: 4541772934837386964}
+  - component: {fileID: 2572211963518075065}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Player
@@ -315,7 +322,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4708401035588872514
+--- !u!114 &691157410547718690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -324,9 +331,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5013344918106328300}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 079ba9f6cdf621b4f957052a2e6ec2e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 58ed805d5affa7844ad7c178b3f47ff0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!50 &4541772934837386964
 Rigidbody2D:
   serializedVersion: 4
@@ -354,6 +364,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2572211963518075065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5013344918106328300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 1826089694
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
 --- !u!1 &5740931211546688156
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,7 +393,7 @@ GameObject:
   - component: {fileID: 5250508825795750888}
   m_Layer: 0
   m_Name: TankShoot
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
