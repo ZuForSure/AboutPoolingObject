@@ -125,6 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b2e0f026a4c794eb5e851284539357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   speed: 10
   flyDirec: {x: 1, y: 0}
 --- !u!1 &5981414042708756307
@@ -137,6 +140,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6268563507975460747}
   - component: {fileID: 1845021988403544838}
+  - component: {fileID: 2116507932548622173}
+  - component: {fileID: 8700348651829532694}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -214,6 +219,57 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2116507932548622173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5981414042708756307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 3481578629
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
+--- !u!114 &8700348651829532694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5981414042708756307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 6268563507975460747}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  timelineOffset: 1
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChangeCorrectionMultiplier: 2
+  useFixedUpdate: 0
+  rotationSensitivity: 0.01
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!1 &6759529761583933604
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,6 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf02abcc85459540be8132d5975c477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDis: 20
-  dis: 0
-  canDesepawn: 0
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  speed: 10
+  maxDistance: 50

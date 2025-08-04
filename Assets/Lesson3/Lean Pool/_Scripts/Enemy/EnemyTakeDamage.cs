@@ -1,9 +1,7 @@
 using Lean.Pool;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Mirror;
 
-public class EnemyTakeDamage : MonoBehaviour
+public class EnemyTakeDamage : NetworkBehaviour
 {
     public int maxHp = 10;
     public int currentHP = 10;
@@ -20,8 +18,10 @@ public class EnemyTakeDamage : MonoBehaviour
         this.currentHP -= amount;
     }
 
+    [Server]
     protected virtual void DeSpawnEnemey()
     {
+        NetworkServer.UnSpawn(transform.parent.gameObject); 
         LeanPool.Despawn(transform.parent);
     }
 }

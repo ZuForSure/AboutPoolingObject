@@ -1,4 +1,5 @@
 using Lean.Pool;
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class BulletSendDamage : MonoBehaviour
 {
     public int damage = 2;
 
+    [ServerCallback]
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Player")) return;
@@ -25,6 +27,7 @@ public class BulletSendDamage : MonoBehaviour
 
     protected virtual void DespawnBullet()
     {
+        NetworkServer.UnSpawn(transform.parent.gameObject);
         LeanPool.Despawn(transform.parent);
     }
 }

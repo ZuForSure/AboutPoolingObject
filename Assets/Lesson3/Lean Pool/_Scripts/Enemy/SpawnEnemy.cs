@@ -1,24 +1,28 @@
 using Lean.Pool;
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnEnemy : ZuSingleton<SpawnEnemy>
+public class SpawnEnemy : NetworkBehaviour
 {
     [SerializeField] protected float delay = 2f;
     public float SpawnRate = 3f;
     [SerializeField] protected GameObject enemey;
 
-    //private void Start() => InvokeRepeating(nameof(this.Spawn), this.delay, this.SpawnRate);
+    [ServerCallback]
     private void Start() => StartCoroutine(this.Spawn());
 
+    [Server]
     protected IEnumerator Spawn()
     {
         while (true)
         {
             Debug.Log("Spawn with rate: " + SpawnRate);
             Transform point = Point.Instance.GetRandomPoint();
-            LeanPool.Spawn(enemey, point.position, Quaternion.identity);
+
+            GameObject enemy = LeanPool.Spawn(enemey, point.position, Quaternion.identity);
+            NetworkServer.Spawn(enemy); 
 
             yield return new WaitForSeconds(this.SpawnRate);
         }
