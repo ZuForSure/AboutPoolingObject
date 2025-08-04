@@ -5,7 +5,7 @@ using Mirror;
 using kcp2k;
 
 [RequireComponent(typeof(KcpTransport))]
-public class CustomNetworkManager : NetworkManager
+public class CusNetworkManager : NetworkManager
 {
     public override void OnStartServer()
     {
