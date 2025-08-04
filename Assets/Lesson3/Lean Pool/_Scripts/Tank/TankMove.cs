@@ -1,38 +1,30 @@
+using Mirror;
+using Mirror.Examples.Basic;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankMove : MonoBehaviour
+public class TankMove : NetworkBehaviour
 {
     [SerializeField] protected Rigidbody2D tankRb;
     [SerializeField] protected float moveSpeed = 5f;
-    [SerializeField] protected Vector3 moveDirection;
+
+    [SyncVar] private Vector2 moveDirection;
+    private InputManager input;
 
     private void Awake()
     {
         this.tankRb = GetComponentInParent<Rigidbody2D>();
     }
 
-    void Update()
+   
+    public void GetMoveDirection()
     {
-        this.GetMoveDirection();
-    }
+        moveDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+    }   
+    public void RbMove()
+    {
+        tankRb.velocity = moveDirection * moveSpeed;
+    }    
 
-    private void FixedUpdate()
-    {
-        this.Moving();
-    }
-
-    protected virtual void GetMoveDirection()
-    {
-        float move_x = InputManager.Instance.HoriInput;
-        float move_y = InputManager.Instance.VertiInput;
-        this.moveDirection = new Vector2(move_x, move_y).normalized;
-    }
-
-    protected virtual void Moving()
-    {
-        //this.tankRb.MovePosition(newPos * this.moveSpeed * Time.fixedDeltaTime);
-        this.tankRb.velocity = this.moveDirection * this.moveSpeed;
-    }
 }

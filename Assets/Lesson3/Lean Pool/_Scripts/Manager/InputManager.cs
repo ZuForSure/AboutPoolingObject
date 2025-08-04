@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class InputManager : ZuSingleton<InputManager>
 
     private void Update()
     {
+      
         this.GetShootInput();
         this.GetMousePosInput();
         this.GetAxisInput();

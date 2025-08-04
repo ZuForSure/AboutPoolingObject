@@ -16,7 +16,7 @@ public class GunShooting : MonoBehaviour
 
     protected virtual bool GetCanShoot()
     {
-        this.canShoot = InputManager.Instance.ShootInput;
+        //this.canShoot = InputManager.Instance.ShootInput;
         return this.canShoot;
     }
 

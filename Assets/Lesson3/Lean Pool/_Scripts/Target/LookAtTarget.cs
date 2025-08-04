@@ -1,13 +1,15 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LookAtTarget : MonoBehaviour
+public abstract class LookAtTarget : NetworkBehaviour
 {
     [Header("Look At Targets")]
     [SerializeField] protected Vector3 target;
 
-    protected void AimTarget(Vector3 target)
+
+    public void AimTarget(Vector3 target)
     {
         Vector2 diff = target - this.transform.position;
         diff = diff.normalized;
@@ -15,5 +17,5 @@ public abstract class LookAtTarget : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
     }
 
-    protected abstract void GetTarget();
+    public abstract Vector3 GetTarget();
 }

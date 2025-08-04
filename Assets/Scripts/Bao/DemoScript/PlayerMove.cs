@@ -47,6 +47,7 @@ public class PlayerMove : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
+        Debug.Log("test");
         inventory.Callback += OnItemChanged;
     }
     private void Start()

@@ -1,21 +1,17 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LookAtMouse : LookAtTarget
 {
-    private void Update()
+ 
+    
+    public override Vector3 GetTarget()
     {
-        this.GetTarget();
-    }
-
-    private void LateUpdate()
-    {
-        this.AimTarget(this.target);
-    }
-
-    protected override void GetTarget()
-    {
-        this.target = InputManager.Instance.MouseWorldPoint;
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorld.z = 0f;
+        this.target = mouseWorld;
+        return target;
     }
 }

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public abstract class ZuSingleton<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class ZuSingleton<T> : NetworkBehaviour  where T : NetworkBehaviour
 {
     protected static T instance;
     public static T Instance => instance;
