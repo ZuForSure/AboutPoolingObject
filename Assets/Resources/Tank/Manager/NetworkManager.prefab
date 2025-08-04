@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 890027964464402194}
   - component: {fileID: 4221882392098594487}
-  - component: {fileID: 6572959809355878593}
-  - component: {fileID: 8990933060162427759}
+  - component: {fileID: 4341962359792679546}
+  - component: {fileID: 4259950343266495843}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -63,7 +63,7 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
---- !u!114 &6572959809355878593
+--- !u!114 &4341962359792679546
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,7 +72,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6822691126966038064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90353822cdb19c1438bb38d7bce09699, type: 3}
+  m_Script: {fileID: 11500000, guid: 519541304254ec24f80c81952d771d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
@@ -81,9 +81,9 @@ MonoBehaviour:
   editorAutoStart: 0
   sendRate: 60
   offlineScene: 
-  onlineScene: Assets/_TankGameOnl/TankGame.unity
+  onlineScene: 
   offlineSceneLoadDelay: 0
-  transport: {fileID: 4221882392098594487}
+  transport: {fileID: 0}
   networkAddress: localhost
   maxConnections: 100
   disconnectInactiveConnections: 0
@@ -92,9 +92,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 5493079047123937449, guid: d1a6b8bf2f53c9846955b249029db0d6, type: 3}
   autoCreatePlayer: 1
   playerSpawnMethod: 0
-  spawnPrefabs:
-  - {fileID: 3883268271223384625, guid: b273373563d2973438b79c70b39d4ba8, type: 3}
-  - {fileID: 4007063593569356117, guid: 38deac64099afa646841baea552ef814, type: 3}
+  spawnPrefabs: []
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -110,7 +108,11 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
---- !u!114 &8990933060162427759
+  spawnEnemy: {fileID: 0}
+  timePerRound: 10
+  timer: 0
+  lev: 1
+--- !u!114 &4259950343266495843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankNetworkManager : NetworkManager
+public class TankGameNetworkManager : NetworkManager
 {
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
