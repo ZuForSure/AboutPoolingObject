@@ -10,11 +10,14 @@ public class SpawnEnemy : NetworkBehaviour
     public float SpawnRate = 3f;
     [SerializeField] protected GameObject enemey;
 
-    [ServerCallback]
-    private void Start() => StartCoroutine(this.Spawn());
 
     [Server]
-    protected IEnumerator Spawn()
+    public virtual void Spawning()
+    {
+        StartCoroutine(this.Spawn());
+    }
+
+    IEnumerator Spawn()
     {
         while (true)
         {
@@ -22,7 +25,7 @@ public class SpawnEnemy : NetworkBehaviour
             Transform point = Point.Instance.GetRandomPoint();
 
             GameObject enemy = LeanPool.Spawn(enemey, point.position, Quaternion.identity);
-            NetworkServer.Spawn(enemy); 
+            NetworkServer.Spawn(enemy);
 
             yield return new WaitForSeconds(this.SpawnRate);
         }

@@ -10,7 +10,21 @@ public class TankNetworkManager : NetworkManager
     [SerializeField] protected float timePerRound = 10f;
     [SerializeField] protected float timer = 0f;
     [SerializeField] protected int lev = 1;
+    [SerializeField] protected bool canSpawnEnemy = false;
 
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+    {
+        base.OnServerAddPlayer(conn);
+
+        Debug.Log("Test");
+        GameObject player = Instantiate(playerPrefab);
+        NetworkServer.AddPlayerForConnection(conn, player);
+
+        if (canSpawnEnemy) return;
+
+        spawnEnemy.Spawning();
+        canSpawnEnemy = true;
+    }
 
     public override void Update()
     {
@@ -25,11 +39,6 @@ public class TankNetworkManager : NetworkManager
         lev++;
         Debug.Log("Increased level to: " + lev);
     }
-
-    //void OnLevelChanged(int oldValue, int newValue)
-    //{
-    //    Debug.Log("Client received new difficulty level: " + newValue);
-    //}
 
     protected virtual void CheckTimer()
     {

@@ -80,6 +80,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694e64bf49c6d2b46a44b3762f1a9d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!1 &832077778738737779
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,6 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3551671716918146754}
   - component: {fileID: 8298626925065332756}
+  - component: {fileID: 6529665938137498850}
   - component: {fileID: 665953601888372102}
   - component: {fileID: 7194425041418370387}
   - component: {fileID: -6109398636063446172}
@@ -146,7 +150,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3551671716918146754
 Transform:
   m_ObjectHideFlags: 0
@@ -218,6 +222,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6529665938137498850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5493079047123937449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ed805d5affa7844ad7c178b3f47ff0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!114 &665953601888372102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,5 +597,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a045197703d4a0e4bba5787ad3153fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   canShoot: 0
-  bullet: {fileID: 0}
+  bullet: {fileID: 5981414042708756307, guid: 9c4e2e9c9e364894f887e9efd79bb7f4, type: 3}

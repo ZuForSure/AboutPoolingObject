@@ -10,7 +10,7 @@ public class TankMove : NetworkBehaviour
     [SerializeField] protected float moveSpeed = 5f;
 
     [SyncVar] private Vector2 moveDirection;
-    private InputManager input;
+    //private InputManager input;
 
     private void Awake()
     {

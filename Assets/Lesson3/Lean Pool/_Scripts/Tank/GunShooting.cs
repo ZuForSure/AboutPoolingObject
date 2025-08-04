@@ -19,7 +19,7 @@ public class GunShooting : NetworkBehaviour
     {
         if (!isLocalPlayer) return false;
 
-        //this.canShoot = InputManager.Instance.ShootInput;
+        this.canShoot = Input.GetKeyDown(KeyCode.Mouse0);
         return this.canShoot;
     }
 
