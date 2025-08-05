@@ -4,13 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : NetworkBehaviour
+public class EnemySpawner : ZuSingleton<EnemySpawner>
 {
     [SerializeField] protected float delay = 2f;
     public float SpawnRate = 3f, maxRate = 3f;
     public Coroutine coroutine;
     [SerializeField] protected GameObject enemey;
-
 
     [Server]
     public void Spawning()
@@ -37,6 +36,17 @@ public class EnemySpawner : NetworkBehaviour
             NetworkServer.Spawn(enemy);
 
             yield return new WaitForSeconds(this.SpawnRate);
+        }
+    }
+
+    public void DespawnAllEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in enemies)
+        {
+            NetworkServer.UnSpawn(enemy);
+            LeanPool.Despawn(enemy);
         }
     }
 }

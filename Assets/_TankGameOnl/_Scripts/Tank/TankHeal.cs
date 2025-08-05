@@ -29,6 +29,12 @@ public class TankHeal
         {
             newHeal = 0;
             tank.SetDeath(true);
+
+            TankNetworkManager.Instance.playerAlive--;
+            if(TankNetworkManager.Instance.playerAlive <= 0)
+            {
+                EnemySpawner.Instance.StopSpawning();
+            }
         }
 
         tank.SetHealTank(newHeal);
