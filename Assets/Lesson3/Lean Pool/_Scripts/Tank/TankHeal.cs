@@ -1,68 +1,37 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankHeal : NetworkBehaviour
+[Serializable]
+public class TankHeal
 {
-    [SyncVar(hook = nameof(OnChangeTankHeal))]
-    [SerializeField] private int healTank;
+    private Tank tank;
 
-    [SyncVar]
-    [SerializeField] private bool isDeath; 
-    public bool IsDeath => isDeath;
-    [SerializeField] private Tank tank;
-
-    private void Awake()
+    public void Init(Tank tank)
     {
-        tank = GetComponentInParent<Tank>();
+        this.tank = tank;
     }
 
+    //public void SetHealTank(int defaultHeal)
+    //{
+    //    tank.SetHealTank(defaultHeal); // Gọi sang Tank để set SyncVar
+    //}
 
-    public void SetHealTank(int heal)
-    {
-        Debug.Log($"heal : {heal}");
-        healTank = heal;
-
-    }
     public void ReduceHeal(int damage)
     {
-        int oldValue = healTank;
-        healTank -= damage;
-        Debug.Log($"[SERVER] ReduceHeal: {oldValue} -> {healTank}");
-        if ( healTank <= 0 )
-        {
-            healTank = 0;
-            CmdPlayerDeath();
-            //CmdPlayerHide();
-            Debug.Log("tank Die");
-            //PlayerDeath();
-        }
-    }
-    private void OnChangeTankHeal(int oldValue,int newValue)
-    {
-        if(tank.isLocalPlayer)
-        {
-            Debug.Log($"healvalue {healTank}");
-            UiManager.Instance.SetTextHeal(newValue);
-        }    
-        
-    }    
+        Debug.Log($"ReduceHeal - Sever : {NetworkServer.active} | Client : {NetworkClient.active}");
+        if (!tank.isServer) return; // Chỉ cho server xử lý logic này
+        int newHeal = tank.HealTank - damage;
 
-    [Command]
-    private void CmdPlayerDeath()
-    {
-        isDeath = true;
+        if (newHeal <= 0)
+        {
+            newHeal = 0;
+            tank.SetDeath(true);
+        }
+
+        tank.SetHealTank(newHeal);
     }
-    //[Command]
-    //private void CmdPlayerHide()
-    //{
-    //    RpcPlayerHide();
-    //}
-    [ClientRpc]
-    private void RpcPlayerHide()
-    {
-        tank.gameObject.SetActive(false);
-    }    
-   
+
 }
