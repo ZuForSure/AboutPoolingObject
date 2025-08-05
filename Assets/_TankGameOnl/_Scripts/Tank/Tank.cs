@@ -1,4 +1,5 @@
 using Mirror;
+using Mirror.BouncyCastle.X509;
 using Mirror.Examples.Tanks;
 using UnityEngine;
 
@@ -13,7 +14,9 @@ public class Tank : NetworkBehaviour
     [SyncVar]
     [SerializeField] private bool isDeath;
     public bool IsDeath => isDeath;
-    [SerializeField] private bool isReady;public bool IsReady => isReady;
+    [SyncVar]
+    [SerializeField] private bool isReady;
+    public bool IsReady => isReady;
 
     private void Awake()
     {
@@ -23,9 +26,11 @@ public class Tank : NetworkBehaviour
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
     }
 
+
+
     public override void OnStartClient()
     {
-        Debug.Log($"[OnStartClient] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+        Debug.Log($"[OnStartClient] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}, author : {authority}");
 
         if (!isLocalPlayer)
         {
@@ -35,7 +40,10 @@ public class Tank : NetworkBehaviour
 
         CmdInitTankHeal();
         CmdInitUiHeal();
+        UiManager.Instance.ShowUiButton(true);
     }
+  
+
     private void Update()
     {
         if (!isLocalPlayer) return;
@@ -61,8 +69,22 @@ public class Tank : NetworkBehaviour
 
     }
 
+    #region Funtion
+
+    #endregion
 
     #region Commnad
+    [Command]
+    public void CmdSetReady(bool value)
+    {
+
+        Debug.Log($"[CmdSetReady] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+        isReady = value;
+        TargetActionOnReadyGame();
+        TankGameManager.Instance.CheckAllPlayersReady();
+
+
+    }
     [Command]
     private void CmdInitTankHeal()
     {
@@ -71,42 +93,29 @@ public class Tank : NetworkBehaviour
     [Command]
     private void CmdInitUiHeal()
     {
-        RpcInitUiHeal();
+        TargetInitUiHeal();
     }
     #endregion
-    #region TargetRPC
 
-    #endregion
-    #region ClientRPC
+    #region TargetRPC
     [TargetRpc]
-    private void RpcInitUiHeal()
+    private void TargetInitUiHeal()
     {
         UiManager.Instance.ShowUiHeal(true);
         UiManager.Instance.SetTextHeal(TankGameManager.Instance.Heal);
     }
-    [ClientRpc]
-    private void RpcSetTankVisibility(bool isVisible)
+    [TargetRpc]
+    private void TargetActionOnReadyGame()
     {
-        // Ẩn Renderer
-        foreach (var r in GetComponentsInChildren<SpriteRenderer>())
-
-            if (r != null)
-            {
-                r.enabled = isVisible;
-            }
-            else
-            {
-                Debug.LogWarning("No SpriteRenderer found in children.");
-            }
-
-        if (TryGetComponent<Collider2D>(out var collider2D))
-        {
-            // Ẩn Collider
-            collider2D.enabled = isVisible;
-        }
-
+        UiManager.Instance.OnReadyGame?.Invoke(isReady);
     }
     #endregion
+
+    #region ClientRPC
+
+    #endregion
+
+    #region Server
     [Server]
     public void SetHealTank(int value)
     {
@@ -117,6 +126,7 @@ public class Tank : NetworkBehaviour
     public void SetDeath(bool value)
     {
         isDeath = value;
-        Destroy(gameObject,0.5f);
+        Destroy(gameObject, 0.5f);
     }
+    #endregion
 }
