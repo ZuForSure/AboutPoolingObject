@@ -517,6 +517,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TankGameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 5370537026273895417, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5429749152030201204, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

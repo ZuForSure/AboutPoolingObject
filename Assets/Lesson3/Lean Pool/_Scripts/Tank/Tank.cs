@@ -1,17 +1,24 @@
-using UnityEngine;
 using Mirror;
+using Mirror.Examples.Tanks;
+using UnityEngine;
 
 public class Tank : NetworkBehaviour
 {
-    [SerializeField] private TankHeal tankHeal; public TankHeal TankHeal=>tankHeal;
+    [SerializeField] private TankHeal tankHeal; public TankHeal TankHeal => tankHeal;
     [SerializeField] private LookAtMouse lookAtMouse;
     [SerializeField] private TankMove tankMove;
+    [SyncVar(hook = nameof(OnChangeTankHeal))]
+    [SerializeField] private int healTank;
+    public int HealTank => healTank;
+    [SyncVar]
+    [SerializeField] private bool isDeath;
+    public bool IsDeath => isDeath;
 
     private void Awake()
     {
-        tankHeal = GetComponentInChildren<TankHeal>();
+        tankHeal.Init(this);
         lookAtMouse = GetComponentInChildren<LookAtMouse>();
-        tankMove = GetComponentInChildren<TankMove>();
+        tankMove.Init(GetComponent<Rigidbody2D>());
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
     }
 
@@ -31,7 +38,7 @@ public class Tank : NetworkBehaviour
     private void Update()
     {
         if (!isLocalPlayer) return;
-        if (tankHeal.IsDeath) return;
+        if (isDeath) return;
         tankMove.GetMoveDirection();
         lookAtMouse.AimTarget(lookAtMouse.GetTarget());
 
@@ -39,8 +46,18 @@ public class Tank : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!isLocalPlayer) return;
-        if (tankHeal.IsDeath) return;
+        if (isDeath) return;
         tankMove.RbMove();
+    }
+
+    private void OnChangeTankHeal(int oldValue, int newValue)
+    {
+        if (isLocalPlayer)
+        {
+            //Debug.Log($"healvalue {healTank}");
+            UiManager.Instance.SetTextHeal(newValue);
+        }
+
     }
 
 
@@ -48,24 +65,16 @@ public class Tank : NetworkBehaviour
     [Command]
     private void CmdInitTankHeal()
     {
-        tankHeal.SetHealTank(TankGameManager.Instance.Heal);
+        SetHealTank(TankGameManager.Instance.Heal);
     }
     [Command]
     private void CmdInitUiHeal()
     {
         RpcInitUiHeal();
-    }    
+    }
     #endregion
     #region TargetRPC
-    //[TargetRpc]
-    //private void TargetSetTankHeal(NetworkConnection target)
-    //{
-    //    if (tankHeal != null)
-    //    {
-    //        tankHeal.SetHealTank(TankGameManager.Instance.Heal);
-    //        Debug.Log($"healtank : {TankGameManager.Instance.Heal}");
-    //    }
-    //}
+
     #endregion
     #region ClientRPC
     [ClientRpc]
@@ -73,7 +82,40 @@ public class Tank : NetworkBehaviour
     {
         UiManager.Instance.ShowUiHeal(true);
         UiManager.Instance.SetTextHeal(TankGameManager.Instance.Heal);
-    }    
-    #endregion
+    }
+    [ClientRpc]
+    private void RpcSetTankVisibility(bool isVisible)
+    {
+        // Ẩn Renderer
+        foreach (var r in GetComponentsInChildren<SpriteRenderer>())
 
+            if (r != null)
+            {
+                r.enabled = isVisible;
+            }
+            else
+            {
+                Debug.LogWarning("No SpriteRenderer found in children.");
+            }
+
+        if (TryGetComponent<Collider2D>(out var collider2D))
+        {
+            // Ẩn Collider
+            collider2D.enabled = isVisible;
+        }
+
+    }
+    #endregion
+    [Server]
+    public void SetHealTank(int value)
+    {
+        healTank = value;
+        // Hook sẽ tự gọi OnChangeTankHeal
+    }
+    [Server]
+    public void SetDeath(bool value)
+    {
+        isDeath = value;
+        RpcSetTankVisibility(false);
+    }
 }
