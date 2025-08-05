@@ -1,7 +1,3 @@
-using Mirror.BouncyCastle.Asn1.Pkcs;
-using Mono.CompilerServices.SymbolWriter;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
