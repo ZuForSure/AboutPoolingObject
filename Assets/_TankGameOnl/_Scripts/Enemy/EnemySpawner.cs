@@ -11,7 +11,6 @@ public class EnemySpawner : ZuSingleton<EnemySpawner>
     public Coroutine coroutine;
     [SerializeField] protected GameObject enemey;
 
-
     [Server]
     public void Spawning()
     {
@@ -37,6 +36,17 @@ public class EnemySpawner : ZuSingleton<EnemySpawner>
             NetworkServer.Spawn(enemy);
 
             yield return new WaitForSeconds(this.SpawnRate);
+        }
+    }
+
+    public void DespawnAllEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in enemies)
+        {
+            NetworkServer.UnSpawn(enemy);
+            LeanPool.Despawn(enemy);
         }
     }
 }
