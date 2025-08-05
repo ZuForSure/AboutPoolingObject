@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : NetworkBehaviour
+public class EnemySpawner : ZuSingleton<EnemySpawner>
 {
     [SerializeField] protected float delay = 2f;
     public float SpawnRate = 3f, maxRate = 3f;

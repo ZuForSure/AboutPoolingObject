@@ -10,28 +10,24 @@ public class TankNetworkManager : NetworkManager
     [SerializeField] protected float timePerRound = 10f;
     [SerializeField] protected float timer = 0f;
     [SerializeField] protected int lev = 1;
-    [SerializeField] protected int currentPlayer = 0;
+    [SerializeField] protected int playerCount = 0;
     [SerializeField] protected bool canSpawnEnemy = false;
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        GameObject player = Instantiate(playerPrefab);
-        NetworkServer.AddPlayerForConnection(conn, player);
-        this.currentPlayer++;
+        this.playerCount++;
+        base.OnServerAddPlayer(conn);
 
         if (canSpawnEnemy) return;
-
         enemySpawner.Spawning();
         canSpawnEnemy = true;
-
-        base.OnServerAddPlayer(conn);
     }
 
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
-        this.currentPlayer--;
+        this.playerCount--;
 
-        if(this.currentPlayer == 0)
+        if(this.playerCount == 0)
         {
             enemySpawner.StopSpawning();
             canSpawnEnemy = false;

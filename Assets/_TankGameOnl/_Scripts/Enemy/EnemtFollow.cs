@@ -40,16 +40,18 @@ public class EnemtFollow : NetworkBehaviour
             }
         }
 
-        if (closest != null)
-        {
-            player = closest.gameObject;
-        }
+        if (closest != null) player = closest.gameObject;
+        else player = null;
     }
 
     void Update()
     {
         if (!isServer) return;
-        if (player == null) return;
+        if (player == null)
+        {
+            EnemySpawner.Instance.StopSpawning();
+            return;
+        }
 
         Vector3 direction = (player.transform.position - transform.parent.position).normalized;
         transform.parent.position += direction * speed * Time.deltaTime;

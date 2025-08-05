@@ -207,7 +207,7 @@ MonoBehaviour:
   timePerRound: 10
   timer: 0
   lev: 1
-  currentPlayer: 0
+  playerCount: 0
   canSpawnEnemy: 0
 --- !u!114 &22498147
 MonoBehaviour:
