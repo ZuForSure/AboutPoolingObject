@@ -3,11 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class LookAtTarget : NetworkBehaviour
+public abstract class LookAtTarget : MonoBehaviour
 {
-    [Header("Look At Targets")]
-    [SerializeField] protected Vector3 target;
-
 
     public void AimTarget(Vector3 target)
     {

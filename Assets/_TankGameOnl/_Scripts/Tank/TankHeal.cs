@@ -1,16 +1,37 @@
+using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankHeal : MonoBehaviour
+[Serializable]
+public class TankHeal
 {
-    [SerializeField] private int healTank;
+    private Tank tank;
 
-
-    public void SetHealTank(int heal)
+    public void Init(Tank tank)
     {
-        Debug.Log($"heal : {heal}");
-        healTank = heal;
-
+        this.tank = tank;
     }
+
+    //public void SetHealTank(int defaultHeal)
+    //{
+    //    tank.SetHealTank(defaultHeal); // Gọi sang Tank để set SyncVar
+    //}
+
+    public void ReduceHeal(int damage)
+    {
+        Debug.Log($"ReduceHeal - Sever : {NetworkServer.active} | Client : {NetworkClient.active}");
+        if (!tank.isServer) return; // Chỉ cho server xử lý logic này
+        int newHeal = tank.HealTank - damage;
+
+        if (newHeal <= 0)
+        {
+            newHeal = 0;
+            tank.SetDeath(true);
+        }
+
+        tank.SetHealTank(newHeal);
+    }
+
 }
