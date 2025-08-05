@@ -20,12 +20,12 @@ public class BulletSendDamage : MonoBehaviour
         this.DespawnBullet();
     }
 
-    protected virtual void SendDamage(EnemyTakeDamage enemyTakeDamage)
+    protected void SendDamage(EnemyTakeDamage enemyTakeDamage)
     {
         enemyTakeDamage.DeductHP(this.damage);
     }
 
-    protected virtual void DespawnBullet()
+    protected void DespawnBullet()
     {
         NetworkServer.UnSpawn(transform.parent.gameObject);
         LeanPool.Despawn(transform.parent);

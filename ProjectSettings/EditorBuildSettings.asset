@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Bao/DemoScene/NetworkManager.unity
     guid: c3fd1cd4fbd758040a852ee7bc55b903
-  - enabled: 1
+  - enabled: 0
     path: Assets/_TankGameOnl/MainScene.unity
     guid: 8fec54be1c480a04592cc3b67c914617
   m_configObjects: {}

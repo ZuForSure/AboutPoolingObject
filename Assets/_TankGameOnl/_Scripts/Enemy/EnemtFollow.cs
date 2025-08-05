@@ -18,7 +18,13 @@ public class EnemtFollow : NetworkBehaviour
         InvokeRepeating(nameof(FindClosestPlayer), 0f, checkInterval);
     }
 
-    protected virtual void FindClosestPlayer()
+    public override void OnStopServer()
+    {
+        base.OnStopServer();
+        CancelInvoke(nameof(FindClosestPlayer));
+    }
+
+    protected void FindClosestPlayer()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float minDist = Mathf.Infinity;

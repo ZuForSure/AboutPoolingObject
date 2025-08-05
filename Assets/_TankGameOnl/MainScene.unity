@@ -203,10 +203,11 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  spawnEnemy: {fileID: 1134561596}
+  enemySpawner: {fileID: 1134561596}
   timePerRound: 10
   timer: 0
   lev: 1
+  currentPlayer: 0
   canSpawnEnemy: 0
 --- !u!114 &22498147
 MonoBehaviour:
@@ -449,17 +450,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: TankGameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5370537026273895417, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5429749152030201204, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5429749152030201204, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.192
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5429749152030201204, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
       propertyPath: m_LocalPosition.z
@@ -545,7 +542,7 @@ GameObject:
   - component: {fileID: 1134561596}
   - component: {fileID: 1134561597}
   m_Layer: 0
-  m_Name: SpawnEnemy
+  m_Name: EnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -583,6 +580,7 @@ MonoBehaviour:
   syncInterval: 0
   delay: 2
   SpawnRate: 3
+  maxRate: 3
   enemey: {fileID: 9128934830541529343, guid: ce7aac092491f964fadd10e7cd16dc2c, type: 3}
 --- !u!114 &1134561597
 MonoBehaviour:

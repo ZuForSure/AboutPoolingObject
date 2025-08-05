@@ -24,7 +24,7 @@ public class GunShooting : NetworkBehaviour
     }
 
     [Command]
-    protected virtual void SpawnBullet()
+    protected void SpawnBullet()
     {
         var newBullet = LeanPool.Spawn(this.bullet, transform.position, transform.rotation, null);
         NetworkServer.Spawn(newBullet);

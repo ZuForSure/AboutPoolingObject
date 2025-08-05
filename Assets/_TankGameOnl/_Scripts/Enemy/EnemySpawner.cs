@@ -4,24 +4,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnEnemy : NetworkBehaviour
+public class EnemySpawner : NetworkBehaviour
 {
     [SerializeField] protected float delay = 2f;
-    public float SpawnRate = 3f;
+    public float SpawnRate = 3f, maxRate = 3f;
+    public Coroutine coroutine;
     [SerializeField] protected GameObject enemey;
 
 
     [Server]
-    public virtual void Spawning()
+    public void Spawning()
     {
-        StartCoroutine(this.Spawn());
+        this.SpawnRate = maxRate;
+        coroutine = StartCoroutine(this.Spawn());
     }
 
-    IEnumerator Spawn()
+    [Server]
+    public void StopSpawning()
+    {
+        if (coroutine == null) return;
+        StopCoroutine(coroutine);
+        coroutine = null;
+    }
+
+    public IEnumerator Spawn()
     {
         while (true)
         {
-            Debug.Log("Spawn with rate: " + SpawnRate);
             Transform point = Point.Instance.GetRandomPoint();
 
             GameObject enemy = LeanPool.Spawn(enemey, point.position, Quaternion.identity);
