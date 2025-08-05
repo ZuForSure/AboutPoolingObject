@@ -3,7 +3,7 @@ using Mirror;
 
 public class Tank : NetworkBehaviour
 {
-    [SerializeField] private TankHeal tankHeal;
+    [SerializeField] private TankHeal tankHeal; public TankHeal TankHeal=>tankHeal;
     [SerializeField] private LookAtMouse lookAtMouse;
     [SerializeField] private TankMove tankMove;
 
@@ -26,11 +26,12 @@ public class Tank : NetworkBehaviour
         }
 
         CmdInitTankHeal();
+        CmdInitUiHeal();
     }
     private void Update()
     {
         if (!isLocalPlayer) return;
-
+        if (tankHeal.IsDeath) return;
         tankMove.GetMoveDirection();
         lookAtMouse.AimTarget(lookAtMouse.GetTarget());
 
@@ -38,10 +39,8 @@ public class Tank : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!isLocalPlayer) return;
-
+        if (tankHeal.IsDeath) return;
         tankMove.RbMove();
-
-
     }
 
 
@@ -49,18 +48,32 @@ public class Tank : NetworkBehaviour
     [Command]
     private void CmdInitTankHeal()
     {
-        TargetSetTankHeal(connectionToClient);
+        tankHeal.SetHealTank(TankGameManager.Instance.Heal);
     }
+    [Command]
+    private void CmdInitUiHeal()
+    {
+        RpcInitUiHeal();
+    }    
     #endregion
     #region TargetRPC
-    [TargetRpc]
-    private void TargetSetTankHeal(NetworkConnection target)
-    {
-        if (tankHeal != null)
-        {
-            tankHeal.SetHealTank(TankGameManager.Instance.Heal);
-            Debug.Log($"healtank : {TankGameManager.Instance.Heal}");
-        }
-    }
+    //[TargetRpc]
+    //private void TargetSetTankHeal(NetworkConnection target)
+    //{
+    //    if (tankHeal != null)
+    //    {
+    //        tankHeal.SetHealTank(TankGameManager.Instance.Heal);
+    //        Debug.Log($"healtank : {TankGameManager.Instance.Heal}");
+    //    }
+    //}
     #endregion
+    #region ClientRPC
+    [ClientRpc]
+    private void RpcInitUiHeal()
+    {
+        UiManager.Instance.ShowUiHeal(true);
+        UiManager.Instance.SetTextHeal(TankGameManager.Instance.Heal);
+    }    
+    #endregion
+
 }

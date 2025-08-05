@@ -8,9 +8,10 @@ public class GunShooting : NetworkBehaviour
 {
     [SerializeField] protected bool canShoot = false;
     [SerializeField] protected GameObject bullet;
-
+    [SerializeField] private Tank tank;
     private void Update()
     {
+        if (tank.TankHeal.IsDeath) return;
         if (!this.GetCanShoot()) return;
         this.SpawnBullet();
     }

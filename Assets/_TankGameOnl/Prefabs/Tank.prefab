@@ -127,7 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e702221f4c2f5e44aabfe91ae09433f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   healTank: 0
+  isDeath: 0
+  tank: {fileID: 0}
 --- !u!1 &5493079047123937449
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,3 +607,4 @@ MonoBehaviour:
   syncInterval: 0
   canShoot: 0
   bullet: {fileID: 5981414042708756307, guid: 9c4e2e9c9e364894f887e9efd79bb7f4, type: 3}
+  tank: {fileID: 665953601888372102}

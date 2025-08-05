@@ -48,4 +48,5 @@ public class EnemtFollow : NetworkBehaviour
         Vector3 direction = (player.transform.position - transform.parent.position).normalized;
         transform.parent.position += direction * speed * Time.deltaTime;
     }
+
 }
