@@ -10,36 +10,36 @@ public class EnemyColision : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log($"OnCollisionEnter2D - IsServer: {NetworkServer.active} | IsClient: {NetworkClient.active}");
         if (!NetworkServer.active) return;
-        Debug.Log($"Collided with: {collision.gameObject.name}, tag: {collision.gameObject.tag}");
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log($"OnCollisionEnter2D - Collision with Player: {collision.gameObject.name}");
             if (!collision.gameObject.TryGetComponent<Tank>(out var tank))
             {
                 Debug.LogWarning("Không tìm thấy TankHeal trong Player");
             }
             else
             {
-                //if (!isEnemyColision)
+                //if (!isenemycolision)
+                //{
 
-                Debug.Log("ád");
+                //}
+
+                    Debug.Log("ád");
                 tank.TankHeal.ReduceHeal(1);
                 isEnemyColision = true;
-                //StartCoroutine(SetValueEnemyColision());
+                StartCoroutine(SetValueEnemyColision());
 
             }
         }
 
     }
 
-    //IEnumerator SetValueEnemyColision()
-    //{
-    //    yield return new WaitForSeconds(damageCooldown);
-    //    isEnemyColision = false;
-    //}
+    IEnumerator SetValueEnemyColision()
+    {
+        yield return new WaitForSeconds(damageCooldown);
+        isEnemyColision = false;
+    }
 
 
 

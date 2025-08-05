@@ -13,6 +13,7 @@ public class Tank : NetworkBehaviour
     [SyncVar]
     [SerializeField] private bool isDeath;
     public bool IsDeath => isDeath;
+    [SerializeField] private bool isReady;public bool IsReady => isReady;
 
     private void Awake()
     {
@@ -77,7 +78,7 @@ public class Tank : NetworkBehaviour
 
     #endregion
     #region ClientRPC
-    [ClientRpc]
+    [TargetRpc]
     private void RpcInitUiHeal()
     {
         UiManager.Instance.ShowUiHeal(true);
@@ -116,6 +117,6 @@ public class Tank : NetworkBehaviour
     public void SetDeath(bool value)
     {
         isDeath = value;
-        RpcSetTankVisibility(false);
+        Destroy(gameObject,0.5f);
     }
 }

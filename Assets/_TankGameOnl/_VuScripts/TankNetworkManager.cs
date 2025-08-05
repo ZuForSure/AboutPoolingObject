@@ -15,8 +15,9 @@ public class TankNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-        GameObject player = Instantiate(playerPrefab);
-        NetworkServer.AddPlayerForConnection(conn, player);
+        base.OnServerAddPlayer(conn);
+        //GameObject player = Instantiate(playerPrefab);
+        //NetworkServer.AddPlayerForConnection(conn, player);
         this.currentPlayer++;
 
         if (canSpawnEnemy) return;
@@ -24,7 +25,7 @@ public class TankNetworkManager : NetworkManager
         enemySpawner.Spawning();
         canSpawnEnemy = true;
 
-        base.OnServerAddPlayer(conn);
+      
     }
 
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
