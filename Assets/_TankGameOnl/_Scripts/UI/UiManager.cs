@@ -42,8 +42,8 @@ public class UiManager : ZuSingleton<UiManager>
     public void ShowUiSlider(bool isShow)
     {
         SetupCanvasGroup(isShow, cvgPopupSlider);
-        SetTextLevel(LevelManager.instance.CurrentLevelIndex);
-        SetSliderExp(LevelManager.instance.CurrentExp, LevelManager.instance.CurrentExpRequired);
+        SetTextLevel(LevelManager.Instance.CurrentLevelIndex);
+        SetSliderExp(LevelManager.Instance.CurrentExp, LevelManager.Instance.CurrentExpRequired);
     }
 
     public void SetTextHeal(int heal)
@@ -79,7 +79,7 @@ public class UiManager : ZuSingleton<UiManager>
     }
     public void SetTextLevel(int currentLevel)
     {
-        textLevel.text = $"{currentLevel}";
+        textLevel.text = $"Level {currentLevel}";
     }    
     #endregion
 }

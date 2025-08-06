@@ -1,5 +1,7 @@
 using Lean.Pool;
 using Mirror;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class EnemyTakeDamage : NetworkBehaviour
 {
@@ -25,6 +27,15 @@ public class EnemyTakeDamage : NetworkBehaviour
         NetworkServer.UnSpawn(transform.parent.gameObject); 
         LeanPool.Despawn(transform.parent);
         LevelManager.Instance.AddExp(exp);
+        Debug.Log($"Sever : {isServer} - Client : {isClient}");
+        Debug.Log($"DeSpawnEnemey - Exp : {exp} - CurrentExp : {LevelManager.Instance.CurrentExp}");
     }
+    //[TargetRpc]
+    //private void TargetAddExp()
+    //{
+    //    Debug.Log($"Sever : {isServer} - Client : {isClient}");
+    //    Debug.Log($"TargetAddExp - Exp : {exp} - CurrentExp : {LevelManager.Instance.CurrentExp}");
+    //    LevelManager.Instance.AddExp(exp);
+    //}
 
 }
