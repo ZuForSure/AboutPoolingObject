@@ -34,7 +34,6 @@ public class TankNetworkManager : NetworkManager
     [SerializeField] protected int lev = 1;
     public int playerCount = 0;
     public int playerAlive= 0;
-    [SerializeField] protected bool canSpawnEnemy = false;
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
@@ -42,19 +41,24 @@ public class TankNetworkManager : NetworkManager
         this.playerAlive++;
         base.OnServerAddPlayer(conn);
 
-        if (canSpawnEnemy) return;
         enemySpawner.Spawning();
-        canSpawnEnemy = true;
     }
 
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
         this.playerCount--;
 
-        if(this.playerCount == 0)
+        if(conn.identity != null)
+        {
+            if (!conn.identity.GetComponent<Tank>().IsDeath)
+            {
+                this.playerAlive--;
+            }
+        }
+
+        if (this.playerCount <= 0)
         {
             enemySpawner.StopSpawning();
-            canSpawnEnemy = false;
             EnemySpawner.Instance.DespawnAllEnemies();
         }
 
@@ -67,7 +71,6 @@ public class TankNetworkManager : NetworkManager
 
         if (NetworkServer.connections.Count == 0) return;
         this.CheckTimer();
-        //this.CheckPlayerAlive();
     }
 
     [Server]
@@ -92,10 +95,4 @@ public class TankNetworkManager : NetworkManager
         this.IncreaseLevel();
         this.timer = 0f;    
     }
-
-    //protected void CheckPlayerAlive()
-    //{
-    //    if (this.playerAlive > 0) return;
-    //    EnemySpawner.Instance.StopSpawning();
-    //}
 }

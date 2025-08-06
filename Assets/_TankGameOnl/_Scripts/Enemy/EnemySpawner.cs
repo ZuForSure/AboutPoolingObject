@@ -9,11 +9,15 @@ public class EnemySpawner : ZuSingleton<EnemySpawner>
     [SerializeField] protected float delay = 2f;
     public float SpawnRate = 3f, maxRate = 3f;
     public Coroutine coroutine;
+    public bool CanSpawnEnemy = true;
     [SerializeField] protected GameObject enemey;
 
     [Server]
     public void Spawning()
     {
+        if (!CanSpawnEnemy) return;
+        CanSpawnEnemy = false;
+
         this.SpawnRate = maxRate;
         coroutine = StartCoroutine(this.Spawn());
     }
@@ -21,6 +25,8 @@ public class EnemySpawner : ZuSingleton<EnemySpawner>
     [Server]
     public void StopSpawning()
     {
+        CanSpawnEnemy = true;
+
         if (coroutine == null) return;
         StopCoroutine(coroutine);
         coroutine = null;
