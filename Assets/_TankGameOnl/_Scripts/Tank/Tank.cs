@@ -12,9 +12,10 @@ public class Tank : NetworkBehaviour
     [SyncVar]
     [SerializeField] private bool isDeath;
     public bool IsDeath => isDeath;
-    [SyncVar]
-    [SerializeField] private bool isReady;
-    public bool IsReady => isReady;
+
+    [SyncVar] private bool isReady = false;
+    public bool IsReady { get => isReady; set => isReady = value; }
+
 
     private void Awake()
     {
@@ -24,12 +25,13 @@ public class Tank : NetworkBehaviour
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
     }
 
-    private void Start()
+    public override void OnStopClient()
     {
-        UiManager.Instance.OnButtonReadyClick += () =>
+        base.OnStopClient();
+        if (isLocalPlayer)
         {
-            CmdSetReady(true);
-        };
+            UiManager.Instance.OnButtonReadyClick -= OnReadyButtonClicked;
+        }
     }
 
     public override void OnStartClient()
@@ -41,13 +43,13 @@ public class Tank : NetworkBehaviour
             Debug.Log("Not local player ? Skip CmdInitTankHeal");
             return;
         }
+        UiManager.Instance.OnButtonReadyClick += OnReadyButtonClicked;
 
         CmdInitTankHeal();
         CmdInitUiHeal();
-        UiManager.Instance.ShowUiButtonReady(true);
-       
+        CmdIsGamePlaying();
     }
-  
+
 
     private void Update()
     {
@@ -75,6 +77,7 @@ public class Tank : NetworkBehaviour
     }
 
     #region Funtion
+    [TargetRpc]
     private void TargetHideUI(bool isShow)
     {
         Debug.Log($"[TargetHideUI] isShow: {isShow}, isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
@@ -82,21 +85,34 @@ public class Tank : NetworkBehaviour
     }
     public void SetIsReady(bool isReady)
     {
-        this.isReady = isReady;  
-    }    
+        this.isReady = isReady;
+    }
     #endregion
 
     #region Commnad
+
+    public void OnReadyButtonClicked()
+    {
+        CmdSetReady(true);
+    }
 
     [Command]
     public void CmdSetReady(bool value)
     {
         Debug.Log($"[CmdSetReady] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+        Debug.Log("CmdReady: " + value);
         isReady = value;
         //TargetActionOnReadyGame();
 
-        TargetHideUI(TankGameManager.Instance.CheckAllPlayersReady());
+        bool isAllPleyrReady = TankGameManager.Instance.CheckAllPlayersReady();
 
+        TargetHideUI(isAllPleyrReady);
+
+
+        if (isAllPleyrReady)
+        {
+            RpcAllPlayerReady();
+        }
     }
 
     [Command]
@@ -109,6 +125,27 @@ public class Tank : NetworkBehaviour
     private void CmdInitUiHeal()
     {
         TargetInitUiHeal();
+    }
+
+    [Command]
+    private void CmdIsGamePlaying()
+    {
+        Debug.Log("Is playing: " + TankGameManager.Instance.IsPlaying);
+        TargetIsGamePlaying(TankGameManager.Instance.IsPlaying);
+    }
+
+
+    [ClientRpc]
+    void RpcAllPlayerReady()
+    {
+        UiManager.Instance.ShowUiButtonReady(false);
+    }
+
+
+    [TargetRpc]
+    private void TargetIsGamePlaying(bool isGameplaying)
+    {
+        UiManager.Instance.ShowUiButtonReady(!isGameplaying, false);
     }
     #endregion
 
@@ -124,7 +161,7 @@ public class Tank : NetworkBehaviour
     //{
     //    UiManager.Instance.OnReadyGame?.Invoke(isReady);
     //}
-  
+
     #endregion
 
     #region ClientRPC

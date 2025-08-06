@@ -719,6 +719,7 @@ MonoBehaviour:
   delay: 2
   SpawnRate: 3
   maxRate: 3
+  CanSpawnEnemy: 1
   enemey: {fileID: 9128934830541529343, guid: ce7aac092491f964fadd10e7cd16dc2c, type: 3}
 --- !u!114 &1134561597
 MonoBehaviour:

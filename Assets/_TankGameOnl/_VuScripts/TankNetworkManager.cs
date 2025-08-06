@@ -34,14 +34,20 @@ public class TankNetworkManager : NetworkManager
     [SerializeField] protected float timer = 0f;
     [SerializeField] protected int lev = 1;
     public int playerCount = 0;
-    public int playerAlive= 0;
+    public int playerAlive = 0;
 
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
+        base.OnServerAddPlayer(conn);
+
         this.playerCount++;
         this.playerAlive++;
-        base.OnServerAddPlayer(conn);
+
+        if (TankGameManager.Instance.IsPlaying)
+        {
+            conn.identity.GetComponent<Tank>().IsReady = true;
+        }
 
         //enemySpawner.Spawning();
     }
@@ -50,7 +56,7 @@ public class TankNetworkManager : NetworkManager
     {
         this.playerCount--;
 
-        if(conn.identity != null)
+        if (conn.identity != null)
         {
             if (!conn.identity.GetComponent<Tank>().IsDeath)
             {
@@ -95,6 +101,6 @@ public class TankNetworkManager : NetworkManager
 
         enemySpawner.SpawnRate -= .5f;
         this.IncreaseLevel();
-        this.timer = 0f;    
+        this.timer = 0f;
     }
 }

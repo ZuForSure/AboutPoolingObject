@@ -8,6 +8,8 @@ public class TankGameManager : ZuSingleton<TankGameManager>
 {
     [SerializeField] private int heal; public int Heal => heal;
 
+    public bool IsPlaying => !EnemySpawner.Instance.CanSpawnEnemy;
+
     public bool CheckAllPlayersReady()
     {
         bool allReady = true;
@@ -26,10 +28,12 @@ public class TankGameManager : ZuSingleton<TankGameManager>
                 count++;
             }
         }
+        Debug.Log($"Check all: allReady: {allReady}, count: {count}");
+
         if (allReady && count >= TankNetworkManager.Instance.playerCount)
         {
             Debug.Log("All players are ready. Starting the game...");
-            
+
             StartGame();
             // Here you can add logic to start the game, e.g., spawning enemies, etc.
         }

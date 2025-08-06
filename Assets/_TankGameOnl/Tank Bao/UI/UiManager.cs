@@ -32,11 +32,11 @@ public class UiManager : ZuSingleton<UiManager>
     {
         SetupCanvasGroup(isShow, cvgPopupHeal);
     }
-    public void ShowUiButtonReady(bool isShow)
+    public void ShowUiButtonReady(bool isShow, bool ownerReady = true)
     {
         Debug.Log($"Sever : {NetworkServer.active} - Client : {NetworkClient.active}");
         SetupCanvasGroup(isShow, cvgPopupButtonReady);
-        SetTextReady(!isShow);
+        SetTextReady(ownerReady);
        
     }
     public void ShowUiSlider(bool isShow)

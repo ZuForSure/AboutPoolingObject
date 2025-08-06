@@ -9,7 +9,7 @@ public class EnemySpawner : ZuSingleton<EnemySpawner>
     [SerializeField] protected float delay = 2f;
     public float SpawnRate = 3f, maxRate = 3f;
     public Coroutine coroutine;
-    private bool CanSpawnEnemy = true;
+    public bool CanSpawnEnemy = true;
     [SerializeField] protected GameObject enemey;
 
     [Server]
