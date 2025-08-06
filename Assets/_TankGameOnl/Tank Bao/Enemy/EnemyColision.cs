@@ -20,6 +20,7 @@ public class EnemyColision : MonoBehaviour
             }
             else
             {
+                if(isEnemyColision) return;
                 tank.TankHeal.ReduceHeal(1);
                 isEnemyColision = true;
                 StartCoroutine(SetValueEnemyColision());
@@ -32,8 +33,4 @@ public class EnemyColision : MonoBehaviour
         yield return new WaitForSeconds(damageCooldown);
         isEnemyColision = false;
     }
-
-
-
-
 }

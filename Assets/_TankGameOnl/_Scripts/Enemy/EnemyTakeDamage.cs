@@ -1,7 +1,8 @@
 using Lean.Pool;
 using Mirror;
+using UnityEngine;
 
-public class EnemyTakeDamage : NetworkBehaviour
+public class EnemyTakeDamage : MonoBehaviour
 {
     public int maxHp = 10;
     public int currentHP = 10;

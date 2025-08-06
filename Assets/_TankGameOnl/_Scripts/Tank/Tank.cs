@@ -156,7 +156,7 @@ public class Tank : NetworkBehaviour
         UiManager.Instance.ShowUiHeal(true);
         UiManager.Instance.SetTextHeal(TankGameManager.Instance.Heal);
     }
-    [TargetRpc]
+    //[TargetRpc]
     //private void TargetActionOnReadyGame()
     //{
     //    UiManager.Instance.OnReadyGame?.Invoke(isReady);
@@ -175,10 +175,14 @@ public class Tank : NetworkBehaviour
         healTank = value;
         // Hook sẽ tự gọi OnChangeTankHeal
     }
+
     [Server]
+
     public void SetDeath(bool value)
     {
         isDeath = value;
+
+        TankNetworkManager.Instance.Players.Remove(gameObject);
         Destroy(gameObject, 0.5f);
     }
     #endregion
