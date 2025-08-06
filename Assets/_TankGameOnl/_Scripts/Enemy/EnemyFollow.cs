@@ -27,19 +27,8 @@ public class EnemyFollow : NetworkBehaviour
 
     protected void FindClosestPlayer()
     {
-        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float minDist = Mathf.Infinity;
         Transform closest = null;
-
-        //foreach (GameObject player in players)
-        //{
-        //    float dist = Vector3.Distance(transform.position, player.transform.position);
-        //    if (dist < minDist)
-        //    {
-        //        minDist = dist;
-        //        closest = player.transform;
-        //    }
-        //}
         
         foreach (NetworkConnectionToClient conn in NetworkServer.connections.Values)
         {
@@ -70,7 +59,7 @@ public class EnemyFollow : NetworkBehaviour
         if (!isServer) return;
         if (player == null) return;
 
-        Vector3 direction = (player.transform.position - transform.parent.position).normalized;
-        transform.parent.position += direction * speed * Time.deltaTime;
+        Vector3 direction = (player.transform.position - transform.position).normalized;
+        transform.position += direction * speed * Time.deltaTime;
     }
 }
