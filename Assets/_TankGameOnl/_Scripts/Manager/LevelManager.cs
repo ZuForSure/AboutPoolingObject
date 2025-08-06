@@ -22,6 +22,7 @@ public class LevelManager : NetworkBehaviour
     [SyncVar(hook = nameof(OnExpChanged))]
     [SerializeField] private int currentExp = 0; 
     public int CurrentExp => currentExp;
+    [SyncVar]
     [SerializeField] private int currentExpRequired;
     public int CurrentExpRequired => currentExpRequired;
 
@@ -47,11 +48,11 @@ public class LevelManager : NetworkBehaviour
     private void CheckCurrentLever()
     {
         if(currentLevelIndex >= levels.Count) return;
-        if(currentExp >= levels[currentLevelIndex].expRequired)
+        if(currentExp >= levels[currentLevelIndex-1].expRequired)
         {
-            currentExp -= levels[currentLevelIndex ].expRequired;
+            currentExp -= levels[currentLevelIndex -1].expRequired;
             currentLevelIndex++;
-            currentExpRequired = levels[currentLevelIndex].expRequired;
+            currentExpRequired = levels[currentLevelIndex-1].expRequired;
             Debug.Log($"Level Up! New Level: {currentLevelIndex}");
             UiManager.Instance.SetTextLevel(currentLevelIndex);
         }
