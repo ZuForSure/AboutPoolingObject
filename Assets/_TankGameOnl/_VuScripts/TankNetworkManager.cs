@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class TankNetworkManager : NetworkManager
 {
+    #region Singleton
     protected static TankNetworkManager instance;
     public static TankNetworkManager Instance => instance;
 
@@ -25,7 +26,7 @@ public class TankNetworkManager : NetworkManager
 
         if (instance != this) Debug.LogError("Another instance of Singleton already exits");
     }
-
+    #endregion
 
     [Header("Tank Network Manager")]
     [SerializeField] protected EnemySpawner enemySpawner;
