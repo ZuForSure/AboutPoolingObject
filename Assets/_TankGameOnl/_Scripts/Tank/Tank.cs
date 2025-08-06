@@ -46,7 +46,7 @@ public class Tank : NetworkBehaviour
 
         CmdInitTankHeal();
         CmdInitUiHeal();
-        UiManager.Instance.ShowUiButton(true);
+        UiManager.Instance.ShowUiButtonReady(true);
        
     }
   
@@ -77,7 +77,7 @@ public class Tank : NetworkBehaviour
     }
 
     #region Funtion
-
+   
     #endregion
 
     #region Commnad
@@ -87,7 +87,8 @@ public class Tank : NetworkBehaviour
         Debug.Log($"[CmdSetReady] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
         isReady = value;
         //TargetActionOnReadyGame();
-        TankGameManager.Instance.CheckAllPlayersReady();
+
+        TargetHideUI(TankGameManager.Instance.CheckAllPlayersReady());
 
     }
     [Command]
@@ -114,6 +115,10 @@ public class Tank : NetworkBehaviour
     //{
     //    UiManager.Instance.OnReadyGame?.Invoke(isReady);
     //}
+    private void TargetHideUI(bool isShow)
+    {
+        UiManager.Instance.ShowUiButtonReady(!isShow);
+    }    
     #endregion
 
     #region ClientRPC

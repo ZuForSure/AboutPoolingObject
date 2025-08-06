@@ -31,7 +31,7 @@ public class UiManager : ZuSingleton<UiManager>
     {
         SetupCanvasGroup(isShow, cvgPopupHeal);
     }
-    public void ShowUiButton(bool isShow)
+    public void ShowUiButtonReady(bool isShow)
     {
         SetupCanvasGroup(isShow, cvgPopupButtonReady);
         SetTextReady(!isShow);
