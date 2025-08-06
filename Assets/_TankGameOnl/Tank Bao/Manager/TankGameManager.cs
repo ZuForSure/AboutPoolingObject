@@ -8,7 +8,7 @@ public class TankGameManager : ZuSingleton<TankGameManager>
 {
     [SerializeField] private int heal; public int Heal => heal;
 
-    public void CheckAllPlayersReady()
+    public bool CheckAllPlayersReady()
     {
         bool allReady = true;
         int count = 0;
@@ -29,7 +29,7 @@ public class TankGameManager : ZuSingleton<TankGameManager>
         if (allReady && count >= TankNetworkManager.Instance.playerCount)
         {
             Debug.Log("All players are ready. Starting the game...");
-            UiManager.instance.ShowUiButton(false);
+            
             StartGame();
             // Here you can add logic to start the game, e.g., spawning enemies, etc.
         }
@@ -37,6 +37,7 @@ public class TankGameManager : ZuSingleton<TankGameManager>
         {
             Debug.Log("Not all players are ready yet.");
         }
+        return allReady;
     }
     private void StartGame()
     {
