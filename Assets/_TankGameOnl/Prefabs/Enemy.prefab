@@ -96,6 +96,7 @@ MonoBehaviour:
   syncInterval: 0
   maxHp: 10
   currentHP: 10
+  exp: 5
 --- !u!114 &5674143129113143646
 MonoBehaviour:
   m_ObjectHideFlags: 0

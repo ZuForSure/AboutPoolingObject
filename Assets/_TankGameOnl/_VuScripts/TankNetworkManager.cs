@@ -35,6 +35,7 @@ public class TankNetworkManager : NetworkManager
     public int playerCount = 0;
     public int playerAlive= 0;
 
+
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         this.playerCount++;

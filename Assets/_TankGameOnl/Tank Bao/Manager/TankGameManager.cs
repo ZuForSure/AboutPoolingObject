@@ -4,13 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankGameManager : ZuSingleton<TankGameManager> 
+public class TankGameManager : ZuSingleton<TankGameManager>
 {
-    [SerializeField] private int heal; public int Heal=> heal;
+    [SerializeField] private int heal; public int Heal => heal;
 
     public void CheckAllPlayersReady()
     {
         bool allReady = true;
+        int count = 0;
         foreach (var conn in NetworkServer.connections.Values)
         {
             if (conn.identity == null) continue;
@@ -20,8 +21,12 @@ public class TankGameManager : ZuSingleton<TankGameManager>
                 allReady = false;
                 break;
             }
+            else
+            {
+                count++;
+            }
         }
-        if (allReady)
+        if (allReady && count >= TankNetworkManager.Instance.playerCount)
         {
             Debug.Log("All players are ready. Starting the game...");
             UiManager.instance.ShowUiButton(false);
@@ -39,5 +44,5 @@ public class TankGameManager : ZuSingleton<TankGameManager>
         Debug.Log("Game started!");
         //enemySpawner.Spawning();
     }
-    
+
 }

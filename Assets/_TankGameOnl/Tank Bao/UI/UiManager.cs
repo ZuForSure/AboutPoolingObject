@@ -4,30 +4,44 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UiManager : ZuSingleton<UiManager>
-{  
+{
+    [Header("Text Heal")]
     [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] private CanvasGroup popupHeal;
-    [SerializeField] private CanvasGroup popupButtonReady;
+    [SerializeField] private CanvasGroup cvgPopupHeal;
+   
+    [Header("Button Ready")]
+    [SerializeField] private CanvasGroup cvgPopupButtonReady;
     [SerializeField] private Button buttonStart;
+    [SerializeField] private bool buttonReadyValue; public bool ButtonReadyValue => buttonReadyValue;
     [SerializeField] private TextMeshProUGUI textReady;
-    private Action onReadyClick;
-    public Action<bool> OnReadyGame;
+    public Action OnButtonReadyClick;
+
+    [Header("Slider Exp")]
+    [SerializeField] private Slider sliderExp;
+    [SerializeField] private TextMeshProUGUI textLevel;
+    [SerializeField] private CanvasGroup cvgPopupSlider;
+
 
     private void Start()
     {
-        OnReadyGame += SetText;
+        buttonStart.onClick.AddListener(OnButtonReady);
     }
-    private void OnDestroy()
-    {
-        OnReadyGame -= SetText;
-    }
+
     public void ShowUiHeal(bool isShow)
     {
-        SetupCanvasGroup(isShow, popupHeal);
+        SetupCanvasGroup(isShow, cvgPopupHeal);
     }
     public void ShowUiButton(bool isShow)
     {
-        SetupCanvasGroup(isShow, popupButtonReady);
+        SetupCanvasGroup(isShow, cvgPopupButtonReady);
+        SetTextReady(!isShow);
+       
+    }
+    public void ShowUiSlider(bool isShow)
+    {
+        SetupCanvasGroup(isShow, cvgPopupSlider);
+        SetTextLevel(LevelManager.instance.CurrentLevelIndex);
+        SetSliderExp(LevelManager.instance.CurrentExp, LevelManager.instance.CurrentExpRequired);
     }
 
     public void SetTextHeal(int heal)
@@ -40,18 +54,30 @@ public class UiManager : ZuSingleton<UiManager>
         canvasGroup.interactable = isShow;
         canvasGroup.blocksRaycasts = isShow;
     }    
-    private void SetText(bool isReady)
+    public void SetTextReady(bool isReady)
     {
         textReady.text = isReady ? "Ready" : "Not Ready";
-        buttonStart.interactable = isReady;
+        buttonStart.interactable = !isReady;
     }
-    //public void RegisterReadyButton(Action callback)
-    //{
-    //    onReadyClick = callback;
-    //    buttonStart.onClick.RemoveAllListeners(); // Clear listener cũ (nếu có)
-    //    buttonStart.onClick.AddListener(() =>
-    //    {
-    //        onReadyClick?.Invoke();
-    //    });
-    //}
+    #region Button Ready
+    public void OnButtonReady()
+    {
+        buttonReadyValue = true;
+        SetTextReady(buttonReadyValue);
+        OnButtonReadyClick?.Invoke();
+    }
+    #endregion
+
+    #region Slider Exp
+    public void SetSliderExp(int currentExp, int currentExpRequired )
+    {
+        sliderExp.value = currentExp;
+        sliderExp.maxValue = currentExpRequired;
+
+    }
+    public void SetTextLevel(int currentLevel)
+    {
+        textLevel.text = $"{currentLevel}";
+    }    
+    #endregion
 }

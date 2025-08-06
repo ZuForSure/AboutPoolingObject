@@ -26,7 +26,13 @@ public class Tank : NetworkBehaviour
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
     }
 
-
+    private void Start()
+    {
+        UiManager.Instance.OnButtonReadyClick += () =>
+        {
+            CmdSetReady(true);
+        };
+    }
 
     public override void OnStartClient()
     {
@@ -41,6 +47,7 @@ public class Tank : NetworkBehaviour
         CmdInitTankHeal();
         CmdInitUiHeal();
         UiManager.Instance.ShowUiButton(true);
+       
     }
   
 
@@ -77,12 +84,10 @@ public class Tank : NetworkBehaviour
     [Command]
     public void CmdSetReady(bool value)
     {
-
         Debug.Log($"[CmdSetReady] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
         isReady = value;
-        TargetActionOnReadyGame();
+        //TargetActionOnReadyGame();
         TankGameManager.Instance.CheckAllPlayersReady();
-
 
     }
     [Command]
@@ -105,10 +110,10 @@ public class Tank : NetworkBehaviour
         UiManager.Instance.SetTextHeal(TankGameManager.Instance.Heal);
     }
     [TargetRpc]
-    private void TargetActionOnReadyGame()
-    {
-        UiManager.Instance.OnReadyGame?.Invoke(isReady);
-    }
+    //private void TargetActionOnReadyGame()
+    //{
+    //    UiManager.Instance.OnReadyGame?.Invoke(isReady);
+    //}
     #endregion
 
     #region ClientRPC
