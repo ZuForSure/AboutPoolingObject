@@ -42,7 +42,7 @@ public class TankNetworkManager : NetworkManager
         this.playerAlive++;
         base.OnServerAddPlayer(conn);
 
-        enemySpawner.Spawning();
+        //enemySpawner.Spawning();
     }
 
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
