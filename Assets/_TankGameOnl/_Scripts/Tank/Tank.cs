@@ -1,6 +1,4 @@
 using Mirror;
-using Mirror.BouncyCastle.X509;
-using Mirror.Examples.Tanks;
 using UnityEngine;
 
 public class Tank : NetworkBehaviour
@@ -77,10 +75,19 @@ public class Tank : NetworkBehaviour
     }
 
     #region Funtion
-   
+    private void TargetHideUI(bool isShow)
+    {
+        Debug.Log($"[TargetHideUI] isShow: {isShow}, isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+        UiManager.Instance.ShowUiButtonReady(!isShow);
+    }
+    public void SetIsReady(bool isReady)
+    {
+        this.isReady = isReady;  
+    }    
     #endregion
 
     #region Commnad
+
     [Command]
     public void CmdSetReady(bool value)
     {
@@ -91,11 +98,13 @@ public class Tank : NetworkBehaviour
         TargetHideUI(TankGameManager.Instance.CheckAllPlayersReady());
 
     }
+
     [Command]
     private void CmdInitTankHeal()
     {
         SetHealTank(TankGameManager.Instance.Heal);
     }
+
     [Command]
     private void CmdInitUiHeal()
     {
@@ -115,10 +124,7 @@ public class Tank : NetworkBehaviour
     //{
     //    UiManager.Instance.OnReadyGame?.Invoke(isReady);
     //}
-    private void TargetHideUI(bool isShow)
-    {
-        UiManager.Instance.ShowUiButtonReady(!isShow);
-    }    
+  
     #endregion
 
     #region ClientRPC

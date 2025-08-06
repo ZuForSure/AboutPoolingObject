@@ -29,6 +29,7 @@ public class TankHeal
         {
             newHeal = 0;
             tank.SetDeath(true);
+            tank.SetIsReady(false); // Đặt trạng thái không sẵn sàng khi chết
 
             TankNetworkManager.Instance.playerAlive--;
             if(TankNetworkManager.Instance.playerAlive <= 0)
@@ -38,6 +39,7 @@ public class TankHeal
         }
 
         tank.SetHealTank(newHeal);
+      
     }
 
 }
