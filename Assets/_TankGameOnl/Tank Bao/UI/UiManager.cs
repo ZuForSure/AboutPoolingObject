@@ -1,3 +1,4 @@
+using Mirror;
 using System;
 using TMPro;
 using UnityEngine;
@@ -33,6 +34,7 @@ public class UiManager : ZuSingleton<UiManager>
     }
     public void ShowUiButtonReady(bool isShow)
     {
+        Debug.Log($"Sever : {NetworkServer.active} - Client : {NetworkClient.active}");
         SetupCanvasGroup(isShow, cvgPopupButtonReady);
         SetTextReady(!isShow);
        

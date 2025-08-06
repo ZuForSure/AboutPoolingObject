@@ -43,7 +43,7 @@ public class TankGameManager : ZuSingleton<TankGameManager>
     {
         // Logic to start the game, e.g., spawning enemies, initializing game state, etc.
         Debug.Log("Game started!");
-        //enemySpawner.Spawning();
+        EnemySpawner.instance.Spawning();
     }
 
 }

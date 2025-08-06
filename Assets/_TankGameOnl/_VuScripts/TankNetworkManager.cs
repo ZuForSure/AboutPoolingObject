@@ -44,7 +44,7 @@ public class TankNetworkManager : NetworkManager
         base.OnServerAddPlayer(conn);
 
         if (canSpawnEnemy) return;
-        enemySpawner.Spawning();
+        //enemySpawner.Spawning();
         canSpawnEnemy = true;
     }
 
