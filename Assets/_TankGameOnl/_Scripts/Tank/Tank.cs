@@ -8,12 +8,7 @@ public class Tank : NetworkBehaviour
     [SerializeField] private TankMove tankMove;
     [SyncVar(hook = nameof(OnChangeTankHeal))]
     [SerializeField] private int healTank;
-    public int HealTank
-    {
-        get => healTank;
-        set => healTank = value;
-    } 
-        
+    public int HealTank => healTank;
     [SyncVar]
     [SerializeField] private bool isDeath;
     public bool IsDeath => isDeath;
@@ -54,7 +49,8 @@ public class Tank : NetworkBehaviour
         CmdInitUiHeal();
         CmdIsGamePlaying();
     }
-    
+
+
     private void Update()
     {
         if (!isLocalPlayer) return;
@@ -74,7 +70,7 @@ public class Tank : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            Debug.Log($"OnChangeTankHeal - HealTank : {healTank}");
+            //Debug.Log($"healvalue {healTank}");
             UiManager.Instance.SetTextHeal(newValue);
         }
 
@@ -116,18 +112,14 @@ public class Tank : NetworkBehaviour
         if (isAllPleyrReady)
         {
             RpcAllPlayerReady();
-            TargetShowSliderExp();
         }
     }
 
     [Command]
-    public void CmdInitTankHeal()
+    private void CmdInitTankHeal()
     {
-        
         Debug.Log($"CmdInitTankHeal - Sever : {isServer} - Client : {isClient}");
-        //healTank = TankGameManager.Instance.Heal;
         SetHealTank(TankGameManager.Instance.Heal);
-        //Debug.Log($"CmdInitTankHeal - healTank : {healTank}");
     }
 
     [Command]
@@ -165,12 +157,11 @@ public class Tank : NetworkBehaviour
         UiManager.Instance.ShowUiHeal(true);
         UiManager.Instance.SetTextHeal(TankGameManager.Instance.Heal);
     }
-    [TargetRpc]
-    private void TargetShowSliderExp()
-    {
-        Debug.Log($"TargetShowSliderExp - Sever : {isServer} - Client : {isClient}");
-        UiManager.Instance.ShowUiSlider(true);
-    }    
+    //[TargetRpc]
+    //private void TargetActionOnReadyGame()
+    //{
+    //    UiManager.Instance.OnReadyGame?.Invoke(isReady);
+    //}
 
     #endregion
 
@@ -183,15 +174,18 @@ public class Tank : NetworkBehaviour
     public void SetHealTank(int value)
     {
         Debug.Log($"SetHealTank - Sever : {isServer} - Client : {isClient}");
-        healTank = value;
         Debug.Log($"SetHealTank - healTank : {healTank} - Value : {value}");
-
+        healTank = value;
         // Hook sẽ tự gọi OnChangeTankHeal
     }
+
     [Server]
+
     public void SetDeath(bool value)
     {
         isDeath = value;
+
+        TankNetworkManager.Instance.Players.Remove(gameObject);
         Destroy(gameObject, 0.5f);
     }
     #endregion

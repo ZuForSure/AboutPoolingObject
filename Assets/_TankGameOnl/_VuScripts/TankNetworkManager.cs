@@ -34,15 +34,14 @@ public class TankNetworkManager : NetworkManager
     [SerializeField] protected float timer = 0f;
     [SerializeField] protected int lev = 1;
     public int playerCount = 0;
-    public int playerAlive = 0;
-
+    public List<GameObject> Players;
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         base.OnServerAddPlayer(conn);
 
-        this.playerCount++;
-        this.playerAlive++;
+        playerCount++;
+        this.Players.Add(conn.identity.gameObject);
 
         if (TankGameManager.Instance.IsPlaying)
         {
@@ -58,13 +57,13 @@ public class TankNetworkManager : NetworkManager
 
         if (conn.identity != null)
         {
-            if (!conn.identity.GetComponent<Tank>().IsDeath)
+            if (!conn.identity.gameObject.GetComponent<Tank>().IsDeath)
             {
-                this.playerAlive--;
+                this.Players.Remove(conn.identity.gameObject);
             }
         }
 
-        if (this.playerCount <= 0)
+        if (Players.Count <= 0 && playerCount <= 0)
         {
             enemySpawner.StopSpawning();
             EnemySpawner.Instance.DespawnAllEnemies();

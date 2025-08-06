@@ -55,4 +55,12 @@ public class EnemySpawner : ZuSingleton<EnemySpawner>
             LeanPool.Despawn(enemy);
         }
     }
+
+    public void CheckCanContinueSpawn()
+    {
+        if(TankNetworkManager.Instance.Players.Count <= 0)
+        {
+            this.StopSpawning();
+        }
+    }
 }

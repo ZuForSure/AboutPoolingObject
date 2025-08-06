@@ -14,15 +14,10 @@ public class TankMove
     [SyncVar] private Vector2 moveDirection;
     //private InputManager input;
 
-    private void Awake()
-    {
-        
-    }
     public void Init(Rigidbody2D rb2d)
     {
         this.tankRb = rb2d;
     }
-
 
     public void GetMoveDirection()
     {

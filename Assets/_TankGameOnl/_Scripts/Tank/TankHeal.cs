@@ -31,11 +31,7 @@ public class TankHeal
             tank.SetDeath(true);
             tank.SetIsReady(false); // Đặt trạng thái không sẵn sàng khi chết
 
-            TankNetworkManager.Instance.playerAlive--;
-            if(TankNetworkManager.Instance.playerAlive <= 0)
-            {
-                EnemySpawner.Instance.StopSpawning();
-            }
+            EnemySpawner.Instance.CheckCanContinueSpawn();
         }
 
         tank.SetHealTank(newHeal);

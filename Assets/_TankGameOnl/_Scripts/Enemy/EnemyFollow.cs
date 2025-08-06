@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemtFollow : NetworkBehaviour
+public class EnemyFollow : NetworkBehaviour
 {
     public GameObject player;     
     public float speed = 4f;     
@@ -14,10 +14,11 @@ public class EnemtFollow : NetworkBehaviour
     {
         base.OnStartServer();
 
-        if (!isServer) return;
+        if (!NetworkServer.active) return;
         InvokeRepeating(nameof(FindClosestPlayer), 0f, checkInterval);
     }
 
+    [ServerCallback]
     public override void OnStopServer()
     {
         base.OnStopServer();
@@ -26,17 +27,35 @@ public class EnemtFollow : NetworkBehaviour
 
     protected void FindClosestPlayer()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float minDist = Mathf.Infinity;
         Transform closest = null;
 
-        foreach (GameObject player in players)
+        //foreach (GameObject player in players)
+        //{
+        //    float dist = Vector3.Distance(transform.position, player.transform.position);
+        //    if (dist < minDist)
+        //    {
+        //        minDist = dist;
+        //        closest = player.transform;
+        //    }
+        //}
+        
+        foreach (NetworkConnectionToClient conn in NetworkServer.connections.Values)
         {
-            float dist = Vector3.Distance(transform.position, player.transform.position);
+            if(conn.identity == null) continue;
+            if (!conn.identity.gameObject.activeSelf) 
+            {
+                player = null;
+                continue;
+            }
+
+            GameObject playerObj = conn.identity.gameObject;
+            float dist = Vector3.Distance(transform.position, playerObj.transform.position);
             if (dist < minDist)
             {
                 minDist = dist;
-                closest = player.transform;
+                closest = playerObj.transform;
             }
         }
 
