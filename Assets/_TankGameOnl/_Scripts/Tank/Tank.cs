@@ -118,6 +118,7 @@ public class Tank : NetworkBehaviour
     [Command]
     private void CmdInitTankHeal()
     {
+        Debug.Log($"CmdInitTankHeal - Sever : {isServer} - Client : {isClient}");
         SetHealTank(TankGameManager.Instance.Heal);
     }
 
@@ -172,6 +173,8 @@ public class Tank : NetworkBehaviour
     [Server]
     public void SetHealTank(int value)
     {
+        Debug.Log($"SetHealTank - Sever : {isServer} - Client : {isClient}");
+        Debug.Log($"SetHealTank - healTank : {healTank} - Value : {value}");
         healTank = value;
         // Hook sẽ tự gọi OnChangeTankHeal
     }
