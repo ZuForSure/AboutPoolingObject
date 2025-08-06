@@ -36,6 +36,7 @@ public class TankNetworkManager : NetworkManager
     public int playerAlive= 0;
     [SerializeField] protected bool canSpawnEnemy = false;
 
+
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         this.playerCount++;

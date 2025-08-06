@@ -20,19 +20,11 @@ public class EnemyColision : MonoBehaviour
             }
             else
             {
-                //if (!isenemycolision)
-                //{
-
-                //}
-
-                    Debug.Log("ád");
                 tank.TankHeal.ReduceHeal(1);
                 isEnemyColision = true;
                 StartCoroutine(SetValueEnemyColision());
-
             }
         }
-
     }
 
     IEnumerator SetValueEnemyColision()

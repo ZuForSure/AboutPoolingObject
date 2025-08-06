@@ -5,6 +5,7 @@ public class EnemyTakeDamage : NetworkBehaviour
 {
     public int maxHp = 10;
     public int currentHP = 10;
+    public int exp;
 
     private void OnEnable()
     {
@@ -23,5 +24,7 @@ public class EnemyTakeDamage : NetworkBehaviour
     {
         NetworkServer.UnSpawn(transform.parent.gameObject); 
         LeanPool.Despawn(transform.parent);
+        LevelManager.Instance.AddExp(exp);
     }
+
 }
