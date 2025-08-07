@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using UnityEngine;
 
 public class Tank : NetworkBehaviour
@@ -27,7 +28,11 @@ public class Tank : NetworkBehaviour
         lookAtMouse = GetComponentInChildren<LookAtMouse>();
         tankMove.Init(GetComponent<Rigidbody2D>(),transform);
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+        NetworkClient.RegisterHandler<SeverSendMessage>(OnServerSendMessage);
     }
+
+   
+
     void Start()
     {
         // Chỉ client mới cần update UI khi inventory thay đổi
@@ -35,6 +40,7 @@ public class Tank : NetworkBehaviour
         {
             inventory.Callback += OnInventoryChanged;
         }
+        NetworkClient.Send(new ClientRequestSever());
     }
 
     public override void OnStopClient()
@@ -272,6 +278,12 @@ public class Tank : NetworkBehaviour
 
     #endregion
 
-
+    #region Message 
+  
+    private void OnServerSendMessage(SeverSendMessage message)
+    {
+        Debug.Log($"[OnServerSendMessage] severTime: {message.severTime}");
+    }
+    #endregion
 
 }
