@@ -1,5 +1,6 @@
 using Lean.Pool;
 using Mirror;
+using Mirror.BouncyCastle.Security;
 using UnityEngine;
 
 public class EnemyTakeDamage : MonoBehaviour
@@ -15,7 +16,11 @@ public class EnemyTakeDamage : MonoBehaviour
 
     public virtual void DeductHP(int amount)
     {
-        if (this.currentHP == 0) this.DeSpawnEnemey();
+        if (this.currentHP == 0)
+        {
+            this.DeSpawnEnemey();
+            DropItem();
+        }
 
         this.currentHP -= amount;
     }
@@ -23,9 +28,64 @@ public class EnemyTakeDamage : MonoBehaviour
     [Server]
     protected virtual void DeSpawnEnemey()
     {
-        NetworkServer.UnSpawn(transform.parent.gameObject); 
+        NetworkServer.UnSpawn(transform.parent.gameObject);
         LeanPool.Despawn(transform.parent);
         LevelManager.Instance.AddExp(exp);
     }
+    [Server]
+    private void DropItem()
+    {
+        Debug.Log($"DropItem - Sever : {NetworkServer.active} - Client : {NetworkClient.active}");
+        int randomDropItem = Random.Range(0, 100);
+        Debug.Log($"randomDropItem : {randomDropItem}");
+        if (randomDropItem <= 90)
+        {
+            int randomItem = Random.Range(0, 100);
+            Debug.Log($"randomItem : {randomItem}");
+            if (randomItem <= 70)
+            {
+                // Spawn Small Item
+                Debug.Log("Spawn Small Item");
+                InitItem(0);
+            }
+            else if (randomItem > 70 && randomItem <= 90)
+            {
+                // Spawn Medium Item
+                Debug.Log("Spawn Medium Item");
+                InitItem(1);
+            }
+            else
+            {
+                // Spawn Large Item
+                Debug.Log("Spawn Large Item");
+                InitItem(2);
+            }
+        }
+    }
+    [Server]
+    private void InitItem(int itemIndex)
+    {
+        switch (itemIndex)
+        {
+            case 0:
+                GameObject smallPotion = Instantiate(TankGameManager.Instance.PotionSmallPref, transform.position, Quaternion.identity);
+                NetworkServer.Spawn(smallPotion);
+                break;
+            case 1:
+                GameObject mediumPotion = Instantiate(TankGameManager.Instance.PotionMediumPref,   transform.position, Quaternion.identity);
+                NetworkServer.Spawn(mediumPotion);
+                break;
+            case 2:
+                GameObject largePotion = Instantiate(TankGameManager.Instance.PotionLargePref, transform.position, Quaternion.identity);
+                NetworkServer.Spawn(largePotion);
+                break;
+            default:
+                Debug.LogError("Invalid item index");
+                break;
+        }
+
+    }
+
+
 
 }

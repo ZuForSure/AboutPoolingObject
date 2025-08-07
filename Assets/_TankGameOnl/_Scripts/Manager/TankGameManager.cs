@@ -10,6 +10,11 @@ public class TankGameManager : ZuSingleton<TankGameManager>
 
     public bool IsPlaying => !EnemySpawner.Instance.CanSpawnEnemy;
 
+    [SerializeField] private GameObject potionSmallPref; public GameObject PotionSmallPref => potionSmallPref;
+    [SerializeField] private GameObject potionMediumPref; public GameObject PotionMediumPref => potionMediumPref;
+    [SerializeField] private GameObject potionLargePref; public GameObject PotionLargePref => potionLargePref;
+   
+
     public bool CheckAllPlayersReady()
     {
         bool allReady = true;
@@ -50,4 +55,5 @@ public class TankGameManager : ZuSingleton<TankGameManager>
 
         EnemySpawner.instance.Spawning();
     }
+    
 }

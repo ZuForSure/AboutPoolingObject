@@ -22,6 +22,9 @@ public class UiManager : ZuSingleton<UiManager>
     [SerializeField] private TextMeshProUGUI textLevel;
     [SerializeField] private CanvasGroup cvgPopupSlider;
 
+    [Header("IventorySlot")]
+     public InventorySlot inventorySlot;
+
 
     private void Start()
     {
