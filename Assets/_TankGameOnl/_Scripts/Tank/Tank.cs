@@ -5,7 +5,7 @@ public class Tank : NetworkBehaviour
 {
     [SerializeField] private TankHeal tankHeal; public TankHeal TankHeal => tankHeal;
     [SerializeField] private LookAtMouse lookAtMouse;
-    [SerializeField] private TankMove tankMove;
+    [SerializeField] private BoatMove tankMove;
     [SyncVar(hook = nameof(OnChangeTankHeal))]
     [SerializeField] private int healTank;
     public int HealTank => healTank;
@@ -55,7 +55,7 @@ public class Tank : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
         if (isDeath) return;
-        tankMove.GetMoveDirection();
+        tankMove.GetInputMoveAndRotate();
         lookAtMouse.AimTarget(lookAtMouse.GetTarget());
 
     }
