@@ -669,11 +669,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c519791df3501e549bbc338ab15e0389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 9128934830541529343, guid: ce7aac092491f964fadd10e7cd16dc2c, type: 3}
   delay: 2
+  CanSpawnEnemy: 1
   SpawnRate: 5
   MaxRate: 5
-  CanSpawnEnemy: 1
-  enemey: {fileID: 9128934830541529343, guid: ce7aac092491f964fadd10e7cd16dc2c, type: 3}
+  EnemyPerRound: 4
 --- !u!1 &1149828892
 GameObject:
   m_ObjectHideFlags: 0
