@@ -16,8 +16,8 @@ public class Tank : NetworkBehaviour
     [SyncVar] private bool isReady = false;
     public bool IsReady { get => isReady; set => isReady = value; }
 
-    public class SyncListInt : SyncList<int> { }
-    public SyncListInt inventory = new();
+    //public class SyncListInt : SyncList<int> { }
+    public SyncList<int> inventory = new();
     public int maxSlots = 3;
 
 
