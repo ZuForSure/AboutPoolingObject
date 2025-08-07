@@ -26,12 +26,18 @@ public class Tank : NetworkBehaviour
     {
         tankHeal.Init(this);
         lookAtMouse = GetComponentInChildren<LookAtMouse>();
-        tankMove.Init(GetComponent<Rigidbody2D>(),transform);
+        tankMove.Init(GetComponent<Rigidbody2D>(), transform);
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+       
         NetworkClient.RegisterHandler<SeverSendMessage>(OnServerSendMessage);
     }
+    private void OnDestroy()
+    {
+        NetworkClient.UnregisterHandler<SeverSendMessage>();
+    }
 
-   
+
+
 
     void Start()
     {
@@ -49,7 +55,12 @@ public class Tank : NetworkBehaviour
         if (isLocalPlayer)
         {
             UiManager.Instance.OnButtonReadyClick -= OnReadyButtonClicked;
+            UiManager.Instance.inventorySlot.ShowInventory(false);
+            TargetRemoveAllItem();
+
         }
+
+       
     }
 
     public override void OnStartClient()
@@ -61,11 +72,19 @@ public class Tank : NetworkBehaviour
             Debug.Log("Not local player ? Skip CmdInitTankHeal");
             return;
         }
+
         UiManager.Instance.OnButtonReadyClick += OnReadyButtonClicked;
 
         CmdInitTankHeal();
         CmdInitUiHeal();
         CmdIsGamePlaying();
+        UiManager.Instance.inventorySlot.ShowInventory(true);
+
+    }
+    public override void OnStopServer()
+    {
+        base.OnStopServer();
+        RemoveAllItem();
     }
     private void Update()
     {
@@ -95,14 +114,14 @@ public class Tank : NetworkBehaviour
         if (!isLocalPlayer) return;
         if (isDeath) return;
         tankMove.RbMove();
-        
+
 
     }
 
-   
+
 
     #region Funtion
-   
+
     public void SetIsReady(bool isReady)
     {
         this.isReady = isReady;
@@ -127,7 +146,7 @@ public class Tank : NetworkBehaviour
 
         // TODO: Áp dụng hiệu ứng của itemID cho player
         Debug.Log($"Server: Player dùng item {itemID}");
-        switch(itemID)
+        switch (itemID)
         {
             case 0:
                 healTank += 2; // Giả sử itemID 0 là item nhỏ, tăng 2 máu
@@ -185,7 +204,10 @@ public class Tank : NetworkBehaviour
         Debug.Log("Is playing: " + TankGameManager.Instance.IsPlaying);
         TargetIsGamePlaying(TankGameManager.Instance.IsPlaying);
     }
+
    
+   
+
     #endregion
 
     #region TargetRPC
@@ -208,6 +230,13 @@ public class Tank : NetworkBehaviour
     {
         Debug.Log($"[TargetHideUI] isShow: {isShow}, isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
         UiManager.Instance.ShowUiButtonReady(!isShow);
+    }
+    //[TargetRpc]
+    private void TargetRemoveAllItem()
+    {
+        Debug.Log($"[TargetRemoveAllItem] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+        Debug.Log("All items removed from inventory.");
+        UiManager.Instance.inventorySlot.ResetUiItem();
     }
 
     #endregion
@@ -245,13 +274,25 @@ public class Tank : NetworkBehaviour
         Destroy(gameObject, 0.5f);
     }
     [Server]
-    public bool AddItem(NetworkConnection conn ,int itemID)
+    public bool AddItem(NetworkConnection conn, int itemID)
     {
         if (inventory.Count >= maxSlots)
             return false;
 
         inventory.Add(itemID); // Thêm item
         return true;
+    }
+    [Server]
+    private void RemoveAllItem()
+    {
+        inventory.Clear(); // xử lý trên server
+
+        //if (connectionToClient != null)
+        //{
+        //    TargetRemoveAllItem(); // Gửi RPC về client để cập nhật UI
+        //}
+
+        Debug.Log("All items removed from inventory (server-side).");
     }
     #endregion
 
@@ -279,7 +320,7 @@ public class Tank : NetworkBehaviour
     #endregion
 
     #region Message 
-  
+
     private void OnServerSendMessage(SeverSendMessage message)
     {
         Debug.Log($"[OnServerSendMessage] severTime: {message.severTime}");
