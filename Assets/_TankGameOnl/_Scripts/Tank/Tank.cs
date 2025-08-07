@@ -25,7 +25,7 @@ public class Tank : NetworkBehaviour
     {
         tankHeal.Init(this);
         lookAtMouse = GetComponentInChildren<LookAtMouse>();
-        tankMove.Init(GetComponent<Rigidbody2D>());
+        tankMove.Init(GetComponent<Rigidbody2D>(),transform);
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
     }
     void Start()

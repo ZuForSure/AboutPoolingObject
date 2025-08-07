@@ -125,12 +125,14 @@ MonoBehaviour:
   lookAtMouse: {fileID: 0}
   tankMove:
     boatRB: {fileID: 0}
+    transform: {fileID: 0}
     moveSpeed: 7
     rotateSpeed: 50
     horizontalInput: 0
     verticalInput: 0
   healTank: 0
   isDeath: 0
+  maxSlots: 3
 --- !u!50 &7194425041418370387
 Rigidbody2D:
   serializedVersion: 4
@@ -157,7 +159,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &-6109398636063446172
 MonoBehaviour:
   m_ObjectHideFlags: 0
