@@ -41,7 +41,7 @@ public class TankNetworkManager : NetworkManager
 
     [Header("Tank Network Manager")]
     [SerializeField] protected EnemySpawner enemySpawner;
-    [SerializeField] protected float timePerRound = 10f;
+    [SerializeField] protected float timePerRound = 15f;
     [SerializeField] protected float timer = 0f;
     [SerializeField] protected int lev = 1;
     public int playerCount = 0;
@@ -58,8 +58,6 @@ public class TankNetworkManager : NetworkManager
         {
             conn.identity.GetComponent<Tank>().IsReady = true;
         }
-
-        //enemySpawner.Spawning();
     }
 
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
@@ -89,7 +87,7 @@ public class TankNetworkManager : NetworkManager
     {
         base.Update();
 
-        if (NetworkServer.connections.Count == 0) return;
+        if (NetworkServer.connections.Count == 0 || this.playerCount == 0) return;
         this.CheckTimer();
     }
 

@@ -1,3 +1,4 @@
+using Lean.Pool;
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,5 +33,8 @@ public class EnemyColision : MonoBehaviour
     {
         yield return new WaitForSeconds(damageCooldown);
         isEnemyColision = false;
+
+        NetworkServer.UnSpawn(transform.parent.gameObject);
+        LeanPool.Despawn(transform.parent.gameObject);
     }
 }

@@ -6,11 +6,13 @@ using UnityEngine;
 
 public class EnemySpawner : ZuSingleton<EnemySpawner>
 {
+    [SerializeField] protected GameObject enemy;
     [SerializeField] protected float delay = 2f;
-    public float SpawnRate = 3f, maxRate = 3f;
-    public Coroutine coroutine;
+    private Coroutine coroutine;
+
     public bool CanSpawnEnemy = true;
-    [SerializeField] protected GameObject enemey;
+    public float SpawnRate = 5f, MaxRate = 5f;
+    public int EnemyPerRound = 4;
 
     [Server]
     public void Spawning()
@@ -18,7 +20,7 @@ public class EnemySpawner : ZuSingleton<EnemySpawner>
         if (!CanSpawnEnemy) return;
         CanSpawnEnemy = false;
 
-        this.SpawnRate = maxRate;
+        this.SpawnRate = MaxRate;
         coroutine = StartCoroutine(this.Spawn());
     }
 
@@ -38,8 +40,8 @@ public class EnemySpawner : ZuSingleton<EnemySpawner>
         {
             Transform point = Point.Instance.GetRandomPoint();
 
-            GameObject enemy = LeanPool.Spawn(enemey, point.position, Quaternion.identity);
-            NetworkServer.Spawn(enemy);
+            GameObject newEnemy = LeanPool.Spawn(this.enemy, point.position, Quaternion.identity);
+            NetworkServer.Spawn(newEnemy);
 
             yield return new WaitForSeconds(this.SpawnRate);
         }

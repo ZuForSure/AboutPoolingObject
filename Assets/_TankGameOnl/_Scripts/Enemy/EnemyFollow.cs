@@ -54,7 +54,9 @@ public class EnemyFollow : NetworkBehaviour
         }
     }
 
-    void Update()
+    void Update() => this.FollowPlayer();
+
+    void FollowPlayer()
     {
         if (!isServer) return;
         if (player == null) return;
