@@ -112,6 +112,7 @@ public class Tank : NetworkBehaviour
         if (isAllPleyrReady)
         {
             RpcAllPlayerReady();
+            RpcShowSliderExp();
         }
     }
 
@@ -140,6 +141,11 @@ public class Tank : NetworkBehaviour
     void RpcAllPlayerReady()
     {
         UiManager.Instance.ShowUiButtonReady(false);
+    }
+    [ClientRpc]
+    void RpcShowSliderExp()
+    {
+        UiManager.Instance.ShowUiSlider(true);
     }
 
 
@@ -180,7 +186,6 @@ public class Tank : NetworkBehaviour
     }
 
     [Server]
-
     public void SetDeath(bool value)
     {
         isDeath = value;
