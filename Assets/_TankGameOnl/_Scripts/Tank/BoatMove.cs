@@ -13,7 +13,7 @@ public class BoatMove
     [SerializeField] protected Rigidbody2D boatRB;
     [SerializeField] private Transform transform;
     [SerializeField] protected float moveSpeed = 7f;
-    [SerializeField] protected float rotateSpeed = 50f;
+    [SerializeField] protected float rotateSpeed = 100f;
     [SerializeField] protected float horizontalInput;
     [SerializeField] protected float verticalInput;
 

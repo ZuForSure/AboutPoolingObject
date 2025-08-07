@@ -47,8 +47,6 @@ public class TankNetworkManager : NetworkManager
         {
             conn.identity.GetComponent<Tank>().IsReady = true;
         }
-
-        //enemySpawner.Spawning();
     }
 
     public override void OnServerDisconnect(NetworkConnectionToClient conn)

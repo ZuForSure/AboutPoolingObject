@@ -127,7 +127,7 @@ MonoBehaviour:
     boatRB: {fileID: 0}
     transform: {fileID: 0}
     moveSpeed: 7
-    rotateSpeed: 50
+    rotateSpeed: 100
     horizontalInput: 0
     verticalInput: 0
   healTank: 0
