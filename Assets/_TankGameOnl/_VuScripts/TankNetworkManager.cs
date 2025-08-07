@@ -1,4 +1,5 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,16 @@ public class TankNetworkManager : NetworkManager
     {
         base.Awake();
         this.LoadInstance();
+        NetworkServer.RegisterHandler<ClientRequestSever>(OnClientRequestServer);
+    }
+
+    private void OnClientRequestServer(NetworkConnectionToClient client, ClientRequestSever sever)
+    {
+        SeverSendMessage report = new SeverSendMessage
+        {
+            severTime = NetworkTime.time
+        };
+        client.Send(report); // G?i th?i gian máy ch? hi?n t?i ??n client v?a g?i message cho máy ch?
     }
 
     protected virtual void LoadInstance()
@@ -69,6 +80,8 @@ public class TankNetworkManager : NetworkManager
 
         base.OnServerDisconnect(conn);
     }
+
+
 
     public override void Update()
     {
