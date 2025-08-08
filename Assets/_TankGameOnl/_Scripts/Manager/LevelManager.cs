@@ -32,6 +32,7 @@ public class LevelManager : NetworkBehaviour
         currentExpRequired = levels[currentLevelIndex-1].expRequired;
         //Hello NIga
         // test
+        //Alo12324434665475367
     }
 
     private void Awake()
