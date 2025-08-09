@@ -566,6 +566,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6167263369049402627, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
+      propertyPath: potionPrefabs
+      value: 
+      objectReference: {fileID: 3327129646766067025, guid: 6bf4bc5f8ca5829478ff48deba9eea27, type: 3}
+    - target: {fileID: 6167263369049402627, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
       propertyPath: largePotionIcon
       value: 
       objectReference: {fileID: 21300000, guid: 1d9fe87bd79ba0d4ab284f16fe73e4ac, type: 3}

@@ -14,9 +14,40 @@ public class TankNetworkManager : NetworkManager
     {
         base.Awake();
         this.LoadInstance();
+    }
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
         NetworkServer.RegisterHandler<ClientRequestSever>(OnClientRequestServer);
+        Debug.Log($"[OnStartServer] ");
+    }
+    public override void OnStopServer()
+    {
+        base.OnStopServer();
+        NetworkServer.UnregisterHandler<ClientRequestSever>();
+        Debug.Log($"[OnStopServer] ");
+    }
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        NetworkClient.RegisterHandler<SeverSendMessage>(OnServerSendMessage);
+        Debug.Log($"[OnStartClient] ");
+    }
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        NetworkClient.UnregisterHandler<SeverSendMessage>();
+        Debug.Log($"[OnStopClient] ");
+
     }
 
+    private void OnServerSendMessage(SeverSendMessage message)
+    {
+        Debug.Log($"[OnServerSendMessage] severTime: {message.severTime}");
+    }
+
+   
+   
     private void OnClientRequestServer(NetworkConnectionToClient client, ClientRequestSever sever)
     {
         SeverSendMessage report = new SeverSendMessage

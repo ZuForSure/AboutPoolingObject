@@ -65,25 +65,14 @@ public class EnemyTakeDamage : MonoBehaviour
     [Server]
     private void InitItem(int itemIndex)
     {
-        switch (itemIndex)
+        GameObject item = Instantiate(TankGameManager.Instance.PotionPrefabs, transform.position, Quaternion.identity);
+
+        if (item.TryGetComponent(out ItemPickup pickup))
         {
-            case 0:
-                GameObject smallPotion = Instantiate(TankGameManager.Instance.PotionSmallPref, transform.position, Quaternion.identity);
-                NetworkServer.Spawn(smallPotion);
-                break;
-            case 1:
-                GameObject mediumPotion = Instantiate(TankGameManager.Instance.PotionMediumPref,   transform.position, Quaternion.identity);
-                NetworkServer.Spawn(mediumPotion);
-                break;
-            case 2:
-                GameObject largePotion = Instantiate(TankGameManager.Instance.PotionLargePref, transform.position, Quaternion.identity);
-                NetworkServer.Spawn(largePotion);
-                break;
-            default:
-                Debug.LogError("Invalid item index");
-                break;
+            pickup.SetItemID(itemIndex); // Gán cho instance
         }
 
+        NetworkServer.Spawn(item);
     }
 
 

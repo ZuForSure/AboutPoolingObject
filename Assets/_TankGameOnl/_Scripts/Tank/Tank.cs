@@ -28,14 +28,8 @@ public class Tank : NetworkBehaviour
         lookAtMouse = GetComponentInChildren<LookAtMouse>();
         tankMove.Init(GetComponent<Rigidbody2D>(), transform);
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
-       
-        NetworkClient.RegisterHandler<SeverSendMessage>(OnServerSendMessage);
     }
-    private void OnDestroy()
-    {
-        NetworkClient.UnregisterHandler<SeverSendMessage>();
-    }
-
+  
 
 
 
@@ -319,12 +313,6 @@ public class Tank : NetworkBehaviour
 
     #endregion
 
-    #region Message 
-
-    private void OnServerSendMessage(SeverSendMessage message)
-    {
-        Debug.Log($"[OnServerSendMessage] severTime: {message.severTime}");
-    }
-    #endregion
+    
 
 }
