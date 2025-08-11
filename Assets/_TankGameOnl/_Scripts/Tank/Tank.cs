@@ -29,17 +29,13 @@ public class Tank : NetworkBehaviour
         tankMove.Init(GetComponent<Rigidbody2D>(), transform);
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
     }
-  
+
 
 
 
     void Start()
     {
-        // Chỉ client mới cần update UI khi inventory thay đổi
-        if (isClient)
-        {
-            inventory.Callback += OnInventoryChanged;
-        }
+        if (!isClient) return;
         NetworkClient.Send(new ClientRequestSever());
     }
 
@@ -51,10 +47,11 @@ public class Tank : NetworkBehaviour
             UiManager.Instance.OnButtonReadyClick -= OnReadyButtonClicked;
             UiManager.Instance.inventorySlot.ShowInventory(false);
             TargetRemoveAllItem();
+            inventory.Callback -= OnInventoryChanged;
 
         }
 
-       
+
     }
 
     public override void OnStartClient()
@@ -73,6 +70,7 @@ public class Tank : NetworkBehaviour
         CmdInitUiHeal();
         CmdIsGamePlaying();
         UiManager.Instance.inventorySlot.ShowInventory(true);
+        inventory.Callback += OnInventoryChanged;
 
     }
     public override void OnStopServer()
@@ -133,7 +131,7 @@ public class Tank : NetworkBehaviour
     [Command]
     public void CmdUseItem(int slotIndex)
     {
-        if (slotIndex < 0 || slotIndex >= inventory.Count)
+        if (slotIndex < 0 || slotIndex >= maxSlots)
             return;
 
         int itemID = inventory[slotIndex];
@@ -199,8 +197,8 @@ public class Tank : NetworkBehaviour
         TargetIsGamePlaying(TankGameManager.Instance.IsPlaying);
     }
 
-   
-   
+
+
 
     #endregion
 
@@ -294,9 +292,20 @@ public class Tank : NetworkBehaviour
     //Chạy ở client khi inventory thay đổi
     private void OnInventoryChanged(SyncList<int>.Operation op, int index, int oldItem, int newItem)
     {
+        switch (op)
+        {
+            case SyncList<int>.Operation.OP_ADD:
+                Debug.Log($"Item added at index {index}: {newItem}");
+                UiManager.Instance.inventorySlot.AddItemUI(index, newItem);
+                break;
+            case SyncList<int>.Operation.OP_REMOVEAT:
+                Debug.Log($"Item removed at index {index}: {oldItem}");
+                UiManager.Instance.inventorySlot.RemoveItemUI(inventory);
+                break;
+        }
         Debug.Log($"Inventory changed! Op: {op}, Slot: {index}");
         if (!isLocalPlayer) return;
-        UiManager.Instance.inventorySlot.UpdateUI(this);
+        //UiManager.Instance.inventorySlot.UpdateUI(this);
     }
     #endregion
 
@@ -313,6 +322,6 @@ public class Tank : NetworkBehaviour
 
     #endregion
 
-    
+
 
 }
