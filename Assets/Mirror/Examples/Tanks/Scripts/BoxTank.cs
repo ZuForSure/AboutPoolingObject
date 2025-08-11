@@ -6,7 +6,7 @@ using Mirror;
 [RequireComponent(typeof(NetworkIdentity))]
 [RequireComponent(typeof(NetworkTransformReliable))]
 [DisallowMultipleComponent]
-public class Box : NetworkBehaviour
+public class BoxTank : NetworkBehaviour
 {
     [Header("Components")]
     public Rigidbody rigidBody;
