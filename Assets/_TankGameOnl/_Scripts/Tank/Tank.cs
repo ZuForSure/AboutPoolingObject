@@ -69,6 +69,7 @@ public class Tank : NetworkBehaviour
         UiManager.Instance.inventorySlot.ShowInventory(true);
         inventory.Callback += OnInventoryChanged;
         TankGameManager.Instance.SetTank(this);
+       
 
     }
     public override void OnStopServer()
@@ -224,6 +225,13 @@ public class Tank : NetworkBehaviour
         Debug.Log($"[TargetHideUI] isShow: {isShow}, isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
         UiManager.Instance.ShowUiButtonReady(!isShow);
     }
+    [TargetRpc]
+    public void TargetPlayPickupFly(NetworkConnectionToClient conn, int itemId, int slotIndex, Vector3 worldPos)
+    {
+        // Gọi sang InventorySlot để làm tween
+        Debug.Log($"[TargetPlayPickupFly] itemId: {itemId}");
+        UiManager.Instance.inventorySlot.PlayFlyTween(itemId, slotIndex, worldPos);
+    }
     //[TargetRpc]
     private void TargetRemoveAllItem()
     {
@@ -267,11 +275,13 @@ public class Tank : NetworkBehaviour
         Destroy(gameObject, 0.5f);
     }
     [Server]
-    public bool AddItem(NetworkConnection conn, int itemID)
+    public bool AddItem(NetworkConnection conn, int itemID , out int slotIndex)
     {
+        slotIndex = -1;
         if (inventory.Count >= maxSlots)
             return false;
 
+        slotIndex = inventory.Count; 
         inventory.Add(itemID); // Thêm item
         return true;
     }

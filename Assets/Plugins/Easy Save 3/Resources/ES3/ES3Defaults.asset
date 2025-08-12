@@ -45,7 +45,6 @@ MonoBehaviour:
     - Mirror.Transports
     - SimpleWebTransport
     - Telepathy
-    - VirtualButtonsScripts
     showAdvancedSettings: 0
   addMgrToSceneAutomatically: 0
   autoUpdateReferences: 1
