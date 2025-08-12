@@ -6,7 +6,7 @@ public class Tank : NetworkBehaviour
 {
     [SerializeField] private TankHeal tankHeal; public TankHeal TankHeal => tankHeal;
     [SerializeField] private LookAtMouse lookAtMouse;
-    [SerializeField] private BoatMove tankMove;
+    [SerializeField] private BoatMove tankMove; public BoatMove TankMove => tankMove;
     [SyncVar(hook = nameof(OnChangeTankHeal))]
     [SerializeField] private int healTank;
     public int HealTank => healTank;
@@ -21,17 +21,16 @@ public class Tank : NetworkBehaviour
     public SyncList<int> inventory = new();
     public int maxSlots = 3;
 
-
     private void Awake()
     {
         tankHeal.Init(this);
         lookAtMouse = GetComponentInChildren<LookAtMouse>();
         tankMove.Init(GetComponent<Rigidbody2D>(), transform);
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+
+
+
     }
-
-
-
 
     void Start()
     {
@@ -50,8 +49,6 @@ public class Tank : NetworkBehaviour
             inventory.Callback -= OnInventoryChanged;
 
         }
-
-
     }
 
     public override void OnStartClient()
@@ -71,6 +68,7 @@ public class Tank : NetworkBehaviour
         CmdIsGamePlaying();
         UiManager.Instance.inventorySlot.ShowInventory(true);
         inventory.Callback += OnInventoryChanged;
+        TankGameManager.Instance.SetTank(this);
 
     }
     public override void OnStopServer()
@@ -105,12 +103,15 @@ public class Tank : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
         if (isDeath) return;
-        tankMove.RbMove();
-
-
+        if (tankMove.isDPad)
+        {
+            tankMove.RbMoveWithInput();
+        }
+        else
+        {
+            tankMove.RbMove();
+        }
     }
-
-
 
     #region Funtion
 
