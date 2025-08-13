@@ -37,6 +37,16 @@ public class BoatController : NetworkBehaviour
     {
         if (!isClient) return;
         NetworkClient.Send(new ClientRequestSever());
+        TankGameManager.Instance.OnSendEventClickItem += OnHandlerItem;
+     
+
+    }
+
+   
+
+    private void OnDestroy()
+    {
+        TankGameManager.Instance.OnSendEventClickItem -= OnHandlerItem;
     }
 
     public override void OnStopClient()
@@ -363,4 +373,23 @@ public class BoatController : NetworkBehaviour
 
     }
     #endregion
+
+    private void OnHandlerItem(string nametag)
+    {
+       switch(nametag)
+        {
+            case "Slot1":
+                CmdUseItem(0); // Gọi lệnh server để dùng item ở slot 0
+                break;
+            case "Slot2":
+                CmdUseItem(1); // Gọi lệnh server để dùng item ở slot 1
+                break;
+            case "Slot3":
+                CmdUseItem(2); // Gọi lệnh server để dùng item ở slot 2
+                break;
+            default:
+               
+                break;
+        }    
+    }
 }

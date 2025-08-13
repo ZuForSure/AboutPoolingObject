@@ -24,6 +24,8 @@ public class TankGameManager : ZuSingleton<TankGameManager>
 
     [SerializeField] private BoatController tank; public BoatController Tank => tank;
 
+    public Action<string> OnSendEventClickItem;
+
 
     public bool CheckAllPlayersReady()
     {
