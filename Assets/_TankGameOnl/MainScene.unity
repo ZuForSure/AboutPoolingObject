@@ -447,6 +447,133 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1488007976}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &327808854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 327808856}
+  - component: {fileID: 327808857}
+  m_Layer: 0
+  m_Name: TestMCP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &327808856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327808854}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &327808857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327808854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a645d334cfb90143ab0a8d4916b80d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameLanguage: 
+  arrayNameLanguage: []
+  currencyID: 0
+  currencyIDByName: 0
+  currencyCurrently:
+    id: 0
+    languageItem: []
+    isTranslateName: 0
+    isTranslateDescription: 0
+    iconUrl: 
+    isAvailable: 1
+    Code: 
+  listCurrencies: []
+  equipmentType: 0
+  rareType: 0
+  cardIds: 
+  listCards: []
+  cardCurrently:
+    id: 0
+    languageItem: []
+    isTranslateName: 0
+    isTranslateDescription: 0
+    iconUrl: 
+    isAvailable: 1
+    itemClass: 0
+    isStackable: 0
+    isTradable: 0
+    isLimited: 0
+    cost: []
+    equipmentType: 0
+    rareType: 0
+    stats: []
+    canDrop: 1
+    canUpgrade: 0
+    useForCraft: 0
+    craftable: 0
+    canEquip: 1
+    canSummon: 0
+    canSell: 1
+    craftOutputIds: 
+    eventCraftOutputIds: 
+    buildingParts: 
+    skillType: 0
+    upgradeCost: []
+    upgradeLevelRate: 1
+  arrayCard: []
+  boxCurrently:
+    id: 0
+    languageItem: []
+    isTranslateName: 0
+    isTranslateDescription: 0
+    iconUrl: 
+    isAvailable: 1
+    itemClass: 6
+    isStackable: 0
+    isTradable: 0
+    isLimited: 0
+    cost: []
+    randomType: 0
+    randomPacks: []
+  bundleCurrently:
+    id: 0
+    languageItem: []
+    isTranslateName: 0
+    isTranslateDescription: 0
+    iconUrl: 
+    isAvailable: 1
+    itemClass: 5
+    isStackable: 0
+    isTradable: 0
+    isLimited: 0
+    cost: []
+    itemPacks: []
+    endTime: 
+    duration: 0
+  dialogCurrently:
+    id: 0
+    languageItem: []
+    isTranslateName: 0
+    isTranslateDescription: 0
+    iconUrl: 
+    isAvailable: 1
+    dialogType: 0
 --- !u!1001 &577818839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27546,3 +27673,4 @@ SceneRoots:
   - {fileID: 1480763441}
   - {fileID: 1610887218}
   - {fileID: 1149828894}
+  - {fileID: 327808856}
