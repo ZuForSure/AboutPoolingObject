@@ -220,6 +220,7 @@ public class BoatController : NetworkBehaviour
     public void TargetPlayPickupFly(NetworkConnectionToClient conn, int itemId, Vector3 worldPos)
     {
         // Gọi sang InventorySlot để làm tween
+        Debug.Log($"[TargetPlayPickupFly]");
         UiManager.Instance.inventorySlot.PlayFlyTween(1f, itemId, worldPos);
         StartCoroutine(WaitItemFlyFinish(1f, itemId));
     }

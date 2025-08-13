@@ -107,9 +107,10 @@ public class InventorySlot : MonoBehaviour
         var go = Instantiate(itemIconPrefab, uiRoot); // <-- parent vào uiRoot
         var img = go.GetComponent<Image>();
         var rt = go.GetComponent<RectTransform>();
-        if (!img || !rt)
+       
+        if(img == null || rt == null|| go ==null)
         {
-            Debug.LogWarning("Prefab thiếu Image/RectTransform");
+            Debug.LogWarning("Item icon prefab must have Image and RectTransform components.");
             return null;
         }
         img.sprite = itemIcons[itemID];
@@ -132,7 +133,11 @@ public class InventorySlot : MonoBehaviour
 
         // 1) tạo icon và set parent
         var rt = InitItemPrefUI(itemId);
-
+        if(rt == null)
+        {
+            Debug.LogWarning("Failed to initialize item UI prefab");
+            return;
+        }
 
         // 2) World -> UI (cùng hệ toạ độ của uiRoot) -> vì là object trong thế giới nên cần dùng camera.main để chuyển đổi
         Vector2 screen = Camera.main.WorldToScreenPoint(worldPos);
