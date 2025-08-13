@@ -1,10 +1,6 @@
-using Mirror;
 using PinePie.SimpleJoystick;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using Transform = UnityEngine.Transform;
 
@@ -22,8 +18,6 @@ public class BoatMove
 
     public bool moveUp, moveDown, moveLeft, moveRight;
     public bool isDPad;
-
-
 
     //[SyncVar] private Vector2 moveDirection;
     //private InputManager input;
