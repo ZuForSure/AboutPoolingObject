@@ -23,7 +23,7 @@ namespace MCP.DataModels.BaseModels
     public enum QuestType { KillMobNumber, KillBossNumber, OpenChestNumber, KillPlayerNumber, TrophyNumber, CraftNumber, HaveItem, Text, CraftItem, JoinClan, PlayerStat, GoldNumber, DiamondNumber, ShardNumber };
 
     public enum ItemType { None, Box, Bundle }
-    public enum ItemClass { BaseItem = -1, Card = 0, Item = 1, Emote = 2, Recipe = 3, Currency = 4, Bundle = 5, Box = 6 }
+    public enum ItemClass { BaseItem = -1, Card = 0, Item = 1, Emote = 2, Recipe = 3, Currency = 4, Bundle = 5, Box = 6, Coconut = 7}
     public enum MemberRole { Leader, Coleader, Member }
     public enum PlayerRole { Admin, Operator, Player };
     public enum GamePlayState { Lock, InProgress, Completed }

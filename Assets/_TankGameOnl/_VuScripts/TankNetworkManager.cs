@@ -60,7 +60,6 @@ public class TankNetworkManager : NetworkManager
         if (instance == null)
         {
             instance = this as TankNetworkManager;
-            //DontDestroyOnLoad(gameObject);
             return;
         }
 
