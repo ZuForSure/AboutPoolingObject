@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 2
---- !u!1 &4036841486827852725
+--- !u!1 &2141203907256005904
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,8 +89,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8869610272795828187}
-  - component: {fileID: 6041958073242192814}
+  - component: {fileID: 4102490317025258407}
+  - component: {fileID: 6237530990235850809}
   m_Layer: 0
   m_Name: BulletFly
   m_TagString: Untagged
@@ -98,13 +98,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8869610272795828187
+--- !u!4 &4102490317025258407
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4036841486827852725}
+  m_GameObject: {fileID: 2141203907256005904}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -113,13 +113,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6268563507975460747}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6041958073242192814
+--- !u!114 &6237530990235850809
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4036841486827852725}
+  m_GameObject: {fileID: 2141203907256005904}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23b2e0f026a4c794eb5e851284539357, type: 3}
@@ -162,9 +162,9 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8869610272795828187}
-  - {fileID: 3954919149108163978}
   - {fileID: 2943571114278919826}
+  - {fileID: 4740827862523802528}
+  - {fileID: 4102490317025258407}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1845021988403544838
@@ -270,7 +270,7 @@ MonoBehaviour:
   rotationSensitivity: 0.01
   positionPrecision: 0.01
   scalePrecision: 0.01
---- !u!1 &6759529761583933604
+--- !u!1 &9041595331186759413
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -278,8 +278,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3954919149108163978}
-  - component: {fileID: 4465733618149803779}
+  - component: {fileID: 4740827862523802528}
+  - component: {fileID: 1008574977282606632}
   m_Layer: 0
   m_Name: BulletDespawn
   m_TagString: Untagged
@@ -287,28 +287,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3954919149108163978
+--- !u!4 &4740827862523802528
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6759529761583933604}
+  m_GameObject: {fileID: 9041595331186759413}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.11216267, z: 0, w: 0.99368984}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6268563507975460747}
-  m_LocalEulerAnglesHint: {x: 0, y: 12.88, z: 0}
---- !u!114 &4465733618149803779
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1008574977282606632
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6759529761583933604}
+  m_GameObject: {fileID: 9041595331186759413}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1cf02abcc85459540be8132d5975c477, type: 3}

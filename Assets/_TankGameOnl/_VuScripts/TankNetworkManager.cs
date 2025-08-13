@@ -45,8 +45,6 @@ public class TankNetworkManager : NetworkManager
     {
         Debug.Log($"[OnServerSendMessage] severTime: {message.severTime}");
     }
-
-   
    
     private void OnClientRequestServer(NetworkConnectionToClient client, ClientRequestSever sever)
     {
@@ -111,8 +109,6 @@ public class TankNetworkManager : NetworkManager
 
         base.OnServerDisconnect(conn);
     }
-
-
 
     public override void Update()
     {

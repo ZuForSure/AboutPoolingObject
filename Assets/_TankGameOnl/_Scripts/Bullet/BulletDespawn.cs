@@ -18,7 +18,7 @@ public class BulletDespawn : NetworkBehaviour
     {
         if (!isServer) return;
 
-        transform.position += transform.forward * speed * Time.deltaTime;
+        //transform.position += transform.forward * speed * Time.deltaTime;
 
         if (Vector3.Distance(startPos, transform.position) >= maxDistance)
         {
