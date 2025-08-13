@@ -8,10 +8,11 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class InventorySlot : MonoBehaviour
+public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
     public Image[] slotImages; // Gán trong Inspector
     public Sprite[] itemIcons; // itemIcons[ itemID ]
@@ -107,8 +108,8 @@ public class InventorySlot : MonoBehaviour
         var go = Instantiate(itemIconPrefab, uiRoot); // <-- parent vào uiRoot
         var img = go.GetComponent<Image>();
         var rt = go.GetComponent<RectTransform>();
-       
-        if(img == null || rt == null|| go ==null)
+
+        if (img == null || rt == null || go == null)
         {
             Debug.LogWarning("Item icon prefab must have Image and RectTransform components.");
             return null;
@@ -133,7 +134,7 @@ public class InventorySlot : MonoBehaviour
 
         // 1) tạo icon và set parent
         var rt = InitItemPrefUI(itemId);
-        if(rt == null)
+        if (rt == null)
         {
             Debug.LogWarning("Failed to initialize item UI prefab");
             return;
@@ -159,7 +160,7 @@ public class InventorySlot : MonoBehaviour
                Destroy(rt.gameObject);
            });
     }
-    public void ItemFlyToUiHeal(int itemID,int slotIndex , float timer)
+    public void ItemFlyToUiHeal(int itemID, int slotIndex, float timer)
     {
         var target = slotRects[slotIndex];
         Vector2 uiStart = ConvertToRectangle(uiRoot, target.position);
@@ -179,6 +180,41 @@ public class InventorySlot : MonoBehaviour
                Destroy(rt.gameObject);
            });
 
+
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        string nametag = "";
+        GameObject gameObject = eventData.pointerCurrentRaycast.gameObject;
+        if (gameObject == null) Debug.LogWarning("GameObject is null in OnPointerClick");
+
+        Sprite sprite = gameObject.GetComponent<Image>().sprite;
+
+        if (sprite == null) Debug.LogWarning("Sprite is null in OnPointerClick");
+        else
+        {
+            switch (gameObject.tag)
+            {
+                case "Slot1":
+                    Debug.Log("Clicked on Slot1");
+                    nametag = "Slot1";
+                    break;
+                case "Slot2":
+                    Debug.Log("Clicked on Slot2");
+                    nametag = "Slot2";
+                    break;
+                case "Slot3":
+                    Debug.Log("Clicked on Slot2");
+                    nametag = "Slot3";
+                    break;
+                default:
+                    Debug.Log($"Clicked on {gameObject.name}");
+                    // Thực hiện hành động khác nếu không phải Slot1 hoặc Slot2
+                    break;
+            }
+        }
+        TankGameManager.Instance.OnSendEventClickItem?.Invoke(nametag);
 
     }
 }

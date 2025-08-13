@@ -1,9 +1,10 @@
 using Mirror;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(NetworkIdentity))]
-public class ItemPickup : NetworkBehaviour
+public class ItemPickup : NetworkBehaviour 
 {
     [SyncVar(hook = nameof(OnItemIdChanged))]
     [SerializeField] private int itemID;
@@ -45,5 +46,10 @@ public class ItemPickup : NetworkBehaviour
             tank.TargetPlayPickupFly(tank.connectionToClient, itemID, transform.position);
             NetworkServer.Destroy(gameObject);
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log($"{eventData.pointerClick.name}");
     }
 }
