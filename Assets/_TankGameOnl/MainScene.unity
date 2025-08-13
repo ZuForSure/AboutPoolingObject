@@ -663,7 +663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5853273420845757887, guid: 002d9035a9f601c40beb492434399dce, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: 50.00006
       objectReference: {fileID: 0}
     - target: {fileID: 6095559225675171406, guid: 002d9035a9f601c40beb492434399dce, type: 3}
       propertyPath: m_TagString
@@ -1030,6 +1030,11 @@ MonoBehaviour:
   m_Damping: 0.5
   m_MaxWindowSize: -1
   m_Padding: 0
+--- !u!4 &1204176914 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5429749152030201204, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
+  m_PrefabInstance: {fileID: 740990633}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1216420583 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8520618265071056989, guid: 002d9035a9f601c40beb492434399dce, type: 3}
@@ -1081,8 +1086,8 @@ Transform:
   m_Children:
   - {fileID: 22498145}
   - {fileID: 1134561595}
-  - {fileID: 479891688}
   - {fileID: 1488007976}
+  - {fileID: 1204176914}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1419772390
@@ -27752,5 +27757,4 @@ SceneRoots:
   - {fileID: 3110054064988932694}
   - {fileID: 1480763441}
   - {fileID: 1610887218}
-  - {fileID: 1149828894}
   - {fileID: 327808856}
