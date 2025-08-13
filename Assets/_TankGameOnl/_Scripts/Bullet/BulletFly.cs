@@ -1,23 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System;
-using Transform = UnityEngine.Transform;
+using Mirror;
 
-[Serializable]
-public class BulletFly
+public class BulletFly : NetworkBehaviour
 {
-    [SerializeField] private Transform transform;
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private Vector2 flyDirec = Vector2.right;
+    [SerializeField] protected float speed = 10f;
+    [SerializeField] protected Vector2 flyDirec = Vector2.right;
 
-    public void Init(Transform transform)
-    {
-        this.transform = transform;
-    }
+    void FixedUpdate() => Fly();
 
-    public void Fly()
+    protected void Fly()
     {
-        transform.parent.Translate(this.flyDirec * this.speed * Time.fixedDeltaTime);
+        if (!isServer) return;
+        transform.parent.Translate(flyDirec * this.speed * Time.fixedDeltaTime);
     }
 }

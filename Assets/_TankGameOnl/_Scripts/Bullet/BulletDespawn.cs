@@ -1,26 +1,26 @@
 using Lean.Pool;
 using UnityEngine;
 using Mirror;
-using Transform = UnityEngine.Transform;
-using System;
 
-[Serializable]
-public class BulletDespawn
+public class BulletDespawn : NetworkBehaviour
 {
-    [SerializeField] private Transform transform;
     public float speed = 10f;
     public float maxDistance = 50f;
-    private Vector2 startPos;
 
-    public void Init(Transform transform)
+    private Vector3 startPos;
+
+    public override void OnStartServer()
     {
-        this.transform = transform;
-        this.startPos = this.transform.position;
+        startPos = transform.position;
     }
 
-    public void DespawnByDistance()
+    void Update()
     {
-        if (Vector2.Distance(startPos, transform.position) >= maxDistance)
+        if (!isServer) return;
+
+        //transform.position += transform.forward * speed * Time.deltaTime;
+
+        if (Vector3.Distance(startPos, transform.position) >= maxDistance)
         {
             NetworkServer.UnSpawn(transform.parent.gameObject);
             LeanPool.Despawn(transform.parent);
