@@ -1,1 +1,3 @@
-[]
+
+[{"dialogType":6,"id":0,"languageItem":[{"Name":"dalogta","Description":""},{"Name":"qrqw","Description":""},{"Name":"t","Description":""},{"Name":"à","Description":""},{"Name":"","Description":""}],"isTranslateName":true,"isTranslateDescription":false,"iconUrl":"","isAvailable":true},{"dialogType":5,"id":1,"languageItem":[{"Name":"qưer","Description":""},{"Name":"ưqrqw","Description":""},{"Name":"qrwqrq","Description":""},{"Name":"qrqr","Description":""},{"Name":"","Description":""}],"isTranslateName":false,"isTranslateDescription":false,"iconUrl":"","isAvailable":true}]
+
