@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5429749152030201204
 Transform:
   m_ObjectHideFlags: 0
@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb5b118a9458f494fa8c777c9a0dd2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
   heal: 3
+  potionPrefabs: {fileID: 3327129646766067025, guid: 6bf4bc5f8ca5829478ff48deba9eea27, type: 3}
+  tank: {fileID: 0}

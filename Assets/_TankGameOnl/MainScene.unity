@@ -629,10 +629,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TankGameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5370537026273895417, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5429749152030201204, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -673,38 +669,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6167263369049402627, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
-      propertyPath: potionPrefabs
-      value: 
-      objectReference: {fileID: 3327129646766067025, guid: 6bf4bc5f8ca5829478ff48deba9eea27, type: 3}
-    - target: {fileID: 6167263369049402627, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
-      propertyPath: largePotionIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 1d9fe87bd79ba0d4ab284f16fe73e4ac, type: 3}
-    - target: {fileID: 6167263369049402627, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
-      propertyPath: potionLargePref
-      value: 
-      objectReference: {fileID: 3327129646766067025, guid: 6bf4bc5f8ca5829478ff48deba9eea27, type: 3}
-    - target: {fileID: 6167263369049402627, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
-      propertyPath: potionPrefabsUI
-      value: 
-      objectReference: {fileID: 3327129646766067025, guid: a78d3db59fa680447a2aa8d6465ef51a, type: 3}
-    - target: {fileID: 6167263369049402627, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
-      propertyPath: potionSmallPref
-      value: 
-      objectReference: {fileID: 6533730367965827478, guid: d08e89491547a1f4fa819ea093530331, type: 3}
-    - target: {fileID: 6167263369049402627, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
-      propertyPath: smallPotionIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: b91c79b920bc1a3429a64aca6cc2c9af, type: 3}
-    - target: {fileID: 6167263369049402627, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
-      propertyPath: mediumPotionIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 854b2601c53da844aa3764985f799c4b, type: 3}
-    - target: {fileID: 6167263369049402627, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
-      propertyPath: potionMediumPref
-      value: 
-      objectReference: {fileID: 4013189163790161624, guid: 1cd4c5e9f6be818488d5c6ef749ac210, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27489,10 +27453,6 @@ PrefabInstance:
     - target: {fileID: 2959407489586859874, guid: 52075da1ce3b53343a48add6a2d2a8a1, type: 3}
       propertyPath: sceneId
       value: 2668719817
-      objectReference: {fileID: 0}
-    - target: {fileID: 7011224651962883547, guid: 52075da1ce3b53343a48add6a2d2a8a1, type: 3}
-      propertyPath: currentLevelIndex
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7406925523998046064, guid: 52075da1ce3b53343a48add6a2d2a8a1, type: 3}
       propertyPath: m_LocalPosition.x
