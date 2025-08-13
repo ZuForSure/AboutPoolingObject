@@ -1315,6 +1315,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 854b2601c53da844aa3764985f799c4b, type: 3}
   - {fileID: 21300000, guid: 1d9fe87bd79ba0d4ab284f16fe73e4ac, type: 3}
   cvgInventorySlot: {fileID: 4242585803224365893}
+  slotRects: []
+  uiRoot: {fileID: 0}
+  itemIconPrefab: {fileID: 0}
 --- !u!225 &4242585803224365893
 CanvasGroup:
   m_ObjectHideFlags: 0

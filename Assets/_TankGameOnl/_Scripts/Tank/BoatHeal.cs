@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class TankHeal
+public class BoatHeal
 {
-    private Tank tank;
+    private BoatController tank;
 
-    public void Init(Tank tank)
+    public void Init(BoatController tank)
     {
         this.tank = tank;
     }

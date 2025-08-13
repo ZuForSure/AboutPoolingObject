@@ -15,14 +15,14 @@ public class EnemyColision : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (!collision.gameObject.TryGetComponent<Tank>(out var tank))
+            if (!collision.gameObject.TryGetComponent<BoatController>(out var tank))
             {
                 Debug.LogWarning("Không tìm thấy TankHeal trong Player");
             }
             else
             {
                 if(isEnemyColision) return;
-                tank.TankHeal.ReduceHeal(1);
+                tank.BoatHeal.ReduceHeal(1);
                 isEnemyColision = true;
                 StartCoroutine(SetValueEnemyColision());
             }

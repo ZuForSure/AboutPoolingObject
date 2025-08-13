@@ -38,7 +38,7 @@ public class ItemPickup : NetworkBehaviour
     {
         if (!isServer) return;
       
-        Tank tank = collision.GetComponent<Tank>();
+        BoatController tank = collision.GetComponent<BoatController>();
         if (tank != null && tank.connectionToClient != null)
         {
             if (tank.AddItem(tank.connectionToClient, itemID , out int slotIndex))

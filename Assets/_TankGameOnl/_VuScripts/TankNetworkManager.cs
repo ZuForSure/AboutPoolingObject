@@ -87,7 +87,7 @@ public class TankNetworkManager : NetworkManager
 
         if (TankGameManager.Instance.IsPlaying)
         {
-            conn.identity.GetComponent<Tank>().IsReady = true;
+            conn.identity.GetComponent<BoatController>().IsReady = true;
         }
     }
 
@@ -97,7 +97,7 @@ public class TankNetworkManager : NetworkManager
 
         if (conn.identity != null)
         {
-            if (!conn.identity.gameObject.GetComponent<Tank>().IsDeath)
+            if (!conn.identity.gameObject.GetComponent<BoatController>().IsDeath)
             {
                 this.Players.Remove(conn.identity.gameObject);
             }
