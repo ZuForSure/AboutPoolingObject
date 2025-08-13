@@ -2,13 +2,15 @@ using Mirror;
 using System;
 using System.Collections;
 using UnityEngine;
+using PinePie.SimpleJoystick;
+using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
 
-public class Tank : NetworkBehaviour
+public class BoatController : NetworkBehaviour
 {
-    [SerializeField] private TankHeal tankHeal; public TankHeal TankHeal => tankHeal;
+    [SerializeField] private BoatHeal boatHeal; public BoatHeal BoatHeal => boatHeal;
     [SerializeField] private LookAtMouse lookAtMouse;
-    [SerializeField] private BoatMove tankMove; public BoatMove TankMove => tankMove;
+    [SerializeField] private BoatMove boatMove; public BoatMove BoatMove => boatMove;
     [SyncVar(hook = nameof(OnChangeTankHeal))]
     [SerializeField] private int healTank;
     public int HealTank => healTank;
@@ -25,13 +27,10 @@ public class Tank : NetworkBehaviour
 
     private void Awake()
     {
-        tankHeal.Init(this);
+        boatHeal.Init(this);
         lookAtMouse = GetComponentInChildren<LookAtMouse>();
-        tankMove.Init(GetComponent<Rigidbody2D>(), transform);
+        boatMove.Init(GetComponent<Rigidbody2D>(), transform, GameObject.Find("Float Joy").GetComponent<JoystickController>());
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
-
-
-
     }
 
     void Start()
@@ -49,7 +48,6 @@ public class Tank : NetworkBehaviour
             UiManager.Instance.inventorySlot.ShowInventory(false);
             TargetRemoveAllItem();
             inventory.Callback -= OnInventoryChanged;
-
         }
     }
 
@@ -83,7 +81,7 @@ public class Tank : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
         if (isDeath) return;
-        tankMove.GetInputMoveAndRotate();
+        boatMove.GetInputMoveAndRotate();
         lookAtMouse.AimTarget(lookAtMouse.GetTarget());
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -106,14 +104,17 @@ public class Tank : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
         if (isDeath) return;
-        if (tankMove.isDPad)
-        {
-            tankMove.RbMoveWithInput();
-        }
-        else
-        {
-            tankMove.RbMove();
-        }
+
+        boatMove.RbMove();
+
+        //if (tankMove.isDPad)
+        //{
+        //    tankMove.RbMoveWithInput();
+        //}
+        //else
+        //{
+        //    tankMove.RbMove();
+        //}
     }
 
     #region Funtion

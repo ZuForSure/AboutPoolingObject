@@ -1,17 +1,19 @@
 using Mirror;
-using Mirror.Examples.Basic;
-using Mirror.Examples.BilliardsPredicted;
+using PinePie.SimpleJoystick;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 using Transform = UnityEngine.Transform;
 
 [Serializable]
 public class BoatMove
 {
-    [SerializeField] protected Rigidbody2D boatRB;
+    [SerializeField] private JoystickController joystick;
+
+    public Rigidbody2D boatRB;
     [SerializeField] private Transform transform;
     [SerializeField] protected float moveSpeed = 7f;
     [SerializeField] protected float rotateSpeed = 100f;
@@ -23,32 +25,51 @@ public class BoatMove
 
 
 
-    [SyncVar] private Vector2 moveDirection;
+    //[SyncVar] private Vector2 moveDirection;
     //private InputManager input;
 
-    public void Init(Rigidbody2D rb2d, Transform transform)
+    public void Init(Rigidbody2D rb2d, Transform transform, JoystickController joy)
     {
         this.boatRB = rb2d;
         this.transform = transform;
-
+        this.joystick = joy;
     }
-
-
 
     public void GetInputMoveAndRotate()
     {
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
+
+        if (Mathf.Approximately(horizontalInput, 0f) && Mathf.Approximately(verticalInput, 0f))
+        {
+            horizontalInput = joystick.InputDirection.x;
+            verticalInput = joystick.InputDirection.y;
+        }
     }
 
     public void RbMove()
     {
-        float rotationAmount = -horizontalInput * rotateSpeed * Time.deltaTime;
-        Vector2 moveDirection = boatRB.transform.up * verticalInput;
+        //float rotationAmount = -horizontalInput * rotateSpeed * Time.deltaTime;
+        //Vector2 moveDirection = boatRB.transform.up * verticalInput;
 
-        //boatRB.MoveRotation(boatRB.rotation + rotationAmount);
-        transform.Rotate(Vector3.forward * rotationAmount);
-        boatRB.velocity = moveDirection * moveSpeed;
+        //transform.Rotate(Vector3.forward * rotationAmount);
+        //boatRB.velocity = moveDirection * moveSpeed;
+
+        //Debug.Log($"Horizontal: {horizontalInput}, Vertical: {verticalInput}");
+
+        if (Mathf.Approximately(horizontalInput, 0f) && Mathf.Approximately(verticalInput, 0f))
+        {
+            boatRB.velocity = Vector2.zero;
+            return;
+        }
+
+        Vector2 inputDir = new Vector2(horizontalInput, verticalInput).normalized;
+
+        float targetAngle = Mathf.Atan2(inputDir.y, inputDir.x) * Mathf.Rad2Deg - 90f;
+        float currentAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, rotateSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Euler(0, 0, currentAngle);
+
+        boatRB.velocity = transform.up * moveSpeed;
     }
 
     public void RbMoveWithInput()
@@ -68,6 +89,4 @@ public class BoatMove
         boatRB.velocity = vel;
 
     }
-
-
 }

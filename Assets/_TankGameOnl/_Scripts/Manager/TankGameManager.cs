@@ -22,7 +22,7 @@ public class TankGameManager : ZuSingleton<TankGameManager>
 
     [SerializeField] private GameObject potionPrefabs; public GameObject PotionPrefabs => potionPrefabs;
 
-    [SerializeField] private Tank tank; public Tank Tank => tank;
+    [SerializeField] private BoatController tank; public BoatController Tank => tank;
 
 
     public bool CheckAllPlayersReady()
@@ -32,7 +32,7 @@ public class TankGameManager : ZuSingleton<TankGameManager>
         foreach (var conn in NetworkServer.connections.Values)
         {
             if (conn.identity == null) continue;
-            Tank tank = conn.identity.GetComponent<Tank>();
+            BoatController tank = conn.identity.GetComponent<BoatController>();
             if (tank == null || !tank.IsReady)
             {
                 allReady = false;
@@ -65,7 +65,7 @@ public class TankGameManager : ZuSingleton<TankGameManager>
 
         EnemySpawner.instance.Spawning();
     }
-    public void SetTank(Tank tank)
+    public void SetTank(BoatController tank)
     {
         this.tank = tank;
         

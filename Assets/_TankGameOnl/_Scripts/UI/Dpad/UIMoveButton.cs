@@ -17,7 +17,7 @@ public class UIMoveButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         Right
     }
     [SerializeField] private Direction direction;
-    [SerializeField] private Tank tank;
+    [SerializeField] private BoatController tank;
 
     [SerializeField] private bool pressed;
 
@@ -30,21 +30,21 @@ public class UIMoveButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         while (NetworkClient.localPlayer == null) yield return null;
         var ni = NetworkClient.localPlayer;
-        tank = ni.GetComponent<Tank>();
+        tank = ni.GetComponent<BoatController>();
     }
    
 
     public void OnPointerDown(PointerEventData eventData)
     {
         pressed = true;
-        tank.TankMove.isDPad = true; // Đặt isDPad thành true khi nút được nhấn
+        tank.BoatMove.isDPad = true; // Đặt isDPad thành true khi nút được nhấn
         Apply(true);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         pressed = false;
-        tank.TankMove.isDPad = false; // Đặt isDPad thành false khi nút được nhả
+        tank.BoatMove.isDPad = false; // Đặt isDPad thành false khi nút được nhả
         Apply(false);
     }
 
@@ -54,7 +54,7 @@ public class UIMoveButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         if (pressed)
         {
             pressed = false;
-            tank.TankMove.isDPad = false; // đặt isdpad thành false khi nút được nhả
+            tank.BoatMove.isDPad = false; // đặt isdpad thành false khi nút được nhả
             Apply(false);
         }
     }
@@ -68,10 +68,10 @@ public class UIMoveButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
         }
         switch (direction)
         {
-            case Direction.Up: tank.TankMove.moveUp = state; break;
-            case Direction.Down: tank.TankMove.moveDown = state; break;
-            case Direction.Left: tank.TankMove.moveLeft = state; break;
-            case Direction.Right: tank.TankMove.moveRight = state; break;
+            case Direction.Up: tank.BoatMove.moveUp = state; break;
+            case Direction.Down: tank.BoatMove.moveDown = state; break;
+            case Direction.Left: tank.BoatMove.moveLeft = state; break;
+            case Direction.Right: tank.BoatMove.moveRight = state; break;
         }
     }
    
