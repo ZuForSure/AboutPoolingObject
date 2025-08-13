@@ -25,6 +25,10 @@ public class UiManager : ZuSingleton<UiManager>
     [Header("IventorySlot")]
      public InventorySlot inventorySlot;
 
+    //[Header("UI Move Button")]
+    //public UIMoveButton uiMoveButton;
+
+
 
     private void Start()
     {

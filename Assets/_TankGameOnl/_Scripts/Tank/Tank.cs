@@ -6,7 +6,7 @@ public class Tank : NetworkBehaviour
 {
     [SerializeField] private TankHeal tankHeal; public TankHeal TankHeal => tankHeal;
     [SerializeField] private LookAtMouse lookAtMouse;
-    [SerializeField] private BoatMove tankMove;
+    [SerializeField] private BoatMove tankMove; public BoatMove TankMove => tankMove;
     [SyncVar(hook = nameof(OnChangeTankHeal))]
     [SerializeField] private int healTank;
     public int HealTank => healTank;
@@ -21,25 +21,20 @@ public class Tank : NetworkBehaviour
     public SyncList<int> inventory = new();
     public int maxSlots = 3;
 
-
     private void Awake()
     {
         tankHeal.Init(this);
         lookAtMouse = GetComponentInChildren<LookAtMouse>();
         tankMove.Init(GetComponent<Rigidbody2D>(), transform);
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+
+
+
     }
-  
-
-
 
     void Start()
     {
-        // Chỉ client mới cần update UI khi inventory thay đổi
-        if (isClient)
-        {
-            inventory.Callback += OnInventoryChanged;
-        }
+        if (!isClient) return;
         NetworkClient.Send(new ClientRequestSever());
     }
 
@@ -51,10 +46,9 @@ public class Tank : NetworkBehaviour
             UiManager.Instance.OnButtonReadyClick -= OnReadyButtonClicked;
             UiManager.Instance.inventorySlot.ShowInventory(false);
             TargetRemoveAllItem();
+            inventory.Callback -= OnInventoryChanged;
 
         }
-
-       
     }
 
     public override void OnStartClient()
@@ -73,6 +67,9 @@ public class Tank : NetworkBehaviour
         CmdInitUiHeal();
         CmdIsGamePlaying();
         UiManager.Instance.inventorySlot.ShowInventory(true);
+        inventory.Callback += OnInventoryChanged;
+        TankGameManager.Instance.SetTank(this);
+       
 
     }
     public override void OnStopServer()
@@ -107,12 +104,15 @@ public class Tank : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
         if (isDeath) return;
-        tankMove.RbMove();
-
-
+        if (tankMove.isDPad)
+        {
+            tankMove.RbMoveWithInput();
+        }
+        else
+        {
+            tankMove.RbMove();
+        }
     }
-
-
 
     #region Funtion
 
@@ -133,7 +133,7 @@ public class Tank : NetworkBehaviour
     [Command]
     public void CmdUseItem(int slotIndex)
     {
-        if (slotIndex < 0 || slotIndex >= inventory.Count)
+        if (slotIndex < 0 || slotIndex >= maxSlots)
             return;
 
         int itemID = inventory[slotIndex];
@@ -199,8 +199,8 @@ public class Tank : NetworkBehaviour
         TargetIsGamePlaying(TankGameManager.Instance.IsPlaying);
     }
 
-   
-   
+
+
 
     #endregion
 
@@ -224,6 +224,13 @@ public class Tank : NetworkBehaviour
     {
         Debug.Log($"[TargetHideUI] isShow: {isShow}, isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
         UiManager.Instance.ShowUiButtonReady(!isShow);
+    }
+    [TargetRpc]
+    public void TargetPlayPickupFly(NetworkConnectionToClient conn, int itemId, int slotIndex, Vector3 worldPos)
+    {
+        // Gọi sang InventorySlot để làm tween
+        Debug.Log($"[TargetPlayPickupFly] itemId: {itemId}");
+        UiManager.Instance.inventorySlot.PlayFlyTween(itemId, slotIndex, worldPos);
     }
     //[TargetRpc]
     private void TargetRemoveAllItem()
@@ -268,11 +275,13 @@ public class Tank : NetworkBehaviour
         Destroy(gameObject, 0.5f);
     }
     [Server]
-    public bool AddItem(NetworkConnection conn, int itemID)
+    public bool AddItem(NetworkConnection conn, int itemID , out int slotIndex)
     {
+        slotIndex = -1;
         if (inventory.Count >= maxSlots)
             return false;
 
+        slotIndex = inventory.Count; 
         inventory.Add(itemID); // Thêm item
         return true;
     }
@@ -294,9 +303,20 @@ public class Tank : NetworkBehaviour
     //Chạy ở client khi inventory thay đổi
     private void OnInventoryChanged(SyncList<int>.Operation op, int index, int oldItem, int newItem)
     {
+        switch (op)
+        {
+            case SyncList<int>.Operation.OP_ADD:
+                Debug.Log($"Item added at index {index}: {newItem}");
+                UiManager.Instance.inventorySlot.AddItemUI(index, newItem);
+                break;
+            case SyncList<int>.Operation.OP_REMOVEAT:
+                Debug.Log($"Item removed at index {index}: {oldItem}");
+                UiManager.Instance.inventorySlot.RemoveItemUI(inventory);
+                break;
+        }
         Debug.Log($"Inventory changed! Op: {op}, Slot: {index}");
         if (!isLocalPlayer) return;
-        UiManager.Instance.inventorySlot.UpdateUI(this);
+        //UiManager.Instance.inventorySlot.UpdateUI(this);
     }
     #endregion
 
@@ -313,6 +333,6 @@ public class Tank : NetworkBehaviour
 
     #endregion
 
-    
+
 
 }
