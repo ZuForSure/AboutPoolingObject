@@ -9,7 +9,7 @@ public class UiManager : ZuSingleton<UiManager>
     [Header("Text Heal")]
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private CanvasGroup cvgPopupHeal;
-   
+
     [Header("Button Ready")]
     [SerializeField] private CanvasGroup cvgPopupButtonReady;
     [SerializeField] private Button buttonStart;
@@ -23,7 +23,7 @@ public class UiManager : ZuSingleton<UiManager>
     [SerializeField] private CanvasGroup cvgPopupSlider;
 
     [Header("IventorySlot")]
-     public InventorySlot inventorySlot;
+    public InventorySlot inventorySlot;
 
     //[Header("UI Move Button")]
     //public UIMoveButton uiMoveButton;
@@ -44,7 +44,7 @@ public class UiManager : ZuSingleton<UiManager>
         Debug.Log($"Sever : {NetworkServer.active} - Client : {NetworkClient.active}");
         SetupCanvasGroup(isShow, cvgPopupButtonReady);
         SetTextReady(ownerReady);
-       
+
     }
     public void ShowUiSlider(bool isShow)
     {
@@ -57,12 +57,12 @@ public class UiManager : ZuSingleton<UiManager>
     {
         text.text = $"Heal: {heal}";
     }
-    private void SetupCanvasGroup(bool isShow,CanvasGroup canvasGroup)
+    private void SetupCanvasGroup(bool isShow, CanvasGroup canvasGroup)
     {
         canvasGroup.alpha = isShow ? 1 : 0;
         canvasGroup.interactable = isShow;
         canvasGroup.blocksRaycasts = isShow;
-    }    
+    }
     public void SetTextReady(bool isReady)
     {
         textReady.text = isReady ? "Ready" : "Not Ready";
@@ -78,7 +78,7 @@ public class UiManager : ZuSingleton<UiManager>
     #endregion
 
     #region Slider Exp
-    public void SetSliderExp(int currentExp, int currentExpRequired )
+    public void SetSliderExp(int currentExp, int currentExpRequired)
     {
         sliderExp.value = currentExp;
         sliderExp.maxValue = currentExpRequired;
@@ -87,6 +87,15 @@ public class UiManager : ZuSingleton<UiManager>
     public void SetTextLevel(int currentLevel)
     {
         textLevel.text = $"Level {currentLevel}";
-    }    
+    }
     #endregion
+    public RectTransform GetRectUiHeal()
+    {
+        if (!text.TryGetComponent<RectTransform>(out var rect))
+        {
+            Debug.LogWarning("TextMeshProUGUI does not have a RectTransform component.");
+            return null;
+        }
+        return rect;
+    }
 }

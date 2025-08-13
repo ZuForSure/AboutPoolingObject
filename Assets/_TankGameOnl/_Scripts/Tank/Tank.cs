@@ -1,6 +1,8 @@
 using Mirror;
 using System;
+using System.Collections;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Tank : NetworkBehaviour
 {
@@ -69,7 +71,7 @@ public class Tank : NetworkBehaviour
         UiManager.Instance.inventorySlot.ShowInventory(true);
         inventory.Callback += OnInventoryChanged;
         TankGameManager.Instance.SetTank(this);
-       
+
 
     }
     public override void OnStopServer()
@@ -135,28 +137,16 @@ public class Tank : NetworkBehaviour
     {
         if (slotIndex < 0 || slotIndex >= maxSlots)
             return;
-
         int itemID = inventory[slotIndex];
+
+        TargetItemFlyToUiHeal(connectionToClient, itemID, slotIndex, 1f);
+
+
+        inventory.RemoveAt(slotIndex); // Xóa item khỏi inventory
 
         // TODO: Áp dụng hiệu ứng của itemID cho player
         Debug.Log($"Server: Player dùng item {itemID}");
-        switch (itemID)
-        {
-            case 0:
-                healTank += 2; // Giả sử itemID 0 là item nhỏ, tăng 2 máu
-                break;
-            case 1:
-                healTank += 4; // Giả sử itemID 1 là item trung bình, tăng 4 máu
-                break;
-            case 2:
-                healTank += 6; // Giả sử itemID 2 là item lớn, tăng 6 máu
-                break;
-            default:
-                Debug.LogWarning($"Unknown item ID: {itemID}");
-                break;
-        }
-
-        inventory.RemoveAt(slotIndex); // Xóa item khỏi inventory
+        StartCoroutine(WaitItemFlyUiHealFinish(1f, itemID, slotIndex));
     }
 
     [Command]
@@ -226,12 +216,19 @@ public class Tank : NetworkBehaviour
         UiManager.Instance.ShowUiButtonReady(!isShow);
     }
     [TargetRpc]
-    public void TargetPlayPickupFly(NetworkConnectionToClient conn, int itemId, int slotIndex, Vector3 worldPos)
+    public void TargetPlayPickupFly(NetworkConnectionToClient conn, int itemId, Vector3 worldPos)
     {
         // Gọi sang InventorySlot để làm tween
-        Debug.Log($"[TargetPlayPickupFly] itemId: {itemId}");
-        UiManager.Instance.inventorySlot.PlayFlyTween(itemId, slotIndex, worldPos);
+        UiManager.Instance.inventorySlot.PlayFlyTween(1f, itemId, worldPos);
+        StartCoroutine(WaitItemFlyFinish(1f, itemId));
     }
+    [TargetRpc]
+    private void TargetItemFlyToUiHeal(NetworkConnectionToClient conn, int itemID, int slotIndex, float timer)
+    {
+        Debug.Log($"[TargetItemFlyToUiHeal] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+        UiManager.Instance.inventorySlot.ItemFlyToUiHeal(itemID, slotIndex, timer);
+    }
+
     //[TargetRpc]
     private void TargetRemoveAllItem()
     {
@@ -274,16 +271,15 @@ public class Tank : NetworkBehaviour
         TankNetworkManager.Instance.Players.Remove(gameObject);
         Destroy(gameObject, 0.5f);
     }
-    [Server]
-    public bool AddItem(NetworkConnection conn, int itemID , out int slotIndex)
+    [Command]
+    public void AddItem(int itemID)
     {
-        slotIndex = -1;
         if (inventory.Count >= maxSlots)
-            return false;
+            return;
 
-        slotIndex = inventory.Count; 
+        //slotIndex = inventory.Count; 
         inventory.Add(itemID); // Thêm item
-        return true;
+
     }
     [Server]
     private void RemoveAllItem()
@@ -325,7 +321,7 @@ public class Tank : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-            //Debug.Log($"healvalue {healTank}");
+            Debug.Log($"healvalue {healTank}");
             UiManager.Instance.SetTextHeal(newValue);
         }
 
@@ -333,6 +329,36 @@ public class Tank : NetworkBehaviour
 
     #endregion
 
+    #region Coroutine
+    IEnumerator WaitItemFlyFinish(float time, int itemID)
+    {
+        yield return new WaitForSeconds(time);
+        if (isLocalPlayer)
+        {
+            AddItem(itemID);
+        }
+    }
+    IEnumerator WaitItemFlyUiHealFinish(float time, int itemID, int slotIndex)
+    {
+        yield return new WaitForSeconds(time);
+        switch (itemID)
+        {
+            case 0:
+                healTank += 2; // Giả sử itemID 0 là item nhỏ, tăng 2 máu
+                break;
+            case 1:
+                healTank += 4; // Giả sử itemID 1 là item trung bình, tăng 4 máu
+                break;
+            case 2:
+                healTank += 6; // Giả sử itemID 2 là item lớn, tăng 6 máu
+                break;
+            default:
+                Debug.LogWarning($"Unknown item ID:");
+                break;
+        }
 
 
+
+    }
+    #endregion
 }

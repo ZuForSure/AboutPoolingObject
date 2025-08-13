@@ -41,13 +41,9 @@ public class ItemPickup : NetworkBehaviour
         Tank tank = collision.GetComponent<Tank>();
         if (tank != null && tank.connectionToClient != null)
         {
-            if (tank.AddItem(tank.connectionToClient, itemID , out int slotIndex))
-            {
-                Vector3 pos = transform.position;
-                tank.TargetPlayPickupFly(tank.connectionToClient, itemID, slotIndex, pos);
-                Debug.Log($"Player {collision.name} picked up item {itemID}");
-                NetworkServer.Destroy(gameObject);
-            }
+            if (tank.inventory.Count >= tank.maxSlots) return;
+            tank.TargetPlayPickupFly(tank.connectionToClient, itemID, transform.position);
+            NetworkServer.Destroy(gameObject);
         }
     }
 }

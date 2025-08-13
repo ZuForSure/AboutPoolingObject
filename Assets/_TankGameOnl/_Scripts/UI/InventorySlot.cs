@@ -1,12 +1,15 @@
 using DG.Tweening;
 using Mirror;
 using Mirror.Examples.Tanks;
+using Mono.CecilX.Cil;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class InventorySlot : MonoBehaviour
 {
@@ -39,25 +42,19 @@ public class InventorySlot : MonoBehaviour
             slotImages[index].sprite = itemIcons[value]; // Gán icon mặc định nếu chưa có item
             ShowAlpha(true, slotImages[index]); // Hiển thị icon
         }
-
-        //for (int i = 0; i < slotImages.Length; i++)
-        //{
-        //    if (i < tank.inventory.Count)
-        //    {
-        //        int itemID = tank.inventory[i];
-        //        Debug.Log($"Slot {i} - Item ID: {itemID}");
-        //        slotImages[i].sprite = itemIcons[itemID];
-        //        ShowAlpha(true, slotImages[i]);
-        //        Debug.Log($"Slot {i} - Icon: {itemIcons[itemID].name}");
-        //    }
-        //    else
-        //    {
-        //        slotImages[i].sprite = null;
-        //        ShowAlpha(false, slotImages[i]); // ?n icon n?u không có item
-        //    }
-
-        //}
     }
+    private int CheckSlotEmpty()
+    {
+        for (int i = 0; i < slotImages.Length; i++)
+        {
+            if (slotImages[i].sprite == null)
+            {
+                return i; // trả về index của slot trống
+            }
+        }
+        return -1; // không có slot trống
+    }
+
     public void RemoveItemUI(SyncList<int> inventory)
     {
         Debug.Log($"RemoveItemUI - inventory count: {inventory.Count}");
@@ -98,14 +95,33 @@ public class InventorySlot : MonoBehaviour
         color.a = isShow ? 1f : 0f; // ??t alpha v? 1 ?? hi?n th? ho?c 0 ?? ?n
         image.color = color;
     }
-
-    public void PlayFlyTween(int itemId, int slotIndex, Vector3 worldPos)
+    private Vector2 ConvertToRectangle(RectTransform rectParent, Vector3 pos)
     {
-        Debug.Log($"[PlayFlyTween] itemId:{itemId}, slotIndex:{slotIndex}, worldPos:{worldPos}");
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            rectParent, RectTransformUtility.WorldToScreenPoint(null, pos), null, out Vector2 uiPos);
+        return uiPos;
 
-        if (slotIndex < 0 || slotIndex >= slotRects.Length)
+    }
+    private RectTransform InitItemPrefUI(int itemID)
+    {
+        var go = Instantiate(itemIconPrefab, uiRoot); // <-- parent vào uiRoot
+        var img = go.GetComponent<Image>();
+        var rt = go.GetComponent<RectTransform>();
+        if (!img || !rt)
         {
-            Debug.LogWarning($"slotIndex {slotIndex} out of range");
+            Debug.LogWarning("Prefab thiếu Image/RectTransform");
+            return null;
+        }
+        img.sprite = itemIcons[itemID];
+        return rt;
+    }
+
+    public void PlayFlyTween(float timeTween, int itemId, Vector3 worldPos)
+    {
+        int indexSlotEmpty = CheckSlotEmpty();
+        if (indexSlotEmpty < 0)
+        {
+            Debug.LogWarning("No empty slot available");
             return;
         }
         if (itemId < 0 || itemId >= itemIcons.Length)
@@ -115,26 +131,49 @@ public class InventorySlot : MonoBehaviour
         }
 
         // 1) tạo icon và set parent
-        var go = Instantiate(itemIconPrefab, uiRoot); // <-- parent vào uiRoot
-        var img = go.GetComponent<Image>();
-        var rt = go.GetComponent<RectTransform>();
-        if (!img || !rt) { Debug.LogWarning("Prefab thiếu Image/RectTransform"); return; }
-        img.sprite = itemIcons[itemId];
+        var rt = InitItemPrefUI(itemId);
 
 
         // 2) World -> UI (cùng hệ toạ độ của uiRoot) -> vì là object trong thế giới nên cần dùng camera.main để chuyển đổi
         Vector2 screen = Camera.main.WorldToScreenPoint(worldPos);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(uiRoot, screen, null, out var uiStart);
-        rt.anchoredPosition = screen;
+        rt.anchoredPosition = uiStart;
 
         // 3) đích đến: dùng anchoredPosition của slot -> vì object là UI element nên dùng RectTransformUtility để chuyển đổi
-        var target = slotRects[slotIndex];
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            uiRoot, RectTransformUtility.WorldToScreenPoint(null, target.position), null, out Vector2 uiEnd);
+        var target = slotRects[indexSlotEmpty];
+        //RectTransformUtility.ScreenPointToLocalPointInRectangle(
+        //    uiRoot, RectTransformUtility.WorldToScreenPoint(null, target.position), null, out Vector2 uiEnd);
+        Vector2 uiEnd = ConvertToRectangle(uiRoot, target.position);
 
         var seq = DOTween.Sequence();
-        seq.Append(rt.DOAnchorPos(uiEnd, 0.8f).SetEase(Ease.OutCubic))
+        seq.Append(rt.DOAnchorPos(uiEnd, timeTween).SetEase(Ease.OutCubic))
            .OnStart(() => Debug.Log("[DOTween] start"))
-           .OnComplete(() => { Debug.Log("[DOTween] complete"); Destroy(go); });
+           .OnComplete(() =>
+           {
+               Debug.Log("[DOTween] complete");
+               Destroy(rt.gameObject);
+           });
+    }
+    public void ItemFlyToUiHeal(int itemID,int slotIndex , float timer)
+    {
+        var target = slotRects[slotIndex];
+        Vector2 uiStart = ConvertToRectangle(uiRoot, target.position);
+
+        var rt = InitItemPrefUI(itemID);
+        rt.anchoredPosition = uiStart;
+
+        var rectHealUI = UiManager.Instance.GetRectUiHeal();
+        var endUi = ConvertToRectangle(uiRoot, rectHealUI.position);
+
+        var seq = DOTween.Sequence();
+        seq.Append(rt.DOAnchorPos(endUi, timer).SetEase(Ease.OutCubic))
+           .OnStart(() => Debug.Log("[DOTween] start"))
+           .OnComplete(() =>
+           {
+               Debug.Log("[DOTween] complete");
+               Destroy(rt.gameObject);
+           });
+
+
     }
 }
