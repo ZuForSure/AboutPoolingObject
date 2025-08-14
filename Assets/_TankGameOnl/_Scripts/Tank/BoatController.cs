@@ -1,10 +1,9 @@
 using Mirror;
-using System;
 using System.Collections;
 using UnityEngine;
 using PinePie.SimpleJoystick;
-using UnityEngine.InputSystem;
 using static UnityEditor.Progress;
+using Cinemachine;
 
 public class BoatController : NetworkBehaviour
 {
@@ -38,11 +37,7 @@ public class BoatController : NetworkBehaviour
         if (!isClient) return;
         NetworkClient.Send(new ClientRequestSever());
         TankGameManager.Instance.OnSendEventClickItem += OnHandlerItem;
-     
-
     }
-
-   
 
     private void OnDestroy()
     {
@@ -58,6 +53,18 @@ public class BoatController : NetworkBehaviour
             UiManager.Instance.inventorySlot.ShowInventory(false);
             TargetRemoveAllItem();
             inventory.Callback -= OnInventoryChanged;
+        }
+    }
+
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+
+        var vCam = FindObjectOfType<CinemachineVirtualCamera>();
+        if (vCam != null)
+        {
+            vCam.Follow = transform;
+            vCam.LookAt = transform;
         }
     }
 
@@ -79,8 +86,6 @@ public class BoatController : NetworkBehaviour
         UiManager.Instance.inventorySlot.ShowInventory(true);
         inventory.Callback += OnInventoryChanged;
         TankGameManager.Instance.SetTank(this);
-
-
     }
     public override void OnStopServer()
     {
@@ -136,7 +141,6 @@ public class BoatController : NetworkBehaviour
     #endregion
 
     #region Commnad
-
     public void OnReadyButtonClicked()
     {
         CmdSetReady(true);
@@ -199,10 +203,6 @@ public class BoatController : NetworkBehaviour
         Debug.Log("Is playing: " + TankGameManager.Instance.IsPlaying);
         TargetIsGamePlaying(TankGameManager.Instance.IsPlaying);
     }
-
-
-
-
     #endregion
 
     #region TargetRPC

@@ -119,8 +119,7 @@ GameObject:
   - component: {fileID: 5363560215297446820}
   - component: {fileID: 3585254435079152016}
   - component: {fileID: 199778645325715473}
-  - component: {fileID: 3492620966974374530}
-  - component: {fileID: 2984728198309389082}
+  - component: {fileID: 3757061847949292168}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -274,7 +273,7 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
---- !u!114 &3492620966974374530
+--- !u!114 &3757061847949292168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -283,7 +282,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9128934830541529343}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 697de9cbff3303c49b6dd14aee712371, type: 3}
+  m_Script: {fileID: 11500000, guid: d22ecfbe08560c94d8fb5e0bda1f9c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncDirection: 0
@@ -292,16 +291,3 @@ MonoBehaviour:
   player: {fileID: 0}
   speed: 4
   checkInterval: 1
---- !u!114 &2984728198309389082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9128934830541529343}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 500d3637656316945aaf78d395465e1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyFollow: {fileID: 3492620966974374530}
