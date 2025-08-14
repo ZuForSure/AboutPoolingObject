@@ -31,7 +31,9 @@ public class EnemyTakeDamage : MonoBehaviour
         NetworkServer.UnSpawn(transform.parent.gameObject);
         LeanPool.Despawn(transform.parent);
         LevelManager.Instance.AddExp(exp);
+        VFXSpawner.Instance.Spawning(VFXType.EnemyDead, transform.position, transform.rotation);
     }
+
     [Server]
     private void DropItem()
     {

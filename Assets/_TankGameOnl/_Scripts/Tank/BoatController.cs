@@ -2,13 +2,12 @@ using Mirror;
 using System.Collections;
 using UnityEngine;
 using PinePie.SimpleJoystick;
-using static UnityEditor.Progress;
 using Cinemachine;
 
 public class BoatController : NetworkBehaviour
 {
     [SerializeField] private BoatHeal boatHeal; public BoatHeal BoatHeal => boatHeal;
-    //[SerializeField] private LookAtMouse lookAtMouse;
+    [SerializeField] private LookAtMouse lookAtMouse;
     [SerializeField] private BoatMove boatMove; public BoatMove BoatMove => boatMove;
     [SyncVar(hook = nameof(OnChangeTankHeal))]
     [SerializeField] private int healTank;
@@ -26,7 +25,7 @@ public class BoatController : NetworkBehaviour
     private void Awake()
     {
         boatHeal.Init(this);
-        //lookAtMouse = GetComponentInChildren<LookAtMouse>();
+        lookAtMouse = GetComponentInChildren<LookAtMouse>();
         boatMove.Init(GetComponent<Rigidbody2D>(), transform, GameObject.Find("Float Joy").GetComponent<JoystickController>());
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
     }
@@ -96,7 +95,7 @@ public class BoatController : NetworkBehaviour
         if (!isLocalPlayer) return;
         if (isDeath) return;
         boatMove.GetInputMoveAndRotate();
-        //lookAtMouse.AimTarget(lookAtMouse.GetTarget());
+        lookAtMouse.AimTarget(lookAtMouse.GetTarget());
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             // Gọi lệnh server để dùng item
