@@ -630,12 +630,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2795376053267261194, guid: 002d9035a9f601c40beb492434399dce, type: 3}
-      propertyPath: cardPref
-      value: 
-      objectReference: {fileID: 8698380368747351871, guid: d320bb85597d92d42a85ae6487c9807e, type: 3}
     - target: {fileID: 3568661126792938845, guid: 002d9035a9f601c40beb492434399dce, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830721391042947234, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830721391042947234, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830721391042947234, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830721391042947234, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+      propertyPath: m_IgnoreParentGroups
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6371541209794638809, guid: 002d9035a9f601c40beb492434399dce, type: 3}
@@ -687,8 +699,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 8007524698971145093, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 002d9035a9f601c40beb492434399dce, type: 3}
