@@ -1,3 +1,4 @@
+using MCP.DataModels.BaseModels;
 using Mirror;
 using System;
 using System.Collections;
@@ -26,6 +27,18 @@ public class LevelManager : NetworkBehaviour
     [SerializeField] private int currentExpRequired;
     public int CurrentExpRequired => currentExpRequired;
 
+    [Header("Reward")]
+    public Card[] arrayCard;
+
+    public Action OnHandlerActive;
+
+    private void OnEnable()
+    {
+        arrayCard = DataHolder.Instance().GetDatas<Card>();
+        OnHandlerActive?.Invoke();
+    }
+
+
     private void Start()
     {
         currentLevelIndex = levels[0].levelIndex;
@@ -33,11 +46,18 @@ public class LevelManager : NetworkBehaviour
         //Hello NIga
         // test
         //Alo12324434665475367
+        
+
+        //Card = DataHolder.Instance().GetData<Card>(index);
+        //string nameSprite = GetNameNoExt(Card.iconUrl);
+        //AssetManager.instance.LoadSprite(nameSprite, OnHandlerSprite);
     }
 
+   
     private void Awake()
     {
         Instance = this;
+        
     }
     public void AddExp(int exp)
     {
@@ -74,5 +94,27 @@ public class LevelManager : NetworkBehaviour
     {
         UiManager.Instance.SetTextLevel(newLevel);
         Debug.Log($"OnChangeLevel - OldLevel: {oldLevel} - NewLevel: {newLevel}");
+    }
+    public static string GetNameNoExt(string path)
+    {
+        // Tìm vị trí dấu chấm cuối cùng (trước phần mở rộng)
+        int dotIndex = path.LastIndexOf('.');
+        if (dotIndex == -1) return string.Empty;
+
+        // Tìm vị trí dấu "/" gần nhất trước dấu chấm
+        int slashIndex = path.LastIndexOf('/', dotIndex);
+        if (slashIndex == -1) return string.Empty;
+
+        // Cắt chuỗi từ sau "/" đến trước "."
+        return path.Substring(slashIndex + 1, dotIndex - slashIndex - 1);
+    }
+    public string GetNameNoExtCard(int index)
+    {
+        if (index < 0 || index >= arrayCard.Length)
+        {
+            Debug.LogWarning($"Index {index} is out of bounds for arrayCard.");
+            return string.Empty;
+        }
+        return GetNameNoExt(arrayCard[index].iconUrl);
     }
 }
