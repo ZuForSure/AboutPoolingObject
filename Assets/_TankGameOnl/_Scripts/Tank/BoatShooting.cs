@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class GunShooting : NetworkBehaviour
+public class BoatShooting : NetworkBehaviour
 {
     [SerializeField] protected bool canShoot = false;
     [SerializeField] protected GameObject bullet;
-    [SerializeField] private BoatController tank;
+    [SerializeField] private BoatController boat;
     private void Update()
     {
-        if (tank.IsDeath) return;
+        if (boat.IsDeath) return;
         if (!this.GetCanShoot()) return;
         this.SpawnBullet();
     }

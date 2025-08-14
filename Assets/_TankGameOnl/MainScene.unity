@@ -131,10 +131,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 22498145}
-  - component: {fileID: 22498146}
   - component: {fileID: 22498147}
   - component: {fileID: 22498148}
   - component: {fileID: 22498149}
+  - component: {fileID: 22498146}
   m_Layer: 0
   m_Name: TankNetworkManager
   m_TagString: Untagged
@@ -1084,10 +1084,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 22498145}
   - {fileID: 1134561595}
   - {fileID: 1488007976}
   - {fileID: 1204176914}
+  - {fileID: 22498145}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1419772390
@@ -1176,8 +1176,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1488007976}
-  - component: {fileID: 1488007977}
   - component: {fileID: 1488007978}
+  - component: {fileID: 1488007977}
   m_Layer: 0
   m_Name: Points
   m_TagString: Untagged

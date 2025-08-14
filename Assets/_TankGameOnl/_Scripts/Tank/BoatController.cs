@@ -8,7 +8,7 @@ using Cinemachine;
 public class BoatController : NetworkBehaviour
 {
     [SerializeField] private BoatHeal boatHeal; public BoatHeal BoatHeal => boatHeal;
-    [SerializeField] private LookAtMouse lookAtMouse;
+    //[SerializeField] private LookAtMouse lookAtMouse;
     [SerializeField] private BoatMove boatMove; public BoatMove BoatMove => boatMove;
     [SyncVar(hook = nameof(OnChangeTankHeal))]
     [SerializeField] private int healTank;
@@ -20,14 +20,13 @@ public class BoatController : NetworkBehaviour
     [SyncVar] private bool isReady = false;
     public bool IsReady { get => isReady; set => isReady = value; }
 
-    //public class SyncListInt : SyncList<int> { }
     public SyncList<int> inventory = new();
     public int maxSlots = 3;
 
     private void Awake()
     {
         boatHeal.Init(this);
-        lookAtMouse = GetComponentInChildren<LookAtMouse>();
+        //lookAtMouse = GetComponentInChildren<LookAtMouse>();
         boatMove.Init(GetComponent<Rigidbody2D>(), transform, GameObject.Find("Float Joy").GetComponent<JoystickController>());
         Debug.Log($"[Awake] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
     }
@@ -97,7 +96,7 @@ public class BoatController : NetworkBehaviour
         if (!isLocalPlayer) return;
         if (isDeath) return;
         boatMove.GetInputMoveAndRotate();
-        lookAtMouse.AimTarget(lookAtMouse.GetTarget());
+        //lookAtMouse.AimTarget(lookAtMouse.GetTarget());
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             // Gọi lệnh server để dùng item
@@ -121,15 +120,6 @@ public class BoatController : NetworkBehaviour
         if (isDeath) return;
 
         boatMove.RbMove();
-
-        //if (tankMove.isDPad)
-        //{
-        //    tankMove.RbMoveWithInput();
-        //}
-        //else
-        //{
-        //    tankMove.RbMove();
-        //}
     }
 
     #region Funtion
@@ -155,7 +145,6 @@ public class BoatController : NetworkBehaviour
         int itemID = inventory[slotIndex];
 
         TargetItemFlyToUiHeal(connectionToClient, itemID, slotIndex, 1f);
-
 
         inventory.RemoveAt(slotIndex); // Xóa item khỏi inventory
 

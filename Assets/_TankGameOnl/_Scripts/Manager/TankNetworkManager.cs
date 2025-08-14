@@ -45,7 +45,7 @@ public class TankNetworkManager : NetworkManager
     {
         Debug.Log($"[OnServerSendMessage] severTime: {message.severTime}");
     }
-   
+
     private void OnClientRequestServer(NetworkConnectionToClient client, ClientRequestSever sever)
     {
         SeverSendMessage report = new SeverSendMessage
