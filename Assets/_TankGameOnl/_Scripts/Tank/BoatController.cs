@@ -19,7 +19,6 @@ public class BoatController : NetworkBehaviour
     [SyncVar] private bool isReady = false;
     public bool IsReady { get => isReady; set => isReady = value; }
 
-    //public class SyncListInt : SyncList<int> { }
     public SyncList<int> inventory = new();
     public int maxSlots = 3;
 
@@ -123,15 +122,6 @@ public class BoatController : NetworkBehaviour
         if (isDeath) return;
 
         boatMove.RbMove();
-
-        //if (tankMove.isDPad)
-        //{
-        //    tankMove.RbMoveWithInput();
-        //}
-        //else
-        //{
-        //    tankMove.RbMove();
-        //}
     }
 
     #region Funtion
@@ -163,7 +153,6 @@ public class BoatController : NetworkBehaviour
         int itemID = inventory[slotIndex];
 
         TargetItemFlyToUiHeal(connectionToClient, itemID, slotIndex, 1f);
-
 
         inventory.RemoveAt(slotIndex); // Xóa item khỏi inventory
 

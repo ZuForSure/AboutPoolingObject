@@ -23,6 +23,7 @@ public class BulletSendDamage : MonoBehaviour
     protected void SendDamage(EnemyTakeDamage enemyTakeDamage)
     {
         enemyTakeDamage.DeductHP(this.damage);
+        VFXSpawner.Instance.Spawning(VFXType.Exploision, transform.position, transform.rotation);
     }
 
     protected void DespawnBullet()

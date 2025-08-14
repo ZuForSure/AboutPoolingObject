@@ -36,5 +36,6 @@ public class EnemyColision : MonoBehaviour
 
         NetworkServer.UnSpawn(transform.parent.gameObject);
         LeanPool.Despawn(transform.parent.gameObject);
+        VFXSpawner.Instance.Spawning(VFXType.EnemyDead, transform.position, transform.rotation);
     }
 }

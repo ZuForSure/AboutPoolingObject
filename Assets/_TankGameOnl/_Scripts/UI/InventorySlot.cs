@@ -1,16 +1,8 @@
 using DG.Tweening;
 using Mirror;
-using Mirror.Examples.Tanks;
-using Mono.CecilX.Cil;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class InventorySlot : MonoBehaviour, IPointerClickHandler
 {
