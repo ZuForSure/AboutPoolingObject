@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1712730324437353014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3083309138084287182}
+  - component: {fileID: 393579540990461291}
+  m_Layer: 0
+  m_Name: AssetManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3083309138084287182
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712730324437353014}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &393579540990461291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712730324437353014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88bd11f37f9333047aa94cbb1328c0a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+    _keys:
+    - GreatHealthPotion
+    - GreatHealthPotion_1
+    - HugeHealthPotion
+    - HugeHealthPotion_1
+    - LesserHealthPotion
+    - LesserHealthPotion_1
+    - MediumHealthPotion
+    - MediumHealthPotion_1
+    - MinorHealthPotion
+    - MinorHealthPotion_1
+    - GreatManaPotion
+    - GreatManaPotion_1
+    - HugeManaPotion
+    - HugeManaPotion_1
+    - LesserManaPotion
+    - LesserManaPotion_1
+    - MediumManaPotion
+    - MediumManaPotion_1
+    - MinorManaPotion
+    - MinorManaPotion_1
+    - AttackPotion
+    - AttackPotion_1
+    - DefencePotion
+    - DefencePotion_1
+    - RessurectionPotion
+    - RessurectionPotion_1
+    - SpeedPotion
+    - SpeedPotion_1
+    _values:
+    - {fileID: 21300000, guid: 6249f6601a75f2c43bd344007ab2049c, type: 3}
+    - {fileID: 21300000, guid: a4bb37021143e2b41864823e7f69c790, type: 3}
+    - {fileID: 21300000, guid: 94119d0b67e29bf40b1d8fdbe9bdd145, type: 3}
+    - {fileID: 21300000, guid: 7e2d873eb5912ac4dbc414c6f963e113, type: 3}
+    - {fileID: 21300000, guid: 061927099cf2dc641b3c3f7dbb9a1604, type: 3}
+    - {fileID: 21300000, guid: 610cf13da2c2a204da097418bd4ea758, type: 3}
+    - {fileID: 21300000, guid: dfc9f131edc7a7a489048ee637e19828, type: 3}
+    - {fileID: 21300000, guid: 578144459002f1348bae6ce6e79e777b, type: 3}
+    - {fileID: 21300000, guid: 2a9441def55676043bbce4ee3dcdce0e, type: 3}
+    - {fileID: 21300000, guid: 4617574d60c9cd5458ef8ae85f876844, type: 3}
+    - {fileID: 21300000, guid: cb2b672101037524fb7a0b57ed0c95ae, type: 3}
+    - {fileID: 21300000, guid: 7999cf9f7ff175a48b64c6cbd03c5be8, type: 3}
+    - {fileID: 21300000, guid: a112944cc2cddfb4da07e80cae77f026, type: 3}
+    - {fileID: 21300000, guid: ed871df2033f3f044ae7fe63c4ded508, type: 3}
+    - {fileID: 21300000, guid: 31eb06c52bc312d47bf6281cdb596651, type: 3}
+    - {fileID: 21300000, guid: 2924e687f95f2d14f9e1e7bb01232ced, type: 3}
+    - {fileID: 21300000, guid: 4d0699bb80095764f8bb8a1c252050fc, type: 3}
+    - {fileID: 21300000, guid: 407bda4cd28dfaa49bf65aa3ab74bb8b, type: 3}
+    - {fileID: 21300000, guid: 8d8d8ebc2b10af245bd7f7ee4f036009, type: 3}
+    - {fileID: 21300000, guid: 9877e80fed62a7e4e9b3185335f7dde4, type: 3}
+    - {fileID: 21300000, guid: d1caf17d7dfe48648bc1bbb650da56bf, type: 3}
+    - {fileID: 21300000, guid: ab9b93a4e0fce3548b2a60eb28252542, type: 3}
+    - {fileID: 21300000, guid: b5af97fd18f58e64abce105809537c5a, type: 3}
+    - {fileID: 21300000, guid: 9afdecbc031c81a47a8474f179222f76, type: 3}
+    - {fileID: 21300000, guid: 0a2fb032b5d5de44aa11a93095122a2b, type: 3}
+    - {fileID: 21300000, guid: aa7902daa85d0bd4692645c074b70268, type: 3}
+    - {fileID: 21300000, guid: 4c3627b4d566d0e4c9e7dc905f642ae9, type: 3}
+    - {fileID: 21300000, guid: f6f8fe6887f31db4fbdf8209bfe89cc9, type: 3}
+  prefabs:
+    _keys: []
+    _values: []
+  audioClips:
+    _keys: []
+    _values: []

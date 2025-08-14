@@ -26,6 +26,7 @@ public class TestMCPModel : MonoBehaviour
 
     [Header("==============Box==============")]
     public Box boxCurrently;
+    public Box[] arrayBox;
 
     [Header("==============Bundle==============")]
     public Bundle bundleCurrently;
@@ -67,7 +68,8 @@ public class TestMCPModel : MonoBehaviour
 
         listCurrencies = DataHolder.Instance().GetDatas<Currency>("Real Money"); // lấy tất cả Currency có languega.name  là Real Money
         arrayCard = DataHolder.Instance().GetDatas<Card>("Cầu lửa"); // lấy tất cả Card có info ngôn ngữ 0 là "Cầu lửa"
-       
+        arrayBox = DataHolder.Instance().GetDatas<Box>(); // lấy tất cả Box
+
         //languegeCurrently = DataHolder.Instance().GetData<LanguageItem>(); // không lấy được vì class LanguageItem không kế thừa từ BaseData , cũng không có ID
 
     }
