@@ -60,7 +60,7 @@ public class BoatMove
         Vector2 inputDir = new Vector2(horizontalInput, verticalInput).normalized;
 
         float targetAngle = Mathf.Atan2(inputDir.y, inputDir.x) * Mathf.Rad2Deg - 90f;
-        float currentAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, rotateSpeed * Time.deltaTime);
+        float currentAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, rotateSpeed * Time.fixedDeltaTime);
         transform.rotation = Quaternion.Euler(0, 0, currentAngle);
 
         boatRB.velocity = transform.up * moveSpeed;

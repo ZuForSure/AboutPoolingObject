@@ -10,15 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 3551671716918146754}
   - component: {fileID: 8298626925065332756}
-  - component: {fileID: 3674920368692178484}
-  - component: {fileID: 6529665938137498850}
   - component: {fileID: 7194425041418370387}
   - component: {fileID: -6109398636063446172}
   - component: {fileID: 2893696716160559938}
   - component: {fileID: 7981779889549271946}
   - component: {fileID: 8153457023783611878}
+  - component: {fileID: 3674920368692178484}
   m_Layer: 0
-  m_Name: Tank
+  m_Name: Boat
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,53 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3674920368692178484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5493079047123937449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c2084b0bda74fc48b0813aef2d5f344, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  lookAtMouse: {fileID: 0}
-  boatMove:
-    joystick: {fileID: 0}
-    boatRB: {fileID: 7194425041418370387}
-    transform: {fileID: 0}
-    moveSpeed: 7
-    rotateSpeed: 100
-    horizontalInput: 0
-    verticalInput: 0
-    moveUp: 0
-    moveDown: 0
-    moveLeft: 0
-    moveRight: 0
-    isDPad: 0
-  healTank: 0
-  isDeath: 0
-  maxSlots: 3
---- !u!114 &6529665938137498850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5493079047123937449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58ed805d5affa7844ad7c178b3f47ff0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
 --- !u!50 &7194425041418370387
 Rigidbody2D:
   serializedVersion: 4
@@ -286,6 +238,38 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.18777668}
   serializedVersion: 2
   m_Radius: 0.6877767
+--- !u!114 &3674920368692178484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5493079047123937449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2084b0bda74fc48b0813aef2d5f344, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  lookAtMouse: {fileID: 0}
+  boatMove:
+    joystick: {fileID: 0}
+    boatRB: {fileID: 7194425041418370387}
+    transform: {fileID: 0}
+    moveSpeed: 7
+    rotateSpeed: 100
+    horizontalInput: 0
+    verticalInput: 0
+    moveUp: 0
+    moveDown: 0
+    moveLeft: 0
+    moveRight: 0
+    isDPad: 0
+  healTank: 0
+  isDeath: 0
+  maxSlots: 3
 --- !u!1 &6124528739526806902
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,7 +282,7 @@ GameObject:
   - component: {fileID: 5016485818777946046}
   - component: {fileID: 7632620341629446481}
   m_Layer: 0
-  m_Name: TankShoot
+  m_Name: Boot Shooting
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
