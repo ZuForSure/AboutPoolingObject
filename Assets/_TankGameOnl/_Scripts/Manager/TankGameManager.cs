@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public struct ClientRequestSever : NetworkMessage { }
+//public struct ClientRequestSever : NetworkMessage { }
 
-public struct SeverSendMessage : NetworkMessage
-{
-    public double severTime;
-}
+//public struct SeverSendMessage : NetworkMessage
+//{
+//    public double severTime;
+//}
 
 
 public class TankGameManager : ZuSingleton<TankGameManager>

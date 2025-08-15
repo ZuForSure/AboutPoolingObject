@@ -33,7 +33,7 @@ public class BoatController : NetworkBehaviour
     void Start()
     {
         if (!isClient) return;
-        NetworkClient.Send(new ClientRequestSever());
+        //NetworkClient.Send(new ClientRequestSever());
         TankGameManager.Instance.OnSendEventClickItem += OnHandlerItem;
     }
 
