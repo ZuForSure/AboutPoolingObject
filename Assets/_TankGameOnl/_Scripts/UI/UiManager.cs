@@ -22,8 +22,11 @@ public class UiManager : ZuSingleton<UiManager>
     [SerializeField] private TextMeshProUGUI textLevel;
     [SerializeField] private CanvasGroup cvgPopupSlider;
 
-    [Header("IventorySlot")]
+    [Header("Iventory Slot")]
     public InventorySlot inventorySlot;
+
+    [Header("Reward Card")]
+    public RewardCard rewardCard;
 
     //[Header("UI Move Button")]
     //public UIMoveButton uiMoveButton;

@@ -28,7 +28,11 @@ public class Enemy : NetworkBehaviour
     }
     #endregion
 
-    void Update() => this.FollowPlayer();
+    void Update()
+    {
+        if (LevelManager.Instance.isLevelUp) return;
+        this.FollowPlayer();
+    }
 
     private void FixedUpdate()
     {

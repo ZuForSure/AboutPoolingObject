@@ -35,11 +35,13 @@ public class BoatController : NetworkBehaviour
         if (!isClient) return;
         //NetworkClient.Send(new ClientRequestSever());
         TankGameManager.Instance.OnSendEventClickItem += OnHandlerItem;
+        LevelManager.Instance.OnClickItemReward += (itemID) => CmdOnEventClickItem();
     }
 
     private void OnDestroy()
     {
         TankGameManager.Instance.OnSendEventClickItem -= OnHandlerItem;
+        LevelManager.Instance.OnClickItemReward -= (itemID) => CmdOnEventClickItem();
     }
 
     public override void OnStopClient()
@@ -94,6 +96,7 @@ public class BoatController : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
         if (isDeath) return;
+        if(LevelManager.Instance.isLevelUp) return;
         boatMove.GetInputMoveAndRotate();
         lookAtMouse.AimTarget(lookAtMouse.GetTarget());
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -134,6 +137,12 @@ public class BoatController : NetworkBehaviour
     {
         CmdSetReady(true);
     }
+    [Command]
+    private void CmdOnEventClickItem()
+    {
+        Debug.Log($"[CmdOnEventClickItem] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
+        LevelManager.Instance.isLevelUp = false;
+    }    
 
     // Gọi trên server khi muốn dùng item
     [Command]

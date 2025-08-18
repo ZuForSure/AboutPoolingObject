@@ -26,11 +26,14 @@ public class LevelManager : NetworkBehaviour
     [SyncVar]
     [SerializeField] private int currentExpRequired;
     public int CurrentExpRequired => currentExpRequired;
+    [SyncVar]
+    public bool isLevelUp;
 
     [Header("Reward")]
     public Card[] arrayCard;
 
     public Action OnHandlerActive;
+    public Action<int> OnClickItemReward;
 
     private void OnEnable()
     {
@@ -43,17 +46,9 @@ public class LevelManager : NetworkBehaviour
     {
         currentLevelIndex = levels[0].levelIndex;
         currentExpRequired = levels[currentLevelIndex-1].expRequired;
-        //Hello NIga
-        // test
-        //Alo12324434665475367
-        
-
-        //Card = DataHolder.Instance().GetData<Card>(index);
-        //string nameSprite = GetNameNoExt(Card.iconUrl);
-        //AssetManager.instance.LoadSprite(nameSprite, OnHandlerSprite);
     }
-
    
+
     private void Awake()
     {
         Instance = this;
@@ -62,29 +57,41 @@ public class LevelManager : NetworkBehaviour
     public void AddExp(int exp)
     {
         Debug.Log($"AddExp - Sever : {NetworkServer.active} - Client: {NetworkClient.active}");
-        
+        if (!NetworkServer.active) return;
         currentExp += exp;
         Debug.Log($"AddExp - Exp: {exp} - CurrentExp: {currentExp} - CurrentLevelIndex: {currentLevelIndex}");
         CheckCurrentLever();
-        //UiManager.Instance.SetSliderExp(currentExp, currentExpRequired);
-    }    
+        UiManager.Instance.SetSliderExp(currentExp, currentExpRequired);
+    }
     private void CheckCurrentLever()
     {
-        if(currentLevelIndex >= levels.Count) return;
+        if (currentLevelIndex >= levels.Count) return;
         if(currentExp >= levels[currentLevelIndex-1].expRequired)
         {
             currentExp -= levels[currentLevelIndex -1].expRequired;
             currentLevelIndex++;
+            RpcShowUiReward();
+            isLevelUp = true;
             currentExpRequired = levels[currentLevelIndex-1].expRequired;
             Debug.Log($"Level Up! New Level: {currentLevelIndex}");
             UiManager.Instance.SetTextLevel(currentLevelIndex);
         }
     }
+    [ClientRpc]
+    private void RpcShowUiReward()
+    {
+        Debug.Log($"TargetShowUiReward - Sever : {NetworkServer.active} - Client: {NetworkClient.active}");
+        UiManager.Instance.rewardCard.SetCanvasGroup(true);
+    }    
     //public void SyncExp(int exp)
     //{
     //    Debug.Log($"SyncExp - Sever : {NetworkServer.active} - Client: {NetworkClient.active}");
     //    currentExp = exp;
     //}
+    public bool IsLevelUp()
+    {
+        return isLevelUp;
+    }    
     private void OnExpChanged(int oldExp, int newExp)
     {
         UiManager.Instance.SetSliderExp(newExp, currentExpRequired);
@@ -117,4 +124,6 @@ public class LevelManager : NetworkBehaviour
         }
         return GetNameNoExt(arrayCard[index].iconUrl);
     }
+  
+
 }

@@ -8,10 +8,16 @@ public class RewardCard : MonoBehaviour
     [SerializeField] private RectTransform[] arrayCardPos;
     [SerializeField] private SkillCardData[] arraySkillCard;
     [SerializeField] private GameObject cardPref;
+    [SerializeField] private CanvasGroup canvasGroup;
 
+    private void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+    }
     private void Start()
     {
         LevelManager.Instance.OnHandlerActive += Init;
+        SetCanvasGroup(false);
     }
     private void OnDestroy()
     {
@@ -77,12 +83,23 @@ public class RewardCard : MonoBehaviour
         {
             int index = i; // tránh closure bug
             string nameCard = LevelManager.Instance.arrayCard[index].languageItem[0].Name;
+            string contentCard = LevelManager.Instance.arrayCard[index].languageItem[0].Description;
+            int idCard = LevelManager.Instance.arrayCard[index].id;
 
             AssetManager.instance.LoadSprite(LevelManager.Instance.GetNameNoExtCard(index),
                 (sprite) =>
                 {
-                    arraySkillCard[index].SetData(sprite, nameCard);
+                    arraySkillCard[index].SetData(sprite, contentCard, nameCard,idCard);
                 });
+        }
+    }
+    public void SetCanvasGroup(bool isShow)
+    {
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = isShow ? 1f : 0f;
+            canvasGroup.interactable = isShow;
+            canvasGroup.blocksRaycasts = isShow;
         }
     }
 }
