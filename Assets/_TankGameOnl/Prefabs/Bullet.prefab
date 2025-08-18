@@ -235,7 +235,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  speed: 10
+  speed: 15
   flyDirec: {x: 1, y: 0}
   maxDistance: 50
   startPos: {x: 0, y: 0}
