@@ -599,6 +599,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 49.99994
       objectReference: {fileID: 0}
+    - target: {fileID: 5884699610179614668, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5884699610179614668, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5884699610179614668, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5884699610179614668, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190335
+      objectReference: {fileID: 0}
     - target: {fileID: 6371541209794638809, guid: 002d9035a9f601c40beb492434399dce, type: 3}
       propertyPath: m_Name
       value: UiManager
@@ -847,7 +863,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c519791df3501e549bbc338ab15e0389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 9128934830541529343, guid: ce7aac092491f964fadd10e7cd16dc2c, type: 3}
+  enemies:
+  - {fileID: 3757061847949292168, guid: ce7aac092491f964fadd10e7cd16dc2c, type: 3}
+  - {fileID: 3757061847949292168, guid: bf248a50a9a59b14a8d00a6b9fd627f5, type: 3}
+  - {fileID: 3757061847949292168, guid: 67692a7b69774d54f9e0c9d3a9d44cf4, type: 3}
   delay: 2
   CanSpawnEnemy: 1
   SpawnRate: 5

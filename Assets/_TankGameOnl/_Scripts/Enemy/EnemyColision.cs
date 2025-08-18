@@ -7,6 +7,7 @@ using UnityEngine;
 public class EnemyColision : MonoBehaviour
 {
     private float damageCooldown = 0.5f;
+    public int damage = 1;
     private bool isEnemyColision = false;
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -22,7 +23,7 @@ public class EnemyColision : MonoBehaviour
             else
             {
                 if(isEnemyColision) return;
-                tank.BoatHeal.ReduceHeal(1);
+                tank.BoatHeal.ReduceHeal(this.damage);
                 isEnemyColision = true;
                 StartCoroutine(SetValueEnemyColision());
             }

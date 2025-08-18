@@ -24,6 +24,8 @@ namespace MCP.DataModels.BaseModels
             typeof(Currency),
             typeof(Bundle),
             typeof(Dialog),
+
+            typeof(EnemyData), //Vu added this line, not a default of MCP
             };
 
         public int[] languageIDs = new int[0];

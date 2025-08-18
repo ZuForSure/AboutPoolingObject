@@ -60,7 +60,7 @@ public class LevelManager : NetworkBehaviour
         if (!NetworkServer.active) return;
         currentExp += exp;
         Debug.Log($"AddExp - Exp: {exp} - CurrentExp: {currentExp} - CurrentLevelIndex: {currentLevelIndex}");
-        CheckCurrentLever();
+        //CheckCurrentLever();
         UiManager.Instance.SetSliderExp(currentExp, currentExpRequired);
     }
     private void CheckCurrentLever()
@@ -82,7 +82,7 @@ public class LevelManager : NetworkBehaviour
     {
         Debug.Log($"TargetShowUiReward - Sever : {NetworkServer.active} - Client: {NetworkClient.active}");
         UiManager.Instance.rewardCard.SetCanvasGroup(true);
-    }    
+    }
     //public void SyncExp(int exp)
     //{
     //    Debug.Log($"SyncExp - Sever : {NetworkServer.active} - Client: {NetworkClient.active}");
