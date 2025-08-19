@@ -138,10 +138,5 @@ public class LevelManager : NetworkBehaviour
         OnArrayStatData?.Invoke(statData);
 
     }
-    public void GetLanguageCard(string language)
-    {
-        
-    }
-
 
 }
