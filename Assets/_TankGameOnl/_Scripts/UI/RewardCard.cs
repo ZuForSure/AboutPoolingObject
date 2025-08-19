@@ -14,7 +14,7 @@ public class RewardCard : MonoBehaviour
     [SerializeField] private GameObject parentPos;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private TMP_Dropdown languageDropDown;
-    [SerializeField] private string[] languageItems;
+    [SerializeField] private string[] languageName;
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class RewardCard : MonoBehaviour
     {
         LevelManager.Instance.OnHandlerActive += Init;
         SetCanvasGroup(false);
-        languageItems = DataHolder.Instance().GetLanguageNameList();
+        languageName = DataHolder.Instance().GetLanguageNameList();
         InitLanguageDropDown();
 
 
@@ -39,12 +39,12 @@ public class RewardCard : MonoBehaviour
     {
         InitArrayRect();
         InitCardPref();
-        InitDataSkillCard();
+        InitDataSkillCard(0);
     }
     private void InitLanguageDropDown()
     {
         languageDropDown.ClearOptions();
-        List<string> options = new(languageItems);
+        List<string> options = new(languageName);
         languageDropDown.AddOptions(options);
         languageDropDown.onValueChanged.AddListener(OnDropdownChanged);
 
@@ -91,7 +91,7 @@ public class RewardCard : MonoBehaviour
         arraySkillCard = skillCards;
 
     }
-    public void InitDataSkillCard()
+    public void InitDataSkillCard(int languageID)
     {
         if (arraySkillCard == null || arraySkillCard.Length == 0)
         {
@@ -101,15 +101,15 @@ public class RewardCard : MonoBehaviour
 
         for (int i = 0; i < arraySkillCard.Length; i++)
         {
-            int index = i; // tránh closure bug
-            string nameCard = LevelManager.Instance.arrayCard[index].languageItem[0].Name;
-            string contentCard = LevelManager.Instance.arrayCard[index].languageItem[0].Description;
-            int idCard = LevelManager.Instance.arrayCard[index].id;
 
-            AssetManager.instance.LoadSprite(LevelManager.Instance.GetNameNoExtCard(index),
+            string nameCard = LevelManager.Instance.arrayCard[i].languageItem[languageID].Name;
+            string contentCard = LevelManager.Instance.arrayCard[i].languageItem[languageID].Description;
+            int idCard = LevelManager.Instance.arrayCard[i].id;
+
+            AssetManager.instance.LoadSprite(LevelManager.Instance.GetNameNoExtCard(i),
                 (sprite) =>
                 {
-                    arraySkillCard[index].SetData(sprite, contentCard, nameCard, idCard);
+                    arraySkillCard[i].SetData(sprite, contentCard, nameCard, idCard);
                 });
         }
     }
@@ -127,13 +127,24 @@ public class RewardCard : MonoBehaviour
     {
         string selected = languageDropDown.options[index].text;
         Debug.Log("Bạn đã chọn: " + selected);
+        OnChangeLanguage(selected);
     }
-    private void ChangeLanguage(string language)
+    private void OnChangeLanguage(string language)
     {
-        //for (int i = 0; i < arraySkillCard.Length; i++)
-        //{
-        //    arraySkillCard[i].
-        //}
+        int languegeID = GetLanguageID(language);
+        InitDataSkillCard(languegeID);
+
+    }
+    private int GetLanguageID(string nameLanguage)
+    {
+        for (int i = 0; i < languageName.Length; i++)
+        {
+            if (languageName[i] == nameLanguage)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
 }

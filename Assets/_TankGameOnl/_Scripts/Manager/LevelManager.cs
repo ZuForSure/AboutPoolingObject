@@ -67,7 +67,7 @@ public class LevelManager : NetworkBehaviour
         if (!NetworkServer.active) return;
         currentExp += exp;
         Debug.Log($"AddExp - Exp: {exp} - CurrentExp: {currentExp} - CurrentLevelIndex: {currentLevelIndex}");
-        //CheckCurrentLever();
+        CheckCurrentLever();
         UiManager.Instance.SetSliderExp(currentExp, currentExpRequired);
     }
     private void CheckCurrentLever()
@@ -138,10 +138,5 @@ public class LevelManager : NetworkBehaviour
         OnArrayStatData?.Invoke(statData);
 
     }
-    public void GetLanguageCard(string language)
-    {
-        
-    }
-
 
 }
