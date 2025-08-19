@@ -12,7 +12,7 @@ public class EnemySpawner : ZuSingleton<EnemySpawner>
     private Coroutine coroutine;
 
     public bool CanSpawnEnemy = true;
-    public float SpawnRate = 5f, MaxRate = 5f;
+    public float SpawnRate = 7f, MaxRate = 7f;
     public int EnemyPerRound = 4;
 
     [Server]

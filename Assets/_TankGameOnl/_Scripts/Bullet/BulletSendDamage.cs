@@ -16,8 +16,6 @@ public class BulletSendDamage : MonoBehaviour
         TankGameManager.Instance.OnSendDamagedEvent += OnReceiverDamageEvent;
     }
 
-   
-
     private void OnDestroy()
     {
         TankGameManager.Instance.OnSendDamagedEvent -= OnReceiverDamageEvent;
@@ -47,8 +45,6 @@ public class BulletSendDamage : MonoBehaviour
         NetworkServer.UnSpawn(transform.parent.gameObject);
         LeanPool.Despawn(transform.parent);
     }
-
-    
     
     private void SetBulletDamage()
     {
@@ -56,9 +52,9 @@ public class BulletSendDamage : MonoBehaviour
         Debug.Log($"SetBulletDamage");
         this.damage = TankGameManager.Instance.Damaged;
     }
+
     private void OnReceiverDamageEvent(int obj)
     {
         damage = obj;
     }
-
 }

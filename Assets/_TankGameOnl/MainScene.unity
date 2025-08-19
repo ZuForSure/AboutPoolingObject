@@ -587,6 +587,10 @@ PrefabInstance:
       propertyPath: cardPref
       value: 
       objectReference: {fileID: 8698380368747351871, guid: d320bb85597d92d42a85ae6487c9807e, type: 3}
+    - target: {fileID: 2795376053267261194, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+      propertyPath: parentPos
+      value: 
+      objectReference: {fileID: 1283672107}
     - target: {fileID: 3375166295560000419, guid: 002d9035a9f601c40beb492434399dce, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -665,7 +669,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7236092357296961159, guid: 002d9035a9f601c40beb492434399dce, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667815044429127205, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -874,8 +882,8 @@ MonoBehaviour:
   - {fileID: 3757061847949292168, guid: 67692a7b69774d54f9e0c9d3a9d44cf4, type: 3}
   delay: 2
   CanSpawnEnemy: 1
-  SpawnRate: 5
-  MaxRate: 5
+  SpawnRate: 7
+  MaxRate: 7
   EnemyPerRound: 4
 --- !u!1 &1149828892
 GameObject:
@@ -970,6 +978,11 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5429749152030201204, guid: a223257d452bd6b4f83a1fc9a20b1f11, type: 3}
   m_PrefabInstance: {fileID: 740990633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1283672107 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7658342649898826852, guid: 002d9035a9f601c40beb492434399dce, type: 3}
+  m_PrefabInstance: {fileID: 577818839}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1350134953
 GameObject:

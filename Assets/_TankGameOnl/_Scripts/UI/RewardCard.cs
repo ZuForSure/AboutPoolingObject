@@ -26,10 +26,8 @@ public class RewardCard : MonoBehaviour
         SetCanvasGroup(false);
         languageItems = DataHolder.Instance().GetLanguageNameList();
         InitLanguageDropDown();
-
-
-
     }
+
     private void OnDestroy()
     {
         LevelManager.Instance.OnHandlerActive -= Init;
@@ -43,10 +41,10 @@ public class RewardCard : MonoBehaviour
     }
     private void InitLanguageDropDown()
     {
-        languageDropDown.ClearOptions();
+        //languageDropDown.ClearOptions();
         List<string> options = new(languageItems);
-        languageDropDown.AddOptions(options);
-        languageDropDown.onValueChanged.AddListener(OnDropdownChanged);
+        //languageDropDown.AddOptions(options);
+        //languageDropDown.onValueChanged.AddListener(OnDropdownChanged);
 
     }
     private void InitArrayRect()
