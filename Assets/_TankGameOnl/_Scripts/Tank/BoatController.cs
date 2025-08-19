@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 using PinePie.SimpleJoystick;
 using Cinemachine;
+using MCP.DataModels.BaseModels;
+using Unity.VisualScripting.Dependencies.NCalc;
 
 public class BoatController : NetworkBehaviour
 {
@@ -33,15 +35,17 @@ public class BoatController : NetworkBehaviour
     void Start()
     {
         if (!isClient) return;
-        NetworkClient.Send(new ClientRequestSever());
+        //NetworkClient.Send(new ClientRequestSever());
         TankGameManager.Instance.OnSendEventClickItem += OnHandlerItem;
         LevelManager.Instance.OnClickItemReward += (itemID) => CmdOnEventClickItem();
+        LevelManager.Instance.OnArrayStatData += OnEventArrayStat;
     }
 
     private void OnDestroy()
     {
         TankGameManager.Instance.OnSendEventClickItem -= OnHandlerItem;
         LevelManager.Instance.OnClickItemReward -= (itemID) => CmdOnEventClickItem();
+        LevelManager.Instance.OnArrayStatData -= OnEventArrayStat;
     }
 
     public override void OnStopClient()
@@ -96,7 +100,7 @@ public class BoatController : NetworkBehaviour
     {
         if (!isLocalPlayer) return;
         if (isDeath) return;
-        if(LevelManager.Instance.isLevelUp) return;
+        if (LevelManager.Instance.isLevelUp) return;
         boatMove.GetInputMoveAndRotate();
         lookAtMouse.AimTarget(lookAtMouse.GetTarget());
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -142,7 +146,7 @@ public class BoatController : NetworkBehaviour
     {
         Debug.Log($"[CmdOnEventClickItem] isLocalPlayer: {isLocalPlayer}, isClient: {isClient}, isServer: {isServer}, netId: {netId}");
         LevelManager.Instance.isLevelUp = false;
-    }    
+    }
 
     // Gọi trên server khi muốn dùng item
     [Command]
@@ -156,7 +160,6 @@ public class BoatController : NetworkBehaviour
 
         inventory.RemoveAt(slotIndex); // Xóa item khỏi inventory
 
-        // TODO: Áp dụng hiệu ứng của itemID cho player
         Debug.Log($"Server: Player dùng item {itemID}");
         StartCoroutine(WaitItemFlyUiHealFinish(1f, itemID, slotIndex));
     }
@@ -199,6 +202,26 @@ public class BoatController : NetworkBehaviour
     {
         Debug.Log("Is playing: " + TankGameManager.Instance.IsPlaying);
         TargetIsGamePlaying(TankGameManager.Instance.IsPlaying);
+    }
+    [Command]
+    private void CmdAddStatValue(float value, StatType statType)
+    {
+        Debug.Log($"CmdAddStatValue - Sever : {isServer} - Client : {isClient}");
+        switch (statType)
+        {
+            case StatType.Health:
+                healTank += (int)value; // Giả sử value là số lượng máu cần thêm
+                Debug.Log($"CmdAddStatValue - Health: {value}");
+                break;
+            case StatType.Damage:
+                TankGameManager.Instance.SetDamage((int)value);
+                Debug.Log($"CmdAddStatValue - Damage {value}");
+                break;
+            case StatType.Speed:
+                BoatMove.PlusSpeed((int)value);
+                break;
+        }
+
     }
     #endregion
 
@@ -366,14 +389,12 @@ public class BoatController : NetworkBehaviour
                 break;
         }
 
-
-
     }
     #endregion
 
     private void OnHandlerItem(string nametag)
     {
-       switch(nametag)
+        switch (nametag)
         {
             case "Slot1":
                 CmdUseItem(0); // Gọi lệnh server để dùng item ở slot 0
@@ -385,8 +406,29 @@ public class BoatController : NetworkBehaviour
                 CmdUseItem(2); // Gọi lệnh server để dùng item ở slot 2
                 break;
             default:
-               
+
                 break;
-        }    
+        }
+    }
+    private void OnEventArrayStat(Stat[] arrayStat)
+    {
+        for (int i = 0; i < arrayStat.Length; i++)
+        {
+            switch (arrayStat[i].statType)
+            {
+                case StatType.Health:
+                    CmdAddStatValue(arrayStat[i].value, arrayStat[i].statType);
+                    Debug.Log($"OnEventArrayStat - Health: {arrayStat[i].value}");
+                    break;
+                case StatType.Damage:
+                    CmdAddStatValue(arrayStat[i].value, arrayStat[i].statType);
+                    Debug.Log($"OnEventArrayStat - Damage: {arrayStat[i].value}");
+                    break;
+                case StatType.Speed:
+                    CmdAddStatValue(arrayStat[i].value, arrayStat[i].statType);
+                    break;
+            }
+        }
+
     }
 }

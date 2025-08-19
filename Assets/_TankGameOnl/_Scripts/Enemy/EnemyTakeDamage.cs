@@ -16,13 +16,14 @@ public class EnemyTakeDamage : MonoBehaviour
 
     public virtual void DeductHP(int amount)
     {
-        if (this.currentHP == 0)
+        this.currentHP -= amount;
+        if (this.currentHP <= 0)
         {
             this.DeSpawnEnemey();
             DropItem();
         }
 
-        this.currentHP -= amount;
+        
     }
 
     [Server]

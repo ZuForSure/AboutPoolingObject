@@ -83,4 +83,8 @@ public class BoatMove
         boatRB.velocity = vel;
 
     }
+    public void PlusSpeed(int value)
+    {
+        moveSpeed += value;
+    }
 }
