@@ -17,6 +17,7 @@ using UnityEngine;
 public class TankGameManager : ZuSingleton<TankGameManager>
 {
     [SerializeField] private int heal; public int Heal => heal;
+    [SerializeField] private int damaged; public int Damaged => damaged;
 
     public bool IsPlaying => !EnemySpawner.Instance.CanSpawnEnemy;
 
@@ -25,6 +26,7 @@ public class TankGameManager : ZuSingleton<TankGameManager>
     [SerializeField] private BoatController tank; public BoatController Tank => tank;
 
     public Action<string> OnSendEventClickItem;
+    public event Action<int> OnSendDamagedEvent;
 
 
     public bool CheckAllPlayersReady()
@@ -72,5 +74,10 @@ public class TankGameManager : ZuSingleton<TankGameManager>
         this.tank = tank;
         
     }
+    public void SetDamage(int damage)
+    {
+        this.damaged += damage;
+        OnSendDamagedEvent?.Invoke(this.damaged);
+    }    
 
 }

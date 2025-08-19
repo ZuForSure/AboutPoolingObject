@@ -18,10 +18,10 @@ public class LevelManager : NetworkBehaviour
     public static LevelManager Instance;
     [SerializeField] private List<LevelData> levels;
     [SyncVar(hook = nameof(OnChangeLevel))]
-    [SerializeField] private int currentLevelIndex; 
+    [SerializeField] private int currentLevelIndex;
     public int CurrentLevelIndex => currentLevelIndex;
     [SyncVar(hook = nameof(OnExpChanged))]
-    [SerializeField] private int currentExp = 0; 
+    [SerializeField] private int currentExp = 0;
     public int CurrentExp => currentExp;
     [SyncVar]
     [SerializeField] private int currentExpRequired;
@@ -32,8 +32,9 @@ public class LevelManager : NetworkBehaviour
     [Header("Reward")]
     public Card[] arrayCard;
 
-    public Action OnHandlerActive;
+    public event Action OnHandlerActive;
     public Action<int> OnClickItemReward;
+    public event Action<Stat[]> OnArrayStatData;
 
     private void OnEnable()
     {
@@ -45,14 +46,20 @@ public class LevelManager : NetworkBehaviour
     private void Start()
     {
         currentLevelIndex = levels[0].levelIndex;
-        currentExpRequired = levels[currentLevelIndex-1].expRequired;
+        currentExpRequired = levels[currentLevelIndex - 1].expRequired;
+        OnClickItemReward += EventClickItemReward;
+
     }
-   
+    private void OnDestroy()
+    {
+        OnClickItemReward -= EventClickItemReward;
+    }
+
 
     private void Awake()
     {
         Instance = this;
-        
+
     }
     public void AddExp(int exp)
     {
@@ -66,13 +73,13 @@ public class LevelManager : NetworkBehaviour
     private void CheckCurrentLever()
     {
         if (currentLevelIndex >= levels.Count) return;
-        if(currentExp >= levels[currentLevelIndex-1].expRequired)
+        if (currentExp >= levels[currentLevelIndex - 1].expRequired)
         {
-            currentExp -= levels[currentLevelIndex -1].expRequired;
+            currentExp -= levels[currentLevelIndex - 1].expRequired;
             currentLevelIndex++;
             RpcShowUiReward();
             isLevelUp = true;
-            currentExpRequired = levels[currentLevelIndex-1].expRequired;
+            currentExpRequired = levels[currentLevelIndex - 1].expRequired;
             Debug.Log($"Level Up! New Level: {currentLevelIndex}");
             UiManager.Instance.SetTextLevel(currentLevelIndex);
         }
@@ -91,7 +98,7 @@ public class LevelManager : NetworkBehaviour
     public bool IsLevelUp()
     {
         return isLevelUp;
-    }    
+    }
     private void OnExpChanged(int oldExp, int newExp)
     {
         UiManager.Instance.SetSliderExp(newExp, currentExpRequired);
@@ -124,6 +131,17 @@ public class LevelManager : NetworkBehaviour
         }
         return GetNameNoExt(arrayCard[index].iconUrl);
     }
-  
+
+    private void EventClickItemReward(int itemID)
+    {
+        var statData = arrayCard[itemID].stats;
+        OnArrayStatData?.Invoke(statData);
+
+    }
+    public void GetLanguageCard(string language)
+    {
+        
+    }
+
 
 }
