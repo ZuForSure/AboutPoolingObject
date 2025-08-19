@@ -148,6 +148,12 @@ public class BoatController : NetworkBehaviour
     [Command]
     public void CmdUseItem(int slotIndex)
     {
+        if (slotIndex < 0 || slotIndex >= inventory.Count)
+        {
+            Debug.LogWarning($"Invalid slotIndex {slotIndex}, list count = {inventory.Count}");
+            return;
+        }
+
         if (slotIndex < 0 || slotIndex >= maxSlots)
             return;
         int itemID = inventory[slotIndex];
