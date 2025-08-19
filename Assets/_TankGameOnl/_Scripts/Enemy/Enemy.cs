@@ -1,6 +1,5 @@
+using MCP.DataModels.BaseModels;
 using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : NetworkBehaviour
@@ -8,7 +7,12 @@ public class Enemy : NetworkBehaviour
     [Header("Follow Player")]
     [SerializeField] private GameObject player;
     [SerializeField] private float speed = 4f;
+    public float weight = 0;
     [SerializeField] private float checkInterval = 1f;
+
+    private EnemyData enemyData;
+    private EnemyTakeDamage enemyTakeDamage;
+    private EnemyColision enemyColision;
 
     #region ServerCallBack
     [ServerCallback]
@@ -27,6 +31,19 @@ public class Enemy : NetworkBehaviour
         CancelInvoke(nameof(FindClosestPlayer));
     }
     #endregion
+
+    public void Init(int enemyId)
+    {
+        enemyTakeDamage = transform.GetComponentInChildren<EnemyTakeDamage>();
+        enemyColision = transform.GetComponentInChildren<EnemyColision>();
+        enemyData = DataHolder.Instance().GetData<EnemyData>(enemyId);
+
+        this.weight = enemyData.weight;
+        this.speed = enemyData.speed;
+        this.enemyColision.damage = enemyData.damage;
+        this.enemyTakeDamage.maxHp = enemyData.health;
+        enemyTakeDamage.currentHP = enemyTakeDamage.maxHp; // Bad idea but now it's the fastest way
+    }
 
     void Update()
     {

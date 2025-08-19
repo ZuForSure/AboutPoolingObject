@@ -1,13 +1,11 @@
 using Lean.Pool;
 using Mirror;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : NetworkBehaviour
 {
     [Header("Fly")]
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float speed = 15f;
     [SerializeField] private Vector2 flyDirec = Vector2.right;
     [Header("Despawn If Out Of Scene")]
     [SerializeField] private float maxDistance = 50f;

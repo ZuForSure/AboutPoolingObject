@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class EnemySpawner : ZuSingleton<EnemySpawner>
 {
-    [SerializeField] protected GameObject enemy;
+    [SerializeField] protected List<Enemy> enemies;
     [SerializeField] protected float delay = 2f;
+    private int enemyID;
     private Coroutine coroutine;
 
     public bool CanSpawnEnemy = true;
@@ -39,12 +40,33 @@ public class EnemySpawner : ZuSingleton<EnemySpawner>
         while (true)
         {
             Transform point = Point.Instance.GetRandomPoint();
-
-            GameObject newEnemy = LeanPool.Spawn(this.enemy, point.position, Quaternion.identity);
+            GameObject newEnemy = LeanPool.Spawn(this.GetRandomEnemy(), point.position, Quaternion.identity);
+            Enemy enemy = newEnemy.GetComponent<Enemy>();
+            enemy.Init(this.enemyID);
             NetworkServer.Spawn(newEnemy);
 
             yield return new WaitForSeconds(this.SpawnRate);
         }
+    }
+
+    private GameObject GetRandomEnemy()
+    {
+        float totalWeight = 100;
+        float r = Random.Range(0, totalWeight);
+        
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            if (r < enemies[i].weight) 
+            {
+                enemyID = i;
+                enemies[i].gameObject.name = "Enemy";
+                return enemies[i].gameObject;
+            }
+
+            r -= enemies[i].weight;
+        }
+
+        return null;
     }
 
     public void DespawnAllEnemies()

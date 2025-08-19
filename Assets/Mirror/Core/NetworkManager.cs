@@ -681,9 +681,8 @@ namespace Mirror
             {
                 if (singleton != null)
                 {
-                    //Bug Here but maybe i'll fix later
-                    //Debug.LogWarning("Multiple NetworkManagers detected in the scene. Only one NetworkManager can exist at a time. The duplicate NetworkManager will be destroyed.");
-                    //Destroy(gameObject);
+                    Debug.LogWarning("Multiple NetworkManagers detected in the scene. Only one NetworkManager can exist at a time. The duplicate NetworkManager will be destroyed.");
+                    Destroy(gameObject);
 
                     // Return false to not allow collision-destroyed second instance to continue.
                     return false;

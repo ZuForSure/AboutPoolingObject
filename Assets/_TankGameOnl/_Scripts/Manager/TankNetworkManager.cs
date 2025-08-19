@@ -46,14 +46,14 @@ public class TankNetworkManager : NetworkManager
     //    Debug.Log($"[OnServerSendMessage] severTime: {message.severTime}");
     //}
 
-    private void OnClientRequestServer(NetworkConnectionToClient client, ClientRequestSever sever)
-    {
-        SeverSendMessage report = new SeverSendMessage
-        {
-            severTime = NetworkTime.time
-        };
-        client.Send(report); // G?i th?i gian máy ch? hi?n t?i ??n client v?a g?i message cho máy ch?
-    }
+    //private void OnClientRequestServer(NetworkConnectionToClient client, ClientRequestSever sever)
+    //{
+    //    SeverSendMessage report = new SeverSendMessage
+    //    {
+    //        severTime = NetworkTime.time
+    //    };
+    //    client.Send(report); // G?i th?i gian máy ch? hi?n t?i ??n client v?a g?i message cho máy ch?
+    //}
 
     protected virtual void LoadInstance()
     {

@@ -16,14 +16,13 @@ public class EnemyTakeDamage : MonoBehaviour
 
     public virtual void DeductHP(int amount)
     {
-        this.currentHP -= amount;
         if (this.currentHP <= 0)
         {
             this.DeSpawnEnemey();
             DropItem();
         }
 
-        
+        this.currentHP -= amount;
     }
 
     [Server]
@@ -77,7 +76,4 @@ public class EnemyTakeDamage : MonoBehaviour
 
         NetworkServer.Spawn(item);
     }
-
-
-
 }
