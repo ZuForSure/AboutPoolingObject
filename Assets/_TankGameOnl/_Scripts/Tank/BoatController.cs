@@ -119,7 +119,6 @@ public class BoatController : NetworkBehaviour
             CmdUseItem(2); // Giả sử dùng item ở slot 2
         }
 
-        // test revert commit
     }
     private void FixedUpdate()
     {
